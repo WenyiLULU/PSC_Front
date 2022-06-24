@@ -10,7 +10,7 @@ function Signup({ signupModalOpen, setSignupModalOpen }) {
       userName: "",
       email: "",
       password: "secret",
-      confirmPassword: "sevret",
+      confirmPassword: "secret",
     },
 
     validate: {
@@ -40,13 +40,13 @@ function Signup({ signupModalOpen, setSignupModalOpen }) {
   return (
     <Modal opened={signupModalOpen} onClose={() => setSignupModalOpen(false)} title='Signup'>
       <form onSubmit={form.onSubmit(handleSubmit)}>
-        <Input
+        <TextInput
           label="Username"
           placeholder="Your username"
           {...form.getInputProps("username")}
         />
 
-        <Input 
+        <TextInput 
             label="Email"
             placeholder="email@internet.org"
             {...form.getInputProps("email")}

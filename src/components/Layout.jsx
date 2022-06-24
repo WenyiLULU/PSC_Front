@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { ActionIcon, Anchor, AppShell, Box, Header, Image, Navbar, Title, MediaQuery, Burger, Text, useMantineTheme, Footer } from '@mantine/core'
 import { NavLink, useMatch } from 'react-router-dom'
+import logo from '../assets/logo_b.svg'
 
 function Layout({children}) {
     const theme = useMantineTheme();
@@ -55,7 +56,11 @@ function Layout({children}) {
                 />
               </MediaQuery>
 
-              <Image src="../../public/logo_b.svg" alt="logo" />
+              <Image 
+                height={100}
+                width={100} 
+                src={logo} 
+                alt="logo" />
               <Text>PSC Pet Social Club</Text>
             </div>
           </Header>

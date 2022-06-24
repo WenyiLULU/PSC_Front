@@ -16,7 +16,6 @@ function HomePage() {
         <Login
           loginModalOpen={loginModalOpen}
           setLoginModalOpen={setLoginModalOpen}
-          signupModalOpen={signupModalOpen}
           setSignupModalOpen={setSignupModalOpen}
         />
         <Signup

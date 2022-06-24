@@ -9,14 +9,14 @@ import {
 import { useContext } from "react";
 import { logIn } from "../utils/reqBackEnd";
 import { SessionContext } from "../context/SessionContext"
-import { Link, Navigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import SignupButton from "../components/SignupButton";
-import Signup from "./Signup";
 
 
 
-function Login({ loginModalOpen, setLoginModalOpen, signupModalOpen, setSignupModalOpen }) {
+function Login({ loginModalOpen, setLoginModalOpen, setSignupModalOpen }) {
   const { authenticateUser } = useContext(SessionContext)
+  const navigate = useNavigate()
     
   const form = useForm({
     initialValues: {
@@ -33,7 +33,7 @@ function Login({ loginModalOpen, setLoginModalOpen, signupModalOpen, setSignupMo
         throw new Error(response.message)
       } else {
         authenticateUser(response.token)
-        Navigate('/user/dashboard')
+        navigate('/user/dashboard')
       }
     } catch (error) {
       console.log(error)
@@ -49,9 +49,9 @@ function Login({ loginModalOpen, setLoginModalOpen, signupModalOpen, setSignupMo
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <TextInput
           required
-          label="Username"
-          placeholder="Your Username"
-          {...form.getInputProps("username")}
+          label="Email"
+          placeholder="Your E-Mail"
+          {...form.getInputProps("email")}
         />
 
         <PasswordInput
