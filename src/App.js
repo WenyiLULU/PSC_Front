@@ -3,8 +3,8 @@ import Layout from './components/Layout'
 import Dashboard from './pages/Dashboard'
 import HomePage from './pages/HomePage'
 import { Route, Routes } from 'react-router-dom'
-import Signup from './modals/Signup';
-import Login from './modals/Login';
+// import Signup from './modals/Signup';
+// import Login from './modals/Login';
 
 function App() {
   return (
@@ -13,8 +13,8 @@ function App() {
       <Layout >  
         <Routes>
             <Route path='/' element={<HomePage />} />
-            <Route path='/signup' element={<Signup />} />
-            <Route path='/login' element={<Login />} />
+            {/* <Route path='/signup' element={<Signup />} />
+            <Route path='/login' element={<Login />} /> */}
             <Route path='/user/dashboard' element={<Dashboard />} />
             <Route path='/user/:userId' element={<h1> User profile </h1>} />
             <Route path='/user/pets' element={<h1> Pets profiles </h1>} />

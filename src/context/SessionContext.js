@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { apiBase, checkToken } from '../utils/reqBackEnd'
 
 const SessionContext = createContext()
@@ -6,6 +7,7 @@ const SessionContext = createContext()
 const SessionContextProvider = ({ children }) => {
   const [token, setToken] = useState()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const navigate = useNavigate()
 
 //   const apiWithToken = apiBase(token)
 
@@ -19,6 +21,7 @@ const SessionContextProvider = ({ children }) => {
     setToken()
     localStorage.removeItem('authToken')
     setIsAuthenticated(false)
+    navigate('/')
   }
 
   const verifyAuth = async () => {

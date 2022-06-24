@@ -18,7 +18,9 @@ export const checkToken = async (token) => {
   return response.data;
 };
 
-export const apiBase = async (endpoint)=>{
-
-    return
+export const apiBase = 
+    (token)=> 
+    async (endpoint)=>{
+    const response = await axios.get(`${BASE_API_URL}/${endpoint}`)
+    return response.data
 }
