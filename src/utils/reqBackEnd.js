@@ -8,7 +8,7 @@ export const signUp = async (newUser) => {
 
 export const logIn = async (loginInfo) => {
   const response = await axios.post(`${AUTH_API_URL}/login`, loginInfo);
-  return response;
+  return response.data;
 };
 
 export const checkToken = async (token) => {

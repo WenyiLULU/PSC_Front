@@ -55,13 +55,14 @@ function Layout({children}) {
                   mr="xl"
                 />
               </MediaQuery>
-
-              <Image 
-                height={100}
-                width={100} 
-                src={logo} 
-                alt="logo" />
-              <Text>PSC Pet Social Club</Text>
+                <Image 
+                  height={50}
+                  width={50} 
+                  color={"red"}
+                  src={logo} 
+                  alt="logo" />
+                <Text>Pet Social Club</Text>
+              
             </div>
           </Header>
         }
