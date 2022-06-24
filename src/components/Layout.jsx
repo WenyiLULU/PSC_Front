@@ -4,9 +4,9 @@ import { NavLink, useMatch } from 'react-router-dom'
 
 function Layout({children}) {
     const theme = useMantineTheme();
-    const match = useMatch('/homepage');
+    const match = useMatch('/');
     const [opened, setOpened] = useState(false);
-    console.log(match)
+    // console.log(match)
     return (
     <>
       {match === null && 
@@ -55,6 +55,7 @@ function Layout({children}) {
                 />
               </MediaQuery>
 
+              <Image src="../../public/logo_b.svg" alt="logo" />
               <Text>PSC Pet Social Club</Text>
             </div>
           </Header>

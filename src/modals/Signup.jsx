@@ -1,7 +1,10 @@
 import { useForm } from "@mantine/form";
-import { PasswordInput, Group, Button, Box, Input } from "@mantine/core";
+import { PasswordInput, Group, Button, Box, Input, Modal, TextInput } from "@mantine/core";
+import { useNavigate } from "react-router-dom";
+import { signUp } from "../utils/reqBackEnd";
 
-function Signup() {
+function Signup({ signupModalOpen, setSignupModalOpen }) {
+    const navigate = useNavigate()
   const form = useForm({
     initialValues: {
       userName: "",
@@ -16,23 +19,49 @@ function Signup() {
     },
   });
 
+  const createUser = async newUser => {
+    try {
+      const response = await signUp(newUser)
+
+      if (response.status === 'KO') {
+        throw new Error(response.message)
+      }
+
+      navigate('/user/dashboard')
+    } catch (error) {
+      form.setErrors({ username: error.message })
+    }
+  }
+
   const handleSubmit = (values) => {
-    console.log(values)
+    createUser(values)
   }
 
   return (
-    <Box sx={{ maxWidth: 340 }} mx="auto">
+    <Modal opened={signupModalOpen} onClose={() => setSignupModalOpen(false)} title='Signup'>
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Input
           label="Username"
           placeholder="Your username"
-          {...form.getInputProps("userName")}
+          {...form.getInputProps("username")}
         />
 
         <Input 
             label="Email"
             placeholder="email@internet.org"
             {...form.getInputProps("email")}
+        />
+
+        <TextInput
+            label="Country"
+            placeholder=""
+            {...form.getInputProps("country")}
+        />
+
+        <TextInput
+            label="City"
+            placeholder=""
+            {...form.getInputProps("city")}
         />
 
         <PasswordInput
@@ -52,7 +81,7 @@ function Signup() {
           <Button type="submit">Create account</Button>
         </Group>
       </form>
-    </Box>
+    </Modal>
   );
 }
 
