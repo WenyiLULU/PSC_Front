@@ -1,13 +1,17 @@
 import { useForm } from "@mantine/form";
 import { PasswordInput, Group, Button, Box, Input, Modal, TextInput } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
-import { signUp } from "../utils/reqBackEnd";
+import { SessionContext } from "../context/SessionContext"
+import { useContext } from "react";
+import { signUp, logIn } from "../utils/reqBackEnd";
 
 function Signup({ signupModalOpen, setSignupModalOpen }) {
+    const { authenticateUser } = useContext(SessionContext)
     const navigate = useNavigate()
+
   const form = useForm({
     initialValues: {
-      userName: "",
+      username: "",
       email: "",
       password: "secret",
       confirmPassword: "secret",
@@ -27,14 +31,43 @@ function Signup({ signupModalOpen, setSignupModalOpen }) {
         throw new Error(response.message)
       }
 
-      navigate('/user/dashboard')
+      //navigate('/user/dashboard')
     } catch (error) {
       form.setErrors({ username: error.message })
     }
   }
 
+  const logUser = async credentials => {
+    try {
+      const response = await logIn(credentials)
+      console.log("response", response)
+      if (response.status === 'KO') {
+        throw new Error(response.message)
+      } else {
+        authenticateUser(response.token)
+        navigate('/user/dashboard')
+      }
+    } catch (error) {
+      
+      const errorStatus = error.response.status
+      const message = error.response.data.message
+      switch (errorStatus) {
+        case 404:
+          form.setErrors({email: message})
+          break;
+        case 403:
+          form.setErrors({password: message})
+          break;
+        default:
+          console.log("error", error)
+          break;
+      }
+    }
+  }
+
   const handleSubmit = (values) => {
     createUser(values)
+    logUser({email: values.email, password:values.password})
   }
 
   return (
