@@ -39,6 +39,8 @@ const SessionContextProvider = ({ children }) => {
       
     } catch (error) {
       localStorage.removeItem('authToken')
+      navigate('/notauth')
+
     }
   }
 

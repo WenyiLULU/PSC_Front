@@ -10,7 +10,7 @@ function Layout({children}) {
     const theme = useMantineTheme();
     const match = useMatch('/');
     const [opened, setOpened] = useState(false);
-    const { userId, logout } = useContext(SessionContext)
+    const { userId, isAuthenticated, logout } = useContext(SessionContext)
     // console.log(match)
     return (
     <>
@@ -26,17 +26,17 @@ function Layout({children}) {
         navbar={
           <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
 
-            <Anchor component={NavLink} to="/user/dashboard">
+            <Anchor component={NavLink} to={isAuthenticated ? "/user/dashboard" : "/notauth"}>
             Dashboard
             </Anchor>
             <hr />
-            <Anchor component={NavLink} to="/user/calendar/:userId">
+            <Anchor component={NavLink} to={isAuthenticated ? "/user/calendar/:userId" : "/notauth"}>
               My Calendar
             </Anchor>
-            <Anchor component={NavLink} to="/user/pets">
+            <Anchor component={NavLink} to={isAuthenticated ? "/user/pets":"/notauth"}>
               My Pets
             </Anchor>
-            <Anchor component={NavLink} to={`/user/${userId}`}>
+            <Anchor component={NavLink} to={isAuthenticated ? `/user/${userId}`: "/notauth"}>
               My Profile
             </Anchor>
 
