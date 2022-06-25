@@ -29,17 +29,21 @@ const SessionContextProvider = ({ children }) => {
     console.log("verify auth")
     try {
       const tokenFromStorage = localStorage.getItem('authToken')
-      const response = await checkToken(tokenFromStorage)
-      if (response.errorMessage) {
-        throw new Error()
+      if (!tokenFromStorage){
+        console.log("You don't have any token")
+      } else {
+        const response = await checkToken(tokenFromStorage)
+        if (response.errorMessage) {
+          throw new Error()
+        }
+        setToken(tokenFromStorage)
+        setIsAuthenticated(true)
+        setUserId(response._id)
       }
-      setToken(tokenFromStorage)
-      setIsAuthenticated(true)
-      setUserId(response._id)
       
     } catch (error) {
       localStorage.removeItem('authToken')
-      navigate('/notauth')
+      //navigate('/notauth')
 
     }
   }
@@ -48,7 +52,7 @@ const SessionContextProvider = ({ children }) => {
 
   useEffect(() => {
     verifyAuth()
-  }, [isAuthenticated])
+  }, [token])
 // deleted apiWithToken from context values for now
   return (
     <SessionContext.Provider

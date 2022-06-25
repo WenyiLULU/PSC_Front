@@ -7,7 +7,7 @@ function UserProfile() {
   const [user, setUser] = useState({})
   const navigate = useNavigate()
 
-  const {apiWithToken, userId } = useContext(SessionContext)
+  const { userId, apiWithToken } = useContext(SessionContext)
   const fetchUser = async ()=>{
     try {
       const userInfo = await apiWithToken(`user/${userId}`)
@@ -19,7 +19,7 @@ function UserProfile() {
   }
 
   useEffect(()=>{
-    user ? fetchUser() : navigate('/notauth')
+    userId ? fetchUser() : navigate('/notauth')
   }, [])
 
   const {username, email, country, city, image} = user
