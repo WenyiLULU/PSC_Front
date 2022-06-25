@@ -7,6 +7,7 @@ const SessionContext = createContext()
 const SessionContextProvider = ({ children }) => {
   const [token, setToken] = useState()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [userId, setUserId] = useState()
   const navigate = useNavigate()
 
 //   const apiWithToken = apiBase(token)
@@ -25,6 +26,7 @@ const SessionContextProvider = ({ children }) => {
   }
 
   const verifyAuth = async () => {
+    console.log("verify auth")
     try {
       const tokenFromStorage = localStorage.getItem('authToken')
       const response = await checkToken(tokenFromStorage)
@@ -33,18 +35,22 @@ const SessionContextProvider = ({ children }) => {
       }
       setToken(tokenFromStorage)
       setIsAuthenticated(true)
+      setUserId(response._id)
+      
     } catch (error) {
       localStorage.removeItem('authToken')
     }
   }
 
+  const apiWithToken = apiBase(token)
+
   useEffect(() => {
     verifyAuth()
-  }, [])
+  }, [isAuthenticated])
 // deleted apiWithToken from context values for now
   return (
     <SessionContext.Provider
-      value={{ token, isAuthenticated, authenticateUser, logout }}
+      value={{ token, userId, isAuthenticated, authenticateUser, logout, apiWithToken }}
     >
     
       {children}
