@@ -10,7 +10,7 @@ function Layout({children}) {
     const theme = useMantineTheme();
     const match = useMatch('/');
     const [opened, setOpened] = useState(false);
-    const { logout } = useContext(SessionContext)
+    const { userId, logout } = useContext(SessionContext)
     // console.log(match)
     return (
     <>
@@ -36,7 +36,7 @@ function Layout({children}) {
             <Anchor component={NavLink} to="/user/pets">
               My Pets
             </Anchor>
-            <Anchor component={NavLink} to="/user/:userId">
+            <Anchor component={NavLink} to={`/user/${userId}`}>
               My Profile
             </Anchor>
 

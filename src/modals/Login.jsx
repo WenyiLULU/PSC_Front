@@ -28,7 +28,7 @@ function Login({ loginModalOpen, setLoginModalOpen, setSignupModalOpen }) {
   const logUser = async credentials => {
     try {
       const response = await logIn(credentials)
-      console.log("response", response)
+      
       if (response.status === 'KO') {
         throw new Error(response.message)
       } else {
