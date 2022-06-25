@@ -20,7 +20,7 @@ function Login({ loginModalOpen, setLoginModalOpen, setSignupModalOpen }) {
     
   const form = useForm({
     initialValues: {
-      userName: "",
+      email: "",
       password: "secret",
     },
   });
@@ -28,7 +28,7 @@ function Login({ loginModalOpen, setLoginModalOpen, setSignupModalOpen }) {
   const logUser = async credentials => {
     try {
       const response = await logIn(credentials)
-      console.log(response)
+      console.log("response", response)
       if (response.status === 'KO') {
         throw new Error(response.message)
       } else {
@@ -36,7 +36,20 @@ function Login({ loginModalOpen, setLoginModalOpen, setSignupModalOpen }) {
         navigate('/user/dashboard')
       }
     } catch (error) {
-      console.log(error)
+      
+      const errorStatus = error.response.status
+      const message = error.response.data.message
+      switch (errorStatus) {
+        case 404:
+          form.setErrors({email: message})
+          break;
+        case 403:
+          form.setErrors({password: message})
+          break;
+        default:
+          console.log("error", error)
+          break;
+      }
     }
   }
 
