@@ -25,9 +25,14 @@ export const apiBase = (token) => async (endpoint) => {
   return response.data;
 };
 
-export const apiPost = (token) => async (endpoint) => {
-  const response = await axios.post(`${BASE_API_URL}/${endpoint}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  return response.data;
-};
+export const apiPost =
+  (token) =>
+  async (endpoint, method = "GET", payload) => {
+    const response = await axios.post(`${BASE_API_URL}/${endpoint}`, {
+      headers: { Authorization: `Bearer ${token}` },
+      body: JSON.stringify(payload),
+    });
+    const parsed = await response.json();
+
+    return parsed;
+  };
