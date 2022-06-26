@@ -31,7 +31,7 @@ export const apiBase =
 }
 
 export const apiPutBase = 
-    (token)=> 
+    (token) => 
     async (endpoint, dataToUpdate)=>{
     const response = await axios.put(
       `${BASE_API_URL}/${endpoint}`,
@@ -40,4 +40,16 @@ export const apiPutBase =
     },
     );
     return response.data
+}
+
+export const apiPostBase = 
+  (token) =>
+    async (endpoint, dataToUpdate)=>{
+    const response = await axios.post(
+      `${BASE_API_URL}/${endpoint}`,
+      dataToUpdate,
+      { headers: { Authorization: `Bearer ${token}` },
+    },
+    );
+    return response
 }

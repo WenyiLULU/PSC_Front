@@ -26,7 +26,7 @@ function EditUser({ editModalOpen, setEditModalOpen, user }) {
 
         validate: {
         email: (value) =>
-        /^\S+@\S+\.\S+$/.test(value)  ? null : "email not valide",
+        /^\S+@\S+\.\S+$/.test(value)  ? null : "Please enter a valid e-Mail",
         }
     });
 

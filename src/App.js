@@ -10,6 +10,7 @@ import NotAuth from './pages/NotAuth';
 import { SessionContext } from './context/SessionContext'
 import { useContext } from 'react';
 import NotFound from './pages/NotFound';
+import UserCalendar from './pages/UserCalendar';
 
 function App() {
   const { isAuthenticated } = useContext(SessionContext)
@@ -26,7 +27,7 @@ function App() {
             <Route path='/user/:userId' element={isAuthenticated ? <UserProfile /> : <NotAuth/>} />
             <Route path='/user/pets' element={isAuthenticated ? <h1> Pets profiles </h1> : <NotAuth/>} />
             <Route path='/user/pets/:petId' element={isAuthenticated ? <h1> One pet profile </h1> : <NotAuth/>} />
-            <Route path='/user/calendar/:userId' element={isAuthenticated ? <h1> User calendar </h1>: <NotAuth/>} />
+            <Route path='/user/calendar/:userId' element={isAuthenticated ? <h1> <UserCalendar /> </h1>: <NotAuth/>} />
             <Route path='/result' element={isAuthenticated ? <h1> Search results </h1> : <NotAuth/>} />
             <Route path='/result/:avaliId' element={isAuthenticated ? <h1> Appointment page </h1>: <NotAuth/>} />
             <Route path='/notauth' element={<NotAuth />} />
