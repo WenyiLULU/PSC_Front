@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { apiBase, apiPutBase, checkToken } from '../utils/reqBackEnd'
+import { apiBase, apiPutBase, apiPostBase, checkToken } from '../utils/reqBackEnd'
 
 const SessionContext = createContext()
 
@@ -50,6 +50,7 @@ const SessionContextProvider = ({ children }) => {
 
   const apiWithToken = apiBase(token)
   const apiPutWithToken = apiPutBase(token)
+  const apiPostWithToken = apiPostBase(token)
 
   useEffect(() => {
     verifyAuth()
@@ -57,7 +58,7 @@ const SessionContextProvider = ({ children }) => {
 // deleted apiWithToken from context values for now
   return (
     <SessionContext.Provider
-      value={{ token, userId, isAuthenticated, authenticateUser, logout, apiWithToken, apiPutWithToken }}
+      value={{ token, userId, isAuthenticated, authenticateUser, logout, apiWithToken, apiPutWithToken, apiPostWithToken }}
     >
     
       {children}

@@ -21,10 +21,10 @@ function EditUser({ editModalOpen, setEditModalOpen, user, setUser }) {
         experience:experience
         },
 
-        /*validate: {
+        validate: {
         email: (value) =>
-        /^\S+@\S+\.\S+$/.test(value) ? null : "email not valide",
-        }*/
+        /^\S+@\S+\.\S+$/.test(value)  ? null : "Please enter a valid e-Mail",
+        }
     });
 
     const updateUser = async newUserInfo => {

@@ -32,7 +32,7 @@ function Layout({children}) {
             Dashboard
             </Anchor>
             <hr />
-            <Anchor component={NavLink} to={isAuthenticated ? "/user/calendar/:userId" : "/notauth"}>
+            <Anchor component={NavLink} to={isAuthenticated ? `/user/calendar/${userId}` : "/notauth"}>
               My Calendar
             </Anchor>
             <Anchor component={NavLink} to={isAuthenticated ? "/user/pets":"/notauth"}>
