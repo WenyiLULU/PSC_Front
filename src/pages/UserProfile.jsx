@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { SessionContext } from "../context/SessionContext"
 import { useContext } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function UserProfile() {
   const [user, setUser] = useState({})
   const navigate = useNavigate()
 
-  const { userId, apiWithToken } = useContext(SessionContext)
+  const { apiWithToken } = useContext(SessionContext)
+  const {userId} = useParams()
   const fetchUser = async ()=>{
     try {
       const userInfo = await apiWithToken(`user/${userId}`)
       setUser(userInfo)
     } catch (error) {
-      console.log(error)
+      console.log("error", error)
+      navigate('*')
     }
     
   }
 
   useEffect(()=>{
     userId ? fetchUser() : navigate('/notauth')
-  }, [])
+  }, [userId])
 
   const {username, email, country, city, image} = user
   return (

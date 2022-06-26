@@ -9,13 +9,15 @@ import { SessionContext } from '../context/SessionContext'
 function Layout({children}) {
     const theme = useMantineTheme();
     const match = useMatch('/');
+    //const notFound = useMatch('*')
     const [opened, setOpened] = useState(false);
     const { userId, isAuthenticated, logout } = useContext(SessionContext)
-    // console.log(match)
+    //console.log(notFound)
     return (
     <>
-      {match === null && 
-        <AppShell
+      {match !== null ? 
+        <>{children}</> 
+        : <AppShell
         styles={{
           main: {
             background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
@@ -81,9 +83,9 @@ function Layout({children}) {
         }
       >
         {children}
-        </AppShell>}
+        </AppShell>
 
-    {match !== null  && <>{children}</>}
+     }
     </>
   )
 }

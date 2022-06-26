@@ -9,6 +9,7 @@ import NotAuth from './pages/NotAuth';
 // import Login from './modals/Login';
 import { SessionContext } from './context/SessionContext'
 import { useContext } from 'react';
+import NotFound from './pages/NotFound';
 
 function App() {
   const { isAuthenticated } = useContext(SessionContext)
@@ -29,6 +30,7 @@ function App() {
             <Route path='/result' element={isAuthenticated ? <h1> Search results </h1> : <NotAuth/>} />
             <Route path='/result/:avaliId' element={isAuthenticated ? <h1> Appointment page </h1>: <NotAuth/>} />
             <Route path='/notauth' element={<NotAuth />} />
+            <Route path='*' element={<NotFound />} />
         </Routes>
       </Layout>    
     </>
