@@ -25,6 +25,9 @@ function UserProfile() {
   }, [userId])
 
   const {username, email, country, city, image} = user
+
+  const [editModalOpen, setEditModalOpen] = useState(false)
+
   return (
     <>
       <h1>Hello {username}</h1>
