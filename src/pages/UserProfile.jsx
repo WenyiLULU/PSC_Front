@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { SessionContext } from "../context/SessionContext"
 import { useContext } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
+import StandardButton from '../components/StandardButton';
+import EditUser from '../modals/EditUser';
 
 function UserProfile() {
   const [user, setUser] = useState({})
@@ -35,6 +37,12 @@ function UserProfile() {
       <p><strong>Country : </strong>{country}</p>
       <p><strong>City : </strong>{city}</p>
       <div><img src={image} alt="user photo" /></div>
+      <StandardButton setEditModalOpen={setEditModalOpen} >Edit profile</StandardButton>
+      <EditUser 
+        editModalOpen={editModalOpen}
+        setEditModalOpen={setEditModalOpen} 
+        user={user}
+        />
     </>
    
   )

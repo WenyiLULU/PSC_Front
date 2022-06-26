@@ -19,12 +19,25 @@ export const checkToken = async (token) => {
   return response.data;
 };
 
+
 export const apiBase = 
     (token)=> 
     async (endpoint)=>{
     const response = await axios.get(
       `${BASE_API_URL}/${endpoint}`,
       { headers: { Authorization: `Bearer ${token}` }},
+    );
+    return response.data
+}
+
+export const apiPutBase = 
+    (token)=> 
+    async (endpoint, dataToUpdate)=>{
+    const response = await axios.put(
+      `${BASE_API_URL}/${endpoint}`,
+      dataToUpdate,
+      { headers: { Authorization: `Bearer ${token}` },
+    },
     );
     return response.data
 }

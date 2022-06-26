@@ -1,122 +1,91 @@
 import { useForm } from "@mantine/form";
-import { PasswordInput, Group, Button, Box, Input, Modal, TextInput } from "@mantine/core";
+import { PasswordInput, Group, Button, Modal, TextInput } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import { SessionContext } from "../context/SessionContext"
 import { useContext } from "react";
-import { signUp, logIn } from "../utils/reqBackEnd";
+import axios from 'axios'
 
-function Signup({ signupModalOpen, setSignupModalOpen }) {
-    const { authenticateUser } = useContext(SessionContext)
+function EditUser({ editModalOpen, setEditModalOpen, user }) {
+    const { token, apiPutWithToken } = useContext(SessionContext)
     const navigate = useNavigate()
+    const {_id, username, email, country, city, image, owner, sitter, pets, description, experience} = user
 
-  const form = useForm({
-    initialValues: {
-      username: "",
-      email: "",
-      password: "secret",
-      confirmPassword: "secret",
-    },
+    const form = useForm({
+        initialValues: {
+        username: username,
+        email: email,
+        country: country,
+        city:city,
+        image:image,
+        owner:owner,
+        sitter:sitter, 
+        pets:pets, 
+        description:description, 
+        experience:experience
+        },
 
-    validate: {
-      confirmPassword: (value, values) =>
-        value !== values.password ? "Passwords did not match" : null,
-    },
-  });
+        validate: {
+        email: (value) =>
+        /^\S+@\S+\.\S+$/.test(value)  ? null : "email not valide",
+        }
+    });
 
-  const createUser = async newUser => {
-    try {
-      const response = await signUp(newUser)
+    const updateUser = async newUserInfo => {
+        try {
+        const response = await apiPutWithToken(`user/${_id}`, newUserInfo)
 
-      if (response.status === 'KO') {
-        throw new Error(response.message)
-      }
+        if (response.status === 'KO') {
+            throw new Error(response.message)
+        }
 
-      //navigate('/user/dashboard')
-    } catch (error) {
-      form.setErrors({ username: error.message })
+        } catch (error) {
+        form.setErrors({ username: error.message })
+        }
     }
-  }
 
-  const logUser = async credentials => {
-    try {
-      const response = await logIn(credentials)
-      console.log("response", response)
-      if (response.status === 'KO') {
-        throw new Error(response.message)
-      } else {
-        authenticateUser(response.token)
-        navigate('/user/dashboard')
-      }
-    } catch (error) {
-      
-      const errorStatus = error.response.status
-      const message = error.response.data.message
-      switch (errorStatus) {
-        case 404:
-          form.setErrors({email: message})
-          break;
-        case 403:
-          form.setErrors({password: message})
-          break;
-        default:
-          console.log("error", error)
-          break;
-      }
+    
+    const handleSubmit = (values) => {
+        updateUser(values)
+        navigate(`/user/${_id}`)
+        
     }
-  }
 
-  const handleSubmit = (values) => {
-    createUser(values)
-    logUser({email: values.email, password:values.password})
-  }
+    return (
+        <Modal opened={editModalOpen} onClose={() => setEditModalOpen(false)} title='EditUser'>
+        <form onSubmit={form.onSubmit(handleSubmit)}>
+            <TextInput
+                label="Username"
+                placeholder={username}
+                {...form.getInputProps("username")}
+            />
 
-  return (
-    <Modal opened={signupModalOpen} onClose={() => setSignupModalOpen(false)} title='Signup'>
-      <form onSubmit={form.onSubmit(handleSubmit)}>
-        <TextInput
-          label="Username"
-          placeholder="Your username"
-          {...form.getInputProps("username")}
-        />
+            <TextInput 
+                label="Email"
+                placeholder={email}
+                {...form.getInputProps("email")}
+            />
 
-        <TextInput 
-            label="Email"
-            placeholder="email@internet.org"
-            {...form.getInputProps("email")}
-        />
+            <TextInput
+                label="Country"
+                placeholder={country}
+                {...form.getInputProps("country")}
+            />
 
-        <TextInput
-            label="Country"
-            placeholder=""
-            {...form.getInputProps("country")}
-        />
+            <TextInput
+                label="City"
+                placeholder={city}
+                {...form.getInputProps("city")}
+            />
 
-        <TextInput
-            label="City"
-            placeholder=""
-            {...form.getInputProps("city")}
-        />
+            
 
-        <PasswordInput
-          label="Password"
-          placeholder="Password"
-          {...form.getInputProps("password")}
-        />
-
-        <PasswordInput
-          mt="sm"
-          label="Confirm password"
-          placeholder="Confirm password"
-          {...form.getInputProps("confirmPassword")}
-        />
-
-        <Group position="right" mt="md">
-          <Button type="submit">Create account</Button>
-        </Group>
-      </form>
-    </Modal>
-  );
-}
+            <Group position="right" mt="md">
+            <Button type="submit">Save</Button>
+            </Group>
+        </form>
+        </Modal>
+    );
+    }
 
 
-export default Signup
+export default EditUser
