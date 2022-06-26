@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import StandardButton from '../components/StandardButton';
 import EditUser from '../modals/EditUser';
+import EditPassword from '../modals/EditPassword';
 
 function UserProfile() {
   const [user, setUser] = useState({})
@@ -29,6 +30,7 @@ function UserProfile() {
   const {username, email, country, city, image} = user
 
   const [editModalOpen, setEditModalOpen] = useState(false)
+  const [passwordModalOpen, setPasswordModalOpen] = useState(false)
 
   return (
     <>
@@ -38,10 +40,18 @@ function UserProfile() {
       <p><strong>City : </strong>{city}</p>
       <div><img src={image} alt="user photo" /></div>
       <StandardButton setEditModalOpen={setEditModalOpen} >Edit profile</StandardButton>
+      <StandardButton setEditModalOpen={setPasswordModalOpen} >Edit password</StandardButton>
       <EditUser 
         editModalOpen={editModalOpen}
         setEditModalOpen={setEditModalOpen} 
         user={user}
+        setUser={setUser}
+        />
+      <EditPassword 
+        passwordModalOpen={passwordModalOpen}
+        setPasswordModalOpen={setPasswordModalOpen} 
+        user={user}
+        setUser={setUser}
         />
     </>
    

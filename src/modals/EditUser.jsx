@@ -1,39 +1,37 @@
 import { useForm } from "@mantine/form";
-import { PasswordInput, Group, Button, Modal, TextInput } from "@mantine/core";
+import { Group, Button, Modal, TextInput, Checkbox, Textarea} from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import { SessionContext } from "../context/SessionContext"
 import { useContext } from "react";
-import axios from 'axios'
 
-function EditUser({ editModalOpen, setEditModalOpen, user }) {
-    const { token, apiPutWithToken } = useContext(SessionContext)
-    const navigate = useNavigate()
-    const {_id, username, email, country, city, image, owner, sitter, pets, description, experience} = user
+function EditUser({ editModalOpen, setEditModalOpen, user, setUser }) {
+    const { apiPutWithToken, apiWithToken } = useContext(SessionContext)
+    const {_id, username, email, country, city, image, owner, sitter, description, experience} = user
 
     const form = useForm({
         initialValues: {
         username: username,
-        email: email,
+        //email: email,
         country: country,
         city:city,
         image:image,
         owner:owner,
-        sitter:sitter, 
-        pets:pets, 
+        sitter:sitter,  
         description:description, 
         experience:experience
         },
 
-        validate: {
+        /*validate: {
         email: (value) =>
-        /^\S+@\S+\.\S+$/.test(value)  ? null : "email not valide",
-        }
+        /^\S+@\S+\.\S+$/.test(value) ? null : "email not valide",
+        }*/
     });
 
     const updateUser = async newUserInfo => {
         try {
         const response = await apiPutWithToken(`user/${_id}`, newUserInfo)
-
+        const newUser = await apiWithToken(`user/${_id}`)
+        setUser(newUser)
         if (response.status === 'KO') {
             throw new Error(response.message)
         }
@@ -45,9 +43,8 @@ function EditUser({ editModalOpen, setEditModalOpen, user }) {
 
     
     const handleSubmit = (values) => {
-        updateUser(values)
-        navigate(`/user/${_id}`)
-        
+        updateUser(values)        
+        setEditModalOpen(false)
     }
 
     return (
@@ -56,27 +53,52 @@ function EditUser({ editModalOpen, setEditModalOpen, user }) {
             <TextInput
                 label="Username"
                 placeholder={username}
+                value={username}
                 {...form.getInputProps("username")}
             />
 
-            <TextInput 
+            {/*<TextInput 
                 label="Email"
                 placeholder={email}
+                value={email}
                 {...form.getInputProps("email")}
-            />
+            />*/}
 
             <TextInput
                 label="Country"
                 placeholder={country}
+                value={country}
                 {...form.getInputProps("country")}
             />
 
             <TextInput
                 label="City"
                 placeholder={city}
+                value={city}
                 {...form.getInputProps("city")}
             />
-
+            <Checkbox
+                label="I'm a pets owner"
+                color="lime"
+                checked={owner}
+                {...form.getInputProps("owner")}
+             />
+             <Checkbox
+                label="I want to be a sitter of pets"
+                checked={sitter}
+                color="lime"
+                {...form.getInputProps("sitter")}
+             />
+            <Textarea
+                label="About you"
+                placeholder={description}
+                {...form.getInputProps("description")}
+            />
+            <Textarea
+                label="Experience of take care pets"
+                placeholder={experience}
+                {...form.getInputProps("experience")}
+            />
             
 
             <Group position="right" mt="md">
