@@ -58,44 +58,44 @@ function EditUser({ editModalOpen, setEditModalOpen, user, setUser }) {
    
     return (
         <Modal opened={editModalOpen} onClose={() => setEditModalOpen(false)} title='EditUser'>
-        <form onSubmit={form.onSubmit(handleSubmit)}>
-            <TextInput
-                label="Username"
-                {...form.getInputProps("username")} 
-            />
+            <form onSubmit={form.onSubmit(handleSubmit)}>
+                <TextInput
+                    label="Username"
+                    {...form.getInputProps("username")} 
+                />
 
-            <TextInput
-                label="Country"
-                {...form.getInputProps("country")}
-            />
+                <TextInput
+                    label="Country"
+                    {...form.getInputProps("country")}
+                />
 
-            <TextInput
-                label="City" 
-                {...form.getInputProps("city")}
-            />
-            <Checkbox
-                label="I'm a pets owner"
-                color="lime"
-                {...form.getInputProps("owner")}
-             />
-             <Checkbox
-                label="I want to be a sitter of pets"
-                color="lime"
-                {...form.getInputProps("sitter")}
-             />
-            <Textarea
-                label="About you"
-                {...form.getInputProps("description")}
-            />
-            <Textarea
-                label="Experience of take care pets"                
-                {...form.getInputProps("experience")}
-            />
+                <TextInput
+                    label="City" 
+                    {...form.getInputProps("city")}
+                />
+                <Checkbox
+                    label="I'm a pets owner"
+                    color="lime"
+                    {...form.getInputProps("owner")}
+                />
+                <Checkbox
+                    label="I want to be a sitter of pets"
+                    color="lime"
+                    {...form.getInputProps("sitter")}
+                />
+                <Textarea
+                    label="About you"
+                    {...form.getInputProps("description")}
+                />
+                <Textarea
+                    label="Experience of take care pets"                
+                    {...form.getInputProps("experience")}
+                />
 
-            <Group position="right" mt="md">
-                <Button type="submit">Save</Button>
-            </Group>
-        </form>
+                <Group position="right" mt="md">
+                    <Button type="submit">Save</Button>
+                </Group>
+            </form>
         </Modal>
     );
     }
