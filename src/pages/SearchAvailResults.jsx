@@ -7,29 +7,30 @@ import { apiBase } from "../utils/reqBackEnd"
 
 
 function SearchAvailResults () {
-    const [avail, setAvail] = useState()
-    const [match, setMatch] = useState()
+    const [avail, setAvail] = useState({})
+    const [match, setMatch] = useState({})
     const { isAuthenticated } = useContext(SessionContext)
     const {apiWithToken} = useContext(SessionContext)
     const location = useLocation();
 
     const fetchAvail = async () => {
         const response = await apiWithToken('avail')
-        console.log(response)
-        setAvail(response)
+        setAvail(response) 
+        console.log('All availabilities: ',avail)
     }
 
-    // const checkMatch = async () => {
-    //     const matches = await avail.map((e) => 
-    //     (e.startDate < data.startDate && e.endDate > data.endDate))
-    //     setMatch(matches)
-    // }
+    const checkMatch = async () => {
+        const matches = await avail.map((e) => 
+        ((e.endDate < location.state.endDate)))
+        // && e.startDate > Date(location.state.startDate))
+        console.log('Matches:', matches)
+        // setMatch(matches)
+    }
 
     useEffect(() => {
         if (isAuthenticated)
         fetchAvail()
-        console.log(location.state)
-        // checkMatch() 
+        checkMatch() 
     }, [isAuthenticated])
 
     return <>

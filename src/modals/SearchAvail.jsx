@@ -21,7 +21,6 @@ function SearchAvail({ searchModalOpen, setSearchModalOpen, user }) {
 
   const handleSubmit = (values) => {
     const data = {startDate: values.dates[0], endDate: values.dates[1], author: user._id, actionType: values.actionType, city: values.city}
-    console.log(data);
     setSearchModalOpen(false);
     navigate("/result", {state: data})
   };
