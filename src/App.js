@@ -12,6 +12,7 @@ import { SessionContext } from "./context/SessionContext";
 import { useContext } from "react";
 import NotFound from "./pages/NotFound";
 import UserCalendar from "./pages/UserCalendar";
+import SearchAvailResults from "./pages/SearchAvailResults";
 
 function App() {
   const { isAuthenticated } = useContext(SessionContext);
@@ -54,7 +55,7 @@ function App() {
           />
           <Route
             path="/result"
-            element={isAuthenticated ? <h1> Search results </h1> : <NotAuth />}
+            element={isAuthenticated ? <SearchAvailResults /> : <NotAuth />}
           />
           <Route
             path="/result/:avaliId"

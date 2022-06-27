@@ -79,7 +79,7 @@ function EditUser({ editModalOpen, setEditModalOpen, user, setUser }) {
                     {...form.getInputProps("owner")}
                 />
                 <Checkbox
-                    label="I want to be a sitter of pets"
+                    label="I want to be a pet sitter"
                     color="lime"
                     {...form.getInputProps("sitter")}
                 />
@@ -88,7 +88,7 @@ function EditUser({ editModalOpen, setEditModalOpen, user, setUser }) {
                     {...form.getInputProps("description")}
                 />
                 <Textarea
-                    label="Experience of take care pets"                
+                    label="Experience in taking care of pets (please specify)"                
                     {...form.getInputProps("experience")}
                 />
 
