@@ -15,14 +15,13 @@ function SearchAvailResults () {
 
     const fetchAvail = async () => {
         const response = await apiWithToken('avail')
-        setAvail(response) 
-        console.log('All availabilities: ',avail)
+        await setAvail(response) 
+        console.log('All availabilities: ', avail)
     }
 
     const checkMatch = async () => {
         const matches = await avail.map((e) => 
-        ((Date.parse(e.endDate) < Date.parse(location.state.endDate))))
-        // && e.startDate > Date(location.state.startDate))
+        ((Date.parse(e.endDate) > Date.parse(location.state.endDate)) && (Date.parse(e.startDate) < Date.parse(location.state.startDate))))
         console.log('Matches:', matches)
         // setMatch(matches)
     }
