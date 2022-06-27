@@ -58,7 +58,7 @@ function EditUser({ editModalOpen, setEditModalOpen, user, setUser }) {
    
     return (
         <Modal opened={editModalOpen} onClose={() => setEditModalOpen(false)} title='EditUser'>
-            <form onSubmit={form.onSubmit(handleSubmit)}>
+            <form onSubmit={form.onSubmit(handleSubmit)} enctype="multipart/form-data">
                 <TextInput
                     label="Username"
                     {...form.getInputProps("username")} 
