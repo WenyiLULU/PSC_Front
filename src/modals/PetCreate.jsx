@@ -9,13 +9,14 @@ import {
   Select,
 } from "@mantine/core";
 import { SessionContext } from "../context/SessionContext";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { BASE_API_URL } from "../utils/constants";
+import { useNavigate, useParams } from "react-router-dom";
 
 function CreatePet({ createPetModal, setCreatePetModal }) {
+  // const { userId } = useParams();
+  const { apiPostWithToken, userId } = useContext(SessionContext);
+  const [selectValue, setSelectValue] = useState();
+
   const navigate = useNavigate();
-  const { apiWithToken, apiPostWithToken, userId } = useContext(SessionContext);
 
   const form = useForm({
     initialValues: {
@@ -27,15 +28,23 @@ function CreatePet({ createPetModal, setCreatePetModal }) {
   });
 
   const createPet = async (newPet) => {
-    const petWithOwner = { ...newPet, userId };
-    console.log(petWithOwner);
-    const response = await apiPostWithToken("pet/create", petWithOwner);
+    const response = await apiPostWithToken("pet/create", newPet);
     // const response = await axios.post(`${BASE_API_URL}/pet/create`, newPet);
-    return response;
+    console.log(">>>> Response: ", response);
   };
 
   const handleSubmit = (values) => {
-    createPet(values);
+    // console.log(">>>> user Id: ", userId);
+    const data = {
+      name: values.name,
+      age: values.age,
+      category: values.category,
+      size: values.size,
+      owner: userId,
+    };
+    // console.log(">>>> data: ", data);
+    createPet(data);
+    setCreatePetModal(false);
   };
 
   return (
@@ -58,16 +67,20 @@ function CreatePet({ createPetModal, setCreatePetModal }) {
         />
 
         <Select
+          value={selectValue}
+          onChange={setSelectValue}
           label="Category"
           placeholder="Pick a category"
           {...form.getInputProps("category")}
           data={[
-            { value: "dog", label: "Dog" },
-            { value: "cat", label: "Cat" },
+            { value: "Dog", label: "Dog" },
+            { value: "Cat", label: "Cat" },
           ]}
         />
 
         <Select
+          value={selectValue}
+          onChange={setSelectValue}
           label="Size"
           placeholder="Select a size"
           {...form.getInputProps("size")}
