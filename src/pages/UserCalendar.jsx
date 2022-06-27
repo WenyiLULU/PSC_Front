@@ -27,8 +27,8 @@ function UserCalendar() {
 
   const createAvailability = async newAvailability => {
     console.log(newAvailability)
-    // const response = await apiPostWithToken('avail/create', newAvailability)
-    // console.log('Response', response)
+    const response = await apiPostWithToken('avail/create', newAvailability)
+    console.log('Response', response)
     // navigate(`/appointment/${response.id}`)
   }
 
