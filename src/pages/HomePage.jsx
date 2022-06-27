@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Center } from "@mantine/core";
+import { Center } from "@mantine/core";
 import Login from "../modals/Login";
 import StartButton from "../components/StartButton";
 import Signup from "../modals/Signup";

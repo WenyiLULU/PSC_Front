@@ -1,25 +1,54 @@
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "@mantine/form";
-import { Group, Button, Box, Input, NumberInput, Select } from "@mantine/core";
+import {
+  Group,
+  Button,
+  Modal,
+  Input,
+  NumberInput,
+  Select,
+} from "@mantine/core";
+import { SessionContext } from "../context/SessionContext";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { BASE_API_URL } from "../utils/constants";
 
-function CreatePet() {
+function CreatePet({ createPetModal, setCreatePetModal }) {
+  const navigate = useNavigate();
+  const { apiWithToken, apiTokenPost, userId } = useContext(SessionContext);
+
   const form = useForm({
     initialValues: {
-      petName: "",
-      age: "",
+      name: "",
+      age: 0,
+      category: "",
+      size: "",
     },
   });
 
+  const createPet = async (newPet) => {
+    const petWithOwner = { ...newPet, userId };
+    console.log(petWithOwner);
+    const response = await apiTokenPost("pet/create", "POST", petWithOwner);
+    // const response = await axios.post(`${BASE_API_URL}/pet/create`, newPet);
+    return response;
+  };
+
   const handleSubmit = (values) => {
-    console.log(values);
+    createPet(values);
   };
 
   return (
-    <Box sx={{ maxWidth: 340 }} mx="auto">
+    <Modal
+      opened={createPetModal}
+      onClose={() => setCreatePetModal(false)}
+      title="Add a new little friend"
+    >
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Input
           label="Pet Name"
           placeholder="Your pet's name"
-          {...form.getInputProps("petName")}
+          {...form.getInputProps("name")}
         />
 
         <NumberInput
@@ -27,10 +56,11 @@ function CreatePet() {
           placeholder="1"
           {...form.getInputProps("age")}
         />
-        
+
         <Select
-          label="Type"
-          placeholder="Pick a type"
+          label="Category"
+          placeholder="Pick a category"
+          {...form.getInputProps("category")}
           data={[
             { value: "dog", label: "Dog" },
             { value: "cat", label: "Cat" },
@@ -40,6 +70,7 @@ function CreatePet() {
         <Select
           label="Size"
           placeholder="Select a size"
+          {...form.getInputProps("size")}
           data={[
             { value: "s", label: "Small" },
             { value: "m", label: "Medium" },
@@ -51,7 +82,7 @@ function CreatePet() {
           <Button type="submit">Create account</Button>
         </Group>
       </form>
-    </Box>
+    </Modal>
   );
 }
 

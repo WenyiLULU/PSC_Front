@@ -12,44 +12,33 @@ export const logIn = async (loginInfo) => {
 };
 
 export const checkToken = async (token) => {
-  const response = await axios.get(
-    `${AUTH_API_URL}/verify`, 
-    { headers: { Authorization: `Bearer ${token}` },}
-    );
+  const response = await axios.get(`${AUTH_API_URL}/verify`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
   return response.data;
 };
 
+export const apiBase = (token) => async (endpoint) => {
+  const response = await axios.get(`${BASE_API_URL}/${endpoint}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return response.data;
+};
 
-export const apiBase = 
-    (token)=> 
-    async (endpoint)=>{
-    const response = await axios.get(
-      `${BASE_API_URL}/${endpoint}`,
-      { headers: { Authorization: `Bearer ${token}` }},
-    );
-    return response.data
-}
+export const apiPutBase = (token) => async (endpoint, dataToUpdate) => {
+  const response = await axios.put(
+    `${BASE_API_URL}/${endpoint}`,
+    dataToUpdate,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  return response.data;
+};
 
-export const apiPutBase = 
-    (token) => 
-    async (endpoint, dataToUpdate)=>{
-    const response = await axios.put(
-      `${BASE_API_URL}/${endpoint}`,
-      dataToUpdate,
-      { headers: { Authorization: `Bearer ${token}` },
-    },
-    );
-    return response.data
-}
-
-export const apiPostBase = 
-  (token) =>
-    async (endpoint, dataToUpdate)=>{
-    const response = await axios.post(
-      `${BASE_API_URL}/${endpoint}`,
-      dataToUpdate,
-      { headers: { Authorization: `Bearer ${token}` },
-    },
-    );
-    return response
-}
+export const apiPostBase = (token) => async (endpoint, dataToUpdate) => {
+  const response = await axios.post(
+    `${BASE_API_URL}/${endpoint}`,
+    dataToUpdate,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  return response;
+};
