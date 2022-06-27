@@ -5,6 +5,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import StandardButton from '../components/StandardButton';
 import EditUser from '../modals/EditUser';
 import EditPassword from '../modals/EditPassword';
+import SearchAvail from '../modals/SearchAvail';
+import { Button } from '@mantine/core';
 
 function UserProfile() {
   const [user, setUser] = useState({})
@@ -31,6 +33,7 @@ function UserProfile() {
 
   const [editModalOpen, setEditModalOpen] = useState(false)
   const [passwordModalOpen, setPasswordModalOpen] = useState(false)
+  const [searchModalOpen, setSearchModalOpen] = useState(false)
 
   return (
     <>
@@ -38,9 +41,10 @@ function UserProfile() {
       <p><strong>Email : </strong>{email}</p>
       <p><strong>Country : </strong>{country}</p>
       <p><strong>City : </strong>{city}</p>
-      <div><img src={image} alt="user photo" /></div>
+      <div><img src={image} alt="user" /></div>
       <StandardButton setEditModalOpen={setEditModalOpen} >Edit profile</StandardButton>
       <StandardButton setEditModalOpen={setPasswordModalOpen} >Edit password</StandardButton>
+      <Button onClick={() => {setSearchModalOpen(true)}}>Become a pet sitter /Find a pet sitter</Button>
       <EditUser 
         editModalOpen={editModalOpen}
         setEditModalOpen={setEditModalOpen} 
@@ -53,6 +57,11 @@ function UserProfile() {
         user={user}
         setUser={setUser}
         />
+      <SearchAvail
+        searchModalOpen={searchModalOpen}
+        setSearchModalOpen={setSearchModalOpen}
+        user={user}
+      />
     </>
    
   )

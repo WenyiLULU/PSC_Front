@@ -3,7 +3,6 @@ import { RangeCalendar } from "@mantine/dates";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Select, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { apiPostBase } from "../utils/reqBackEnd";
 import { SessionContext } from "../context/SessionContext";
 
 function UserCalendar() {
