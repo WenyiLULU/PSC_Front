@@ -4,7 +4,7 @@ import { useForm } from "@mantine/form";
 import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 
-function SearchAvailResults({ searchModalOpen, setSearchModalOpen, user }) {
+function SearchAvail({ searchModalOpen, setSearchModalOpen, user }) {
   const [searchDates, setSearchDates] = useState([Date | null, Date | null]);
 
   const [selectValue, setSelectValue] = useState();
@@ -23,7 +23,7 @@ function SearchAvailResults({ searchModalOpen, setSearchModalOpen, user }) {
     const data = {startDate: values.dates[0], endDate: values.dates[1], author: user._id, actionType: values.actionType, city: values.city}
     console.log(data);
     setSearchModalOpen(false);
-    navigate("/result")
+    navigate("/result", {state: data})
   };
 
   return (
@@ -63,4 +63,4 @@ function SearchAvailResults({ searchModalOpen, setSearchModalOpen, user }) {
   );
 }
 
-export default SearchAvailResults;
+export default SearchAvail

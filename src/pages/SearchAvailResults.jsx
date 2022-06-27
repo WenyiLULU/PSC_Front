@@ -1,46 +1,44 @@
 import { Card } from "@mantine/core"
 import { useContext } from "react"
 import { useEffect, useState } from "react"
+import { useLocation } from "react-router-dom"
 import { SessionContext } from "../context/SessionContext"
 import { apiBase } from "../utils/reqBackEnd"
 
 
-function SearchAvail (type, searchTimeFrame) {
+function SearchAvailResults () {
     const [avail, setAvail] = useState()
     const [match, setMatch] = useState()
     const { isAuthenticated } = useContext(SessionContext)
+    const {apiWithToken} = useContext(SessionContext)
+    const location = useLocation();
 
     const fetchAvail = async () => {
-        const response = await apiBase('api/avail')
+        const response = await apiWithToken('avail')
+        console.log(response)
         setAvail(response)
     }
 
-    const checkMatch = async () => {
-        const matches = await avail.map((e) => 
-        (e.startDate < searchTimeFrame.startDate && e.endDate > searchTimeFrame.endDate))
-        setMatch(matches)
-    }
+    // const checkMatch = async () => {
+    //     const matches = await avail.map((e) => 
+    //     (e.startDate < data.startDate && e.endDate > data.endDate))
+    //     setMatch(matches)
+    // }
 
     useEffect(() => {
         if (isAuthenticated)
         fetchAvail()
-        checkMatch() 
+        console.log(location.state)
+        // checkMatch() 
     }, [isAuthenticated])
 
     return <>
-        {match.map(e => 
-            <Card>
-            <Card.Section>
-            {e.username}
-            </Card.Section>
-            </Card>
+        
+           <p>{location.state.city}</p> 
             
-            
-            
-        )}
         
     </>
 
 }
 
-export default SearchAvail
+export default SearchAvailResults
