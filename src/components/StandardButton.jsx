@@ -1,18 +1,17 @@
-import { Button } from '@mantine/core'
+import { Button } from "@mantine/core";
 
-const StandardButton = ({ setEditModalOpen, children }) => {
+const StandardButton = ({ setModalOpen, children }) => {
   return (
-      <Button onClick={() => {
+    <Button
+      onClick={() => {
         // condition if logged in => redirect to Dashboard
         // else => open login modal
-        setEditModalOpen(true)
-        }
-      }
+        setModalOpen(true);
+      }}
     >
       {children}
     </Button>
+  );
+};
 
-  )
-}
-
-export default StandardButton
+export default StandardButton;
