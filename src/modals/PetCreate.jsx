@@ -15,7 +15,7 @@ import { BASE_API_URL } from "../utils/constants";
 
 function CreatePet({ createPetModal, setCreatePetModal }) {
   const navigate = useNavigate();
-  const { apiWithToken, apiTokenPost, userId } = useContext(SessionContext);
+  const { apiWithToken, apiPostWithToken, userId } = useContext(SessionContext);
 
   const form = useForm({
     initialValues: {
@@ -29,7 +29,7 @@ function CreatePet({ createPetModal, setCreatePetModal }) {
   const createPet = async (newPet) => {
     const petWithOwner = { ...newPet, userId };
     console.log(petWithOwner);
-    const response = await apiTokenPost("pet/create", "POST", petWithOwner);
+    const response = await apiPostWithToken("pet/create", petWithOwner);
     // const response = await axios.post(`${BASE_API_URL}/pet/create`, newPet);
     return response;
   };
