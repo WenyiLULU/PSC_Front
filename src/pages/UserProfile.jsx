@@ -7,6 +7,7 @@ import EditUser from "../modals/EditUser";
 import EditPassword from "../modals/EditPassword";
 import SearchAvail from "../modals/SearchAvail";
 import { Button } from "@mantine/core";
+import ImageDropzone from "../modals/ImageDropzone";
 
 function UserProfile() {
   const [user, setUser] = useState({});
@@ -33,6 +34,7 @@ function UserProfile() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [passwordModalOpen, setPasswordModalOpen] = useState(false);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
+  const [dropModalOpen, setDropModalOpen] = useState(false);
 
   return (
     <>
@@ -51,11 +53,14 @@ function UserProfile() {
       </p>
       <div>
         <img src={image} alt="user" />
+        <StandardButton setModalOpen={setDropModalOpen}>
+        Change photo
+      </StandardButton>
       </div>
-      <StandardButton setEditModalOpen={setEditModalOpen}>
+      <StandardButton setModalOpen={setEditModalOpen}>
         Edit profile
       </StandardButton>
-      <StandardButton setEditModalOpen={setPasswordModalOpen}>
+      <StandardButton setModalOpen={setPasswordModalOpen}>
         Edit password
       </StandardButton>
       <Button
@@ -81,6 +86,12 @@ function UserProfile() {
         searchModalOpen={searchModalOpen}
         setSearchModalOpen={setSearchModalOpen}
         user={user}
+      />
+      <ImageDropzone
+        dropModalOpen={dropModalOpen}
+        setDropModalOpen={setDropModalOpen}
+        user={user}
+        setUser={setUser}
       />
     </>
   );
