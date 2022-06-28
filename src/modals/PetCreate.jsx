@@ -7,6 +7,8 @@ import {
   Input,
   NumberInput,
   Select,
+  TextInput,
+  MultiSelect,
 } from "@mantine/core";
 import { SessionContext } from "../context/SessionContext";
 import { useNavigate, useParams } from "react-router-dom";
@@ -15,6 +17,12 @@ function CreatePet({ createPetModal, setCreatePetModal }) {
   // const { userId } = useParams();
   const { apiPostWithToken, userId } = useContext(SessionContext);
   const [selectValue, setSelectValue] = useState();
+  const [habits, setHabits] = useState([
+    "Sociable",
+    "Quiet",
+    "Run after other dogs",
+    "Friendly to other spieces",
+  ]);
 
   const navigate = useNavigate();
 
@@ -22,6 +30,10 @@ function CreatePet({ createPetModal, setCreatePetModal }) {
     initialValues: {
       name: "",
       age: 0,
+      breed: "",
+      img: [],
+      habits: [],
+      // specialNeeds: [],
       category: "",
       size: "",
     },
@@ -38,6 +50,10 @@ function CreatePet({ createPetModal, setCreatePetModal }) {
     const data = {
       name: values.name,
       age: values.age,
+      breed: values.breed,
+      img: values.img,
+      habits: values.habits,
+      specialNeeds: values.specialNeeds,
       category: values.category,
       size: values.size,
       owner: userId,
@@ -54,7 +70,7 @@ function CreatePet({ createPetModal, setCreatePetModal }) {
       title="Add a new little friend"
     >
       <form onSubmit={form.onSubmit(handleSubmit)}>
-        <Input
+        <TextInput
           label="Pet Name"
           placeholder="Your pet's name"
           {...form.getInputProps("name")}
@@ -64,6 +80,18 @@ function CreatePet({ createPetModal, setCreatePetModal }) {
           label="Age"
           placeholder="1"
           {...form.getInputProps("age")}
+        />
+
+        <MultiSelect
+          label="Habits"
+          data={habits}
+          limit={5}
+          placeholder="Select habits"
+          {...form.getInputProps("habits")}
+          searchable
+          creatable
+          getCreateLabel={(query) => `+ Create ${query}`}
+          onCreate={(query) => setHabits((current) => [...current, query])}
         />
 
         <Select
