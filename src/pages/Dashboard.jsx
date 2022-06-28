@@ -1,10 +1,12 @@
 
-import React from 'react'
+import React, { useState } from 'react'
 
-function dashboard() {
+function Dashboard() {
+  const [user, setUser] = useState({});
+
   return (
     <div>dashboard</div>
   )
 }
 
-export default dashboard
+export default Dashboard

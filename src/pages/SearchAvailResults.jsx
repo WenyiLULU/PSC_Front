@@ -3,6 +3,7 @@ import { useContext } from "react"
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 import { SessionContext } from "../context/SessionContext"
+import CreateAppointment from "../modals/CreateAppointment"
 import { apiBase } from "../utils/reqBackEnd"
 
 
@@ -11,6 +12,7 @@ function SearchAvailResults () {
     const [avail, setAvail] = useState({})
     const [match, setMatch] = useState({})
     const [isLoading, setIsLoading] = useState(true)
+    const [appointModel, setAppointModel] = useState(false)
     const { isAuthenticated } = useContext(SessionContext)
     const {apiWithToken} = useContext(SessionContext)
 
@@ -54,15 +56,22 @@ function SearchAvailResults () {
             <h1>Results</h1>
             {match.map(e => 
             <div style={{width: 300}}>
-            <Card name={e.author} align='center'>
+            <Card name={e.author.username} align='center'>
             <Text weight={500} align='center'>
-            {e.author}
+            {e.author.username}
             </Text>
             <Text weight={500} align='center'>
             {e.city}
             </Text>
-            <Button align='center'>Create appointment</Button>
-            </Card></div>
+            <Button align='center' onClick={() => {setAppointModel(true)}}>Create appointment</Button>
+            </Card>
+            <CreateAppointment
+                appointModel={appointModel}
+                setAppointModel={setAppointModel}
+                user={e}
+                request={location.state}
+             />
+            </div>
             )}
              
             
