@@ -24,11 +24,10 @@ function EditUser({ editModalOpen, setEditModalOpen, user, setUser }) {
 
     useEffect(()=>{
         if(user?.username){
-            const { username, country, city, image, owner, sitter, description, experience} = user
+            const { username, country, city, owner, sitter, description, experience} = user
             form.setValues({username,
                 country,
                 city,
-                image,
                 owner,
                 sitter,  
                 description, 
@@ -51,14 +50,14 @@ function EditUser({ editModalOpen, setEditModalOpen, user, setUser }) {
     }
 
     const handleSubmit = (values) => {
-        console.log(values)
+        console.log("values",values)
         updateUser(values)        
         setEditModalOpen(false)
     }
    
     return (
         <Modal opened={editModalOpen} onClose={() => setEditModalOpen(false)} title='EditUser'>
-            <form onSubmit={form.onSubmit(handleSubmit)}>
+            <form onSubmit={form.onSubmit(handleSubmit)} >
                 <TextInput
                     label="Username"
                     {...form.getInputProps("username")} 
@@ -87,6 +86,7 @@ function EditUser({ editModalOpen, setEditModalOpen, user, setUser }) {
                     label="About you"
                     {...form.getInputProps("description")}
                 />
+
                 <Textarea
                     label="Experience in taking care of pets (please specify)"                
                     {...form.getInputProps("experience")}
