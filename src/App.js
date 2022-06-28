@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import { Route, Routes } from "react-router-dom";
 import UserProfile from "./pages/UserProfile";
 import PetList from "./pages/PetList";
+import PetDetails from "./pages/PetDetails";
 import NotAuth from "./pages/NotAuth";
 // import Signup from './modals/Signup';
 // import Login from './modals/Login';
@@ -38,7 +39,7 @@ function App() {
           />
           <Route
             path="/user/pets/:petId"
-            element={isAuthenticated ? <h1> One pet profile </h1> : <NotAuth />}
+            element={isAuthenticated ? <PetDetails /> : <NotAuth />}
           />
           <Route
             path="/user/calendar/:userId"
