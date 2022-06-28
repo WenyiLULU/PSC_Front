@@ -1,9 +1,21 @@
 import React from "react";
-import { Card, Text } from "@mantine/core";
+import { Button, Card, Text } from "@mantine/core";
+import { Link } from "react-router-dom";
+import StandardButton from "./StandardButton";
 
 function PetCard({ onePet }) {
   return (
-    <Card>
+    <Card
+      shadow="sm"
+      p="xl"
+      component={Link}
+      to={`/user/pets/${onePet._id}`}
+      sx={{
+        "&:hover": {
+          backgroundColor: "#EEEEEE",
+        },
+      }}
+    >
       <Text weight={500} align="left">
         Name: {onePet.name}
       </Text>
@@ -16,6 +28,9 @@ function PetCard({ onePet }) {
       <Text weight={500} align="left">
         Size: {onePet.size}
       </Text>
+      <Button component={Link} to={`/user/pet/${onePet._id}`}>
+        See details
+      </Button>
     </Card>
   );
 }

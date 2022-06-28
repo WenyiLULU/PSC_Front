@@ -5,6 +5,7 @@ import {
   apiPutBase,
   apiPostBase,
   checkToken,
+  apiDeleteBase,
 } from "../utils/reqBackEnd";
 
 const SessionContext = createContext();
@@ -54,6 +55,7 @@ const SessionContextProvider = ({ children }) => {
   const apiWithToken = apiBase(token);
   const apiPutWithToken = apiPutBase(token);
   const apiPostWithToken = apiPostBase(token);
+  const apiDeleteWithToken = apiDeleteBase(token);
 
   useEffect(() => {
     verifyAuth();
@@ -70,6 +72,7 @@ const SessionContextProvider = ({ children }) => {
         apiWithToken,
         apiPutWithToken,
         apiPostWithToken,
+        apiDeleteWithToken,
       }}
     >
       {children}

@@ -42,3 +42,9 @@ export const apiPostBase = (token) => async (endpoint, dataToUpdate) => {
   );
   return response;
 };
+
+export const apiDeleteBase = (token) => async (endpoint) => {
+  await axios.delete(`${BASE_API_URL}/${endpoint}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
