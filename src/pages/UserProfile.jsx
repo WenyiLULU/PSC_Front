@@ -32,7 +32,6 @@ function UserProfile() {
 
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [passwordModalOpen, setPasswordModalOpen] = useState(false);
-  const [searchModalOpen, setSearchModalOpen] = useState(false);
 
   return (
     <>
@@ -58,13 +57,7 @@ function UserProfile() {
       <StandardButton setEditModalOpen={setPasswordModalOpen}>
         Edit password
       </StandardButton>
-      <Button
-        onClick={() => {
-          setSearchModalOpen(true);
-        }}
-      >
-        Become a pet sitter /Find a pet sitter
-      </Button>
+      
       <EditUser
         editModalOpen={editModalOpen}
         setEditModalOpen={setEditModalOpen}
@@ -77,11 +70,7 @@ function UserProfile() {
         user={user}
         setUser={setUser}
       />
-      <SearchAvail
-        searchModalOpen={searchModalOpen}
-        setSearchModalOpen={setSearchModalOpen}
-        user={user}
-      />
+      
     </>
   );
 }
