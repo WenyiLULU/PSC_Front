@@ -63,13 +63,7 @@ function UserProfile() {
       <StandardButton setModalOpen={setPasswordModalOpen}>
         Edit password
       </StandardButton>
-      <Button
-        onClick={() => {
-          setSearchModalOpen(true);
-        }}
-      >
-        Become a pet sitter /Find a pet sitter
-      </Button>
+      
       <EditUser
         editModalOpen={editModalOpen}
         setEditModalOpen={setEditModalOpen}
