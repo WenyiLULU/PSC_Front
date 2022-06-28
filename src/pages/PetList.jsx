@@ -11,20 +11,17 @@ const PetList = () => {
   const { apiWithToken, isAuthenticated, userId } = useContext(SessionContext);
   const [createPetModal, setCreatePetModal] = useState(false);
   const [pets, setPets] = useState([]);
-  console.log("pets: ", pets);
-  // const [user, setUser] = useState({});
-  // console.log("user: ", user);
-  // const navigate = useNavigate();
+  // console.log("pets: ", pets);
 
   // FETCH PETS
 
   const fetchPets = async () => {
     try {
       const data = await apiWithToken("pet");
-      console.log(">>>> Response: ", data);
+      // console.log(">>>> Response: ", data);
       setPets(data);
     } catch (error) {
-      console.log(">>> error: ", error);
+      // console.log(">>> error: ", error);
       // navigate("*");
     }
   };
@@ -34,22 +31,6 @@ const PetList = () => {
       fetchPets();
     }
   }, [isAuthenticated]);
-
-  // FETCH USER
-
-  // const fetchUser = async () => {
-  //   try {
-  //     const userInfo = await apiWithToken(`user/${userId}`);
-  //     setUser(userInfo);
-  //   } catch (error) {
-  //     console.log("error", error);
-  //     navigate("*");
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   userId ? fetchUser() : navigate("/notauth");
-  // }, [userId]);
 
   return (
     <div>
