@@ -3,3 +3,10 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.titleOptions {
+  max-width: 50%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}

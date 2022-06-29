@@ -5,7 +5,8 @@ import PetUpdate from "../modals/PetUpdate";
 import StandardButton from "../components/StandardButton";
 import { SessionContext } from "../context/SessionContext";
 import ImageDropzonePets from "../modals/ImageDropzonePets";
-import { Image, SimpleGrid } from "@mantine/core";
+import { Button, Image, SimpleGrid } from "@mantine/core";
+import TitleBar from "../components/TitleBar";
 
 const PetDetails = () => {
   const { apiWithToken, isAuthenticated, apiDeleteWithToken } =
@@ -71,6 +72,20 @@ const PetDetails = () => {
         <>
           <div>
             <h1>{name}</h1>
+            <TitleBar
+              title={name}
+              options={
+                <>
+                  <StandardButton setModalOpen={setEditModalOpen}>
+                    Edit Info
+                  </StandardButton>
+                  <StandardButton setModalOpen={setDropModalOpen}>
+                    Add photos
+                  </StandardButton>
+                  <DeleteButton handleDelete={handleDelete} />
+                </>
+              }
+            />
             <p>Age: {age}</p>
             <p>Habits:</p>
             <ul>
@@ -100,13 +115,6 @@ const PetDetails = () => {
               ))}
             </SimpleGrid>
 
-            <DeleteButton handleDelete={handleDelete} />
-            <StandardButton setModalOpen={setEditModalOpen}>
-              Edit Info
-            </StandardButton>
-            <StandardButton setModalOpen={setDropModalOpen}>
-              Add photos
-            </StandardButton>
             <PetUpdate
               modalOpen={editModalOpen}
               setModalOpen={setEditModalOpen}

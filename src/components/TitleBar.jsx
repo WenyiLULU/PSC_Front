@@ -5,7 +5,7 @@ const TitleBar = (props) => {
   return (
     <div className="titleBar">
       <h1>{props.title}</h1>
-      <div>{props.options}</div>
+      <div className="titleOptions">{props.options}</div>
     </div>
   );
 };

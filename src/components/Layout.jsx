@@ -44,6 +44,7 @@ function Layout({ children }) {
           fixed
           navbar={
             <Navbar
+              onClick={() => setOpened((o) => !o)}
               p="md"
               hiddenBreakpoint="sm"
               hidden={!opened}
