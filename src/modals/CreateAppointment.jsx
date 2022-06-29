@@ -31,12 +31,12 @@ function CreateAppointment({ user, request, appointModel, setAppointModel }) {
         title="Request an appointment for a pet sitter / a pet sitting offer"
       >
       <form onSubmit={form.onSubmit(handleSubmit)}>
-        <Text>Type: {request.actionType}</Text>
+        <Text>Type: {request.actionType.toUpperCase()}</Text>
         <Text>City: {request.city}</Text>
         <Text>From: {request.name}</Text>
         <Text>To: {user.author.username}</Text>
         <Text>
-          Time: {Date(request.startDate)} to {Date(request.endDate)}
+          Time: {request.startDate.toString().slice(0,10)} TO {request.endDate.toString().slice(0,10)}
         </Text>
         <Button type="submit">Request Appointment</Button>
       </form>
