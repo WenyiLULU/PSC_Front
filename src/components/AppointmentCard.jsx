@@ -1,33 +1,48 @@
-import { ActionIcon, Badge, Card, Group, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Avatar,
+  Badge,
+  Card,
+  CardSection,
+  Group,
+  Space,
+  Text,
+  Title,
+} from "@mantine/core";
 import React from "react";
 import { Trash } from "tabler-icons-react";
 
-const AppointmentCard = ({ user, e, handleDelete }) => {
+const AppointmentCard = ({ user, e, handleDelete, eIndex }) => {
   return (
     <Card shadow="sm" p="lg">
-      <Card.Section>
+      <CardSection>
+        <Title order={3}>{eIndex + 1}. Sitting</Title>
         <Badge color="red" variant="light" align="center">
           {e.startDate.slice(0, 10)} - {e.endDate.slice(0, 10)}
         </Badge>
-      </Card.Section>
-      <Card.Section style={{ marginBottom: 5, marginTop: 5 }}>
-        <Text align="center">{e._id}</Text>
-      </Card.Section>
-      <Card.Section style={{ marginBottom: 5, marginTop: 5 }}>
-        <Text align="center">{user.username}</Text>
-      </Card.Section>
-      <Card.Section style={{ marginBottom: 5 }}>
-        <Text align="center">{e.participant[0].username}</Text>
-      </Card.Section>
-      <Card.Section style={{ marginBottom: 5 }}>
-        <Text align="center">{e.city}</Text>
-      </Card.Section>
-      <Card.Section style={{ marginBottom: 5 }}>
-        {e.pets.map((pet) => (
-          <Text align="center">{pet.name}</Text>
-        ))}
-      </Card.Section>
-      <Group position="center">
+      </CardSection>
+      <CardSection height={250}>
+        {/* <Text>{e._id}</Text> */}
+
+        <Text>Organizer: {e.creator.username}</Text>
+
+        <Text>Participants: {e.participant[0].username}</Text>
+
+        <Text>
+          Participants: {}
+          {e.pets.map((pet, index) => (
+            <>
+              <span key={index}>
+                {pet.name}{" "}
+                <Avatar radius="xl" size="lg" src={pet.img[0]} alt="my face" />{" "}
+                ({pet.owner})
+              </span>
+            </>
+          ))}
+        </Text>
+        <Text>City: {e.city}</Text>
+      </CardSection>
+      <Group position="right">
         <ActionIcon
           onClick={handleDelete.bind(this, e._id)}
           color="red"

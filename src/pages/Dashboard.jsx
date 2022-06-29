@@ -99,8 +99,14 @@ function Dashboard() {
               { maxWidth: 1000, cols: 1, spacing: "sm" },
             ]}
           >
-            {appointments.map((e) => (
-              <AppointmentCard e={e} user={user} handleDelete={handleDelete} />
+            {appointments.map((e, eIndex) => (
+              <AppointmentCard
+                key={eIndex}
+                eIndex={eIndex}
+                e={e}
+                user={user}
+                handleDelete={handleDelete}
+              />
             ))}
           </SimpleGrid>
           <SearchAvail

@@ -5,7 +5,7 @@ import PetUpdate from "../modals/PetUpdate";
 import StandardButton from "../components/StandardButton";
 import { SessionContext } from "../context/SessionContext";
 import ImageDropzonePets from "../modals/ImageDropzonePets";
-import { Button, Image, SimpleGrid } from "@mantine/core";
+import { Badge, Button, Image, SimpleGrid } from "@mantine/core";
 import TitleBar from "../components/TitleBar";
 
 const PetDetails = () => {
@@ -86,18 +86,24 @@ const PetDetails = () => {
               }
             />
             <p>Age: {age}</p>
-            <p>Habits:</p>
-            <ul>
+            <p>
+              Habits:{" "}
               {habits.map((element, index) => (
-                <li key={index}>{element}</li>
+                <Badge color="gray" variant="light" align="center" key={index}>
+                  {element}
+                </Badge>
               ))}
-            </ul>
-            <p>Special Needs: </p>
-            <ul>
+            </p>
+
+            <p>
+              Special Needs:{" "}
               {specialNeeds.map((element, index) => (
-                <li key={index}>{element}</li>
+                <Badge color="gray" variant="light" align="center" key={index}>
+                  {element}
+                </Badge>
               ))}
-            </ul>
+            </p>
+            <ul></ul>
             <p>Category: {category}</p>
             <p>Size: {sizeText()}</p>
             <SimpleGrid
