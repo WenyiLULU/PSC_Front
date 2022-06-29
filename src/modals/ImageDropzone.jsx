@@ -61,8 +61,6 @@ const ImageDropzone = ({dropModalOpen, setDropModalOpen, user, setUser})=>{
             
             onDrop={(files) => {
               console.log('accepted files', files)
-              //const newUser = {...user}
-              //newUser.file = {userPhoto:files[0]}
               const formData = new FormData()
               formData.append('userPhoto', files[0] )
               handlerOnDrop(formData)
