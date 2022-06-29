@@ -3,6 +3,7 @@ import { Group, Button, Modal, PasswordInput} from "@mantine/core";
 import { SessionContext } from "../context/SessionContext"
 import { useContext } from "react";
 import { useState } from "react";
+import { useEffect } from "react";
 
 function EditPassword({ passwordModalOpen, setPasswordModalOpen, user }) {
     const { apiPutWithToken } = useContext(SessionContext)
@@ -37,11 +38,13 @@ function EditPassword({ passwordModalOpen, setPasswordModalOpen, user }) {
             else{console.log("error", error)}  
         }
     }
-
+    
+    useEffect(()=>{
+        if(success){setPasswordModalOpen(false)}
+    },[success])
     
     const handleSubmit = (values) => {
         updatePassword(values)        
-        if(success){setPasswordModalOpen(false)}
     }
 
     return (

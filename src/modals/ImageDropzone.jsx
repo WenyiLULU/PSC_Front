@@ -6,18 +6,9 @@ import { SessionContext } from "../context/SessionContext"
 import { useContext } from "react";
 
 const ImageDropzone = ({dropModalOpen, setDropModalOpen, user, setUser})=>{
-  const { apiPutWithToken, apiWithToken } = useContext(SessionContext)
+  const { apiPostWithToken, apiWithToken } = useContext(SessionContext)
   const theme = useMantineTheme();
-
-  function getIconColor(status, theme) {
-    return status.accepted
-      ? theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6]
-      : status.rejected
-      ? theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6]
-      : theme.colorScheme === 'dark'
-      ? theme.colors.dark[0]
-      : theme.colors.gray[7];
-  }
+  
   
   function ImageUploadIcon({
     status,
@@ -34,9 +25,9 @@ const ImageDropzone = ({dropModalOpen, setDropModalOpen, user, setUser})=>{
     return <Photo {...props} />;
   }
   
-  const dropzoneChildren = (status, theme) => (
+  const dropzoneChildren = (status) => (
     <Group position="center" spacing="xl" style={{ minHeight: 220, pointerEvents: 'none' }}>
-      <ImageUploadIcon status={status} style={{ color: getIconColor(status, theme) }} size={80} />
+      <ImageUploadIcon status={status} style={{ color: "blue"}} size={80} />
   
       <div>
         <Text size="xl" inline>
@@ -50,9 +41,9 @@ const ImageDropzone = ({dropModalOpen, setDropModalOpen, user, setUser})=>{
   );
   
   
-  const handlerOnDrop = async file => {
+  const handlerOnDrop = async formData => {
     try {
-      const response = await apiPutWithToken(`user/${user._id}`, file)
+      const response = await apiPostWithToken(`user/${user._id}/image`, formData)
       const newUser = await apiWithToken(`user/${user._id}`)
       setUser(newUser)
       if (response.status === 'KO') {
@@ -65,22 +56,24 @@ const ImageDropzone = ({dropModalOpen, setDropModalOpen, user, setUser})=>{
 
   return (
     <Modal opened={dropModalOpen} onClose={() => setDropModalOpen(false)} title='EditUser'>
-      {/*<form onSubmit={form.onSubmit(handleSubmit)} enctype="multipart/form-data">*/}
+      
         <Dropzone
             
             onDrop={(files) => {
-              console.log('accepted files', files[0])
-              const newUser = {...user}
-              newUser.file = {userPhoto:files[0]}
-              /*const formData = new FormData()
-              formData.append('file', this.files[0], 'userPhoto')*/
-              handlerOnDrop(newUser)
+              console.log('accepted files', files)
+              //const newUser = {...user}
+              //newUser.file = {userPhoto:files[0]}
+              const formData = new FormData()
+              formData.append('userPhoto', files[0] )
+              handlerOnDrop(formData)
             }}
             onReject={(files) => console.log('rejected files', files)}
             maxSize={3 * 1024 ** 2}
             accept={IMAGE_MIME_TYPE}
           >
-            {(status) => dropzoneChildren(status, theme)}
+            {(status) => {
+              console.log("status", status)
+              return dropzoneChildren(status, theme)}}
         </Dropzone>
       {/*</form>*/}
       
