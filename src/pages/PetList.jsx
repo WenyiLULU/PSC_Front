@@ -61,12 +61,8 @@ const PetList = () => {
         {pets
           .filter((onePet) => onePet.owner === userId)
           .map((onePet) => (
-<<<<<<< HEAD
             <PetCard
               shadow="sm"
-=======
-            <PetCard shadow="sm"
->>>>>>> 190d396337e4164699a553bdc7ba04aac39b8d4d
               p="xl"
               component={Link}
               to={`/pet/${onePet._id}`}
@@ -76,15 +72,8 @@ const PetList = () => {
                 },
               }}
               key={onePet._id}
-<<<<<<< HEAD
               onePet={onePet}
             ></PetCard>
-=======
-              onePet={onePet}> 
-            </PetCard>
-              
-            
->>>>>>> 190d396337e4164699a553bdc7ba04aac39b8d4d
           ))}
       </SimpleGrid>
     </div>
