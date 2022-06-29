@@ -16,7 +16,8 @@ function CreateAppointment({ user, request, appointModel, setAppointModel }) {
       };
 
     const handleSubmit = () => {
-        console.log(request)
+      console.log('User:', user)
+      console.log('Request', request)
         const data = {city: request.city, startDate: request.startDate, endDate: request.endDate, availabiltyId: user._id, creator: request.author, participant: user.author._id}
         setAppointModel(false)
         createAppointment(data)

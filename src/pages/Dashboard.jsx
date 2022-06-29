@@ -23,12 +23,12 @@ function Dashboard() {
       navigate("*");
     }
   };
-//  
+//   
   const fetchAppointments = async () => {
     try {
       const userAppointments = await apiWithToken('appointment')
       console.log(userAppointments)
-      const filteredAppointments = await userAppointments.filter(e => ((e.creator === userId) || e.participant[0]._id===userId))
+      const filteredAppointments = await userAppointments.filter(e => (e.creator._id === userId || e.participant[0]._id===userId))
       setAppointments(filteredAppointments)
       console.log(filteredAppointments)
       setIsLoading(false)
