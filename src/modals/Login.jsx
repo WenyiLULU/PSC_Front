@@ -70,7 +70,7 @@ function Login({ loginModalOpen, setLoginModalOpen, setSignupModalOpen }) {
         />
 
         <Group position="right" mt="md">
-          <Button type="submit">Login</Button>
+          <Button radius="lg" size="md" style={{backgroundColor:"#7FC9CD", boxShadow: "2px 2px #302e36"}} type="submit">Login</Button>
         </Group>
       </form>
       <p>Don't have an account yet?</p>
