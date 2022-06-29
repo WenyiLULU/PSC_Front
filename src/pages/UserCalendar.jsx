@@ -1,9 +1,10 @@
 import { useContext, useState } from "react";
 import { RangeCalendar } from "@mantine/dates";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
 import { Button, Select, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { SessionContext } from "../context/SessionContext";
+import AvailabilitiesList from "./AvailabilitiesList";
 
 function UserCalendar() {
   const { userId } = useParams();
@@ -73,6 +74,7 @@ function UserCalendar() {
           {...form.getInputProps("city")}
         />
         <Button type="submit">Select timeframe</Button>
+        <Button component={NavLink} to="/user/avail">Edit availabilities</Button>
       </form>
     </>
   );

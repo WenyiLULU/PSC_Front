@@ -30,7 +30,7 @@ function SearchAvailResults () {
 
     const checkMatch = async () => {
         const matches = await avail.filter((e) => 
-        ((Date.parse(e.endDate) > Date.parse(location.state.endDate)) && (Date.parse(e.startDate) < Date.parse(location.state.startDate)) && location.state.actionType !== e.actionType))
+        ((Date.parse(e.endDate) >= Date.parse(location.state.endDate)) && (Date.parse(e.startDate) <= Date.parse(location.state.startDate)) && location.state.actionType !== e.actionType))
         console.log('Matches:', matches) 
         setMatch(matches) 
         setIsLoading(false)

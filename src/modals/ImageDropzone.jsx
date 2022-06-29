@@ -6,14 +6,20 @@ import {
   Modal,
 } from "@mantine/core";
 import { Upload, Photo, X, Icon as TablerIcon } from "tabler-icons-react";
-import { Dropzone, DropzoneStatus, IMAGE_MIME_TYPE } from "@mantine/dropzone";
+import { Dropzone, DropzoneStatus, MIME_TYPES } from "@mantine/dropzone";
 import { useForm } from "@mantine/form";
 import { SessionContext } from "../context/SessionContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import { useEffect } from "react";
 
 const ImageDropzone = ({ dropModalOpen, setDropModalOpen, user, setUser }) => {
   const { apiPostWithToken, apiWithToken } = useContext(SessionContext);
-  const theme = useMantineTheme();
+  const [accepted, setAccepted] = useState();
+  const [selected, setSelected] = useState(false);
+
+  const getIconColor = () => {
+    return selected ? "blue" : "gray";
+  };
 
   function ImageUploadIcon({ status, ...props }) {
     if (status.accepted) {
@@ -33,7 +39,11 @@ const ImageDropzone = ({ dropModalOpen, setDropModalOpen, user, setUser }) => {
       spacing="xl"
       style={{ minHeight: 220, pointerEvents: "none" }}
     >
-      <ImageUploadIcon status={status} style={{ color: "blue" }} size={80} />
+      <ImageUploadIcon
+        status={status}
+        style={{ color: getIconColor() }}
+        size={80}
+      />
 
       <div>
         <Text size="xl" align="center" inline>
@@ -62,6 +72,16 @@ const ImageDropzone = ({ dropModalOpen, setDropModalOpen, user, setUser }) => {
     }
   };
 
+  useEffect(() => {
+    console.log(accepted);
+    accepted && setDropModalOpen(false);
+  }, [accepted]);
+
+  useEffect(() => {
+    console.log(accepted);
+    dropModalOpen && setAccepted(false);
+  }, [dropModalOpen]);
+
   return (
     <Modal
       opened={dropModalOpen}
@@ -71,22 +91,22 @@ const ImageDropzone = ({ dropModalOpen, setDropModalOpen, user, setUser }) => {
       <Dropzone
         onDrop={(files) => {
           console.log("accepted files", files);
-          //const newUser = {...user}
-          //newUser.file = {userPhoto:files[0]}
+          setAccepted(true);
           const formData = new FormData();
           formData.append("userPhoto", files[0]);
           handlerOnDrop(formData);
         }}
-        onReject={(files) => console.log("rejected files", files)}
+        onReject={(files) => {
+          console.log("rejected files", files);
+          setAccepted(false);
+        }}
         maxSize={3 * 1024 ** 2}
-        accept={IMAGE_MIME_TYPE}
+        accept={[MIME_TYPES.png, MIME_TYPES.jpeg]}
       >
         {(status) => {
-          console.log("status", status);
-          return dropzoneChildren(status, theme);
+          return dropzoneChildren(status);
         }}
       </Dropzone>
-      {/*</form>*/}
     </Modal>
   );
 };
