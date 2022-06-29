@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 
 const ImageDropzone = ({dropModalOpen, setDropModalOpen, user, setUser})=>{
   const { apiPostWithToken, apiWithToken } = useContext(SessionContext)
-  const [accepted, setAccepted] = useState(false)
+  const [accepted, setAccepted] = useState()
   const [selected, setSelected] = useState(false)
  
   const getIconColor= ()=>{
@@ -60,7 +60,7 @@ const ImageDropzone = ({dropModalOpen, setDropModalOpen, user, setUser})=>{
 
   useEffect(()=>{
     console.log(accepted)
-    accepted ? setDropModalOpen(false):setDropModalOpen(true)
+    accepted && setDropModalOpen(false)
   }, [accepted])
 
   useEffect(()=>{
@@ -70,7 +70,6 @@ const ImageDropzone = ({dropModalOpen, setDropModalOpen, user, setUser})=>{
 
   return (
     <Modal opened={dropModalOpen} onClose={() => setDropModalOpen(false)} title='EditUser'>
-      {/*<form onSubmit={form.onSubmit(handleSubmit)} enctype="multipart/form-data">*/}
         <Dropzone
             
             onDrop={(files) => {
