@@ -14,7 +14,19 @@ import { SessionContext } from "../context/SessionContext";
 function PetUpdate({ modalOpen, setModalOpen, pet, setPet }) {
   const { apiPutWithToken, apiWithToken } = useContext(SessionContext);
   const [selectValue, setSelectValue] = useState();
-  const [habits, setHabits] = useState([]);
+  const [habits, setHabits] = useState([
+    "Sociable",
+    "Quiet",
+    "Run after other dogs",
+    "Friendly to other spieces",
+  ]);
+
+  const [needs, setNeeds] = useState([
+    "Lactose-free milk",
+    "Extra excercise",
+    "Less exercise",
+    "Have the leash all the time",
+  ]);
 
   const form = useForm({
     initialValues: {
@@ -76,6 +88,10 @@ function PetUpdate({ modalOpen, setModalOpen, pet, setPet }) {
 
         <NumberInput label="Age" {...form.getInputProps("age")} />
 
+        <TextInput label="Breed" {...form.getInputProps("breed")} />
+
+        <p>Placeholder for Image</p>
+
         <MultiSelect
           label="Habits"
           data={habits}
@@ -85,6 +101,17 @@ function PetUpdate({ modalOpen, setModalOpen, pet, setPet }) {
           creatable
           getCreateLabel={(query) => `+ Create ${query}`}
           onCreate={(query) => setHabits((current) => [...current, query])}
+        />
+
+        <MultiSelect
+          label="Special Needs"
+          data={needs}
+          limit={5}
+          {...form.getInputProps("specialNeeds")}
+          searchable
+          creatable
+          getCreateLabel={(query) => `+ Create ${query}`}
+          onCreate={(query) => setNeeds((current) => [...current, query])}
         />
 
         <Select
