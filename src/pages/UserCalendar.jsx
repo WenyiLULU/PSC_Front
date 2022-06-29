@@ -5,6 +5,8 @@ import { Button, Group, Select, Text, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { SessionContext } from "../context/SessionContext";
 import AvailabilitiesList from "./AvailabilitiesList";
+import TitleBar from "../components/TitleBar";
+import StandardButton from "../components/StandardButton";
 
 function UserCalendar() {
   const { userId } = useParams();
@@ -19,7 +21,8 @@ function UserCalendar() {
   const [selectValue, setSelectValue] = useState();
 
   const navigate = useNavigate();
-
+  const [availModalOpen, setAvailModalOpen] = useState(false);
+  const [appointModalOpen, setAppointModalOpen] = useState(false);
   const form = useForm({
     initialValues: {
       city: "",
@@ -31,7 +34,7 @@ function UserCalendar() {
   const createAvailability = async (newAvailability) => {
     const response = await apiPostWithToken("avail/create", newAvailability);
     console.log("Response", response);
-    navigate('/user/dashboard')
+    navigate("/user/dashboard");
   };
 
   const handleSubmit = (values) => {
@@ -49,38 +52,53 @@ function UserCalendar() {
 
   return (
     <>
-     
+      <TitleBar
+        title={"My Calendar"}
+        options={
+          <>
+            <StandardButton setModalOpen={setAvailModalOpen}>
+              Add Availabilty
+            </StandardButton>
+            <StandardButton setModalOpen={setAppointModalOpen}>
+              New Appointment
+            </StandardButton>
+          </>
+        }
+      />
       <Group>
-      <form onSubmit={form.onSubmit(handleSubmit)}>
-      <Text align='center'>Create an availability</Text>
-        <RangeCalendar
-          value={calendarValue}
-          onChange={setCalendarValue}
-          label="dates"
-          {...form.getInputProps("dates")}
-        />
+        <form onSubmit={form.onSubmit(handleSubmit)}>
+          <Text align="center">Create an availability</Text>
+          <RangeCalendar
+            value={calendarValue}
+            onChange={setCalendarValue}
+            label="dates"
+            {...form.getInputProps("dates")}
+          />
 
-        <Select
-          value={selectValue}
-          onChange={setSelectValue}
-          label="Type"
-          placeholder="Pick one"
-          data={[
-            { value: "offer", label: "Offer" },
-            { value: "request", label: "Request" },
-          ]}
-          {...form.getInputProps("actionType")}
-        />
-        <TextInput
-          label="City"
-          placeholder="Select a city"
-          {...form.getInputProps("city")}
-        />
-        <Button type="submit" style={{marginRight:5}}>Select timeframe</Button>
-        <Button component={NavLink} to="/user/avail">Edit availabilities</Button>
-      </form>
+          <Select
+            value={selectValue}
+            onChange={setSelectValue}
+            label="Type"
+            placeholder="Pick one"
+            data={[
+              { value: "offer", label: "Offer" },
+              { value: "request", label: "Request" },
+            ]}
+            {...form.getInputProps("actionType")}
+          />
+          <TextInput
+            label="City"
+            placeholder="Select a city"
+            {...form.getInputProps("city")}
+          />
+          <Button type="submit" style={{ marginRight: 5 }}>
+            Select timeframe
+          </Button>
+          <Button component={NavLink} to="/user/avail">
+            Edit availabilities
+          </Button>
+        </form>
       </Group>
-      
     </>
   );
 }
