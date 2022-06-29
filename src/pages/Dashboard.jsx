@@ -1,6 +1,8 @@
-import { Button, Card, Container, Text } from "@mantine/core";
+import { ActionIcon, Badge, Button, Card, Container, Group, Text } from "@mantine/core";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Trash } from "tabler-icons-react";
+import DeleteButton from "../components/DeleteButtonIcon";
 import { SessionContext } from "../context/SessionContext";
 import SearchAvail from "../modals/SearchAvail";
 
@@ -8,7 +10,7 @@ function Dashboard() {
   const [user, setUser] = useState({});
   const [appointments, setAppointments] = useState({});
   const navigate = useNavigate();
-  const { userId, apiWithToken, isAuthenticated } = useContext(SessionContext);
+  const { userId, apiWithToken, isAuthenticated, apiDeleteWithToken } = useContext(SessionContext);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true)
 
@@ -34,6 +36,17 @@ function Dashboard() {
     }
   }
 
+  const deleteAppointment = async (appId) => {
+    try {
+      await apiDeleteWithToken(`appointment/${appId}`);
+      console.log(">>>> deleted");
+      fetchAppointments()
+    } catch (error) {
+      console.log(">>> error: ", error);
+      // navigate("*");
+    }
+  }
+
   useEffect(() => {
     userId ? fetchUser() : navigate("/notauth");
   }, [userId]);
@@ -43,6 +56,10 @@ function Dashboard() {
       fetchAppointments()
     }
   }, [])
+
+  const handleDelete = (appId) => {
+    deleteAppointment(appId)
+  }
 
   return (
     <>
@@ -54,22 +71,27 @@ function Dashboard() {
           }}
         >
           Become a pet sitter /Find a pet sitter
-        </Button>
+        </Button> 
       </div>
-      <Container size='md' px='md'>
+      <Container size='md' px='md' style={{margin:10}}>
           {appointments.map(e =>  
           <Card style={{width:250}}  shadow="sm" p="lg">
-          <Card.Section>
-            <Text align='center'>{e.startDate.slice(0,10)} - {e.endDate.slice(0,10)}</Text>
+          <Card.Section align='center' >
+            <Badge color="red" variant="light" align='center'>{e.startDate.slice(0,10)} - {e.endDate.slice(0,10)}</Badge>
           </Card.Section>
-          <Card.Section>
+          <Card.Section  style={{marginBottom:5, marginTop:5}}>
             <Text align='center'>{user.username}</Text>
-          </Card.Section>  
-          <Card.Section>
+          </Card.Section>
+          <Card.Section style={{marginBottom:5}}>
             <Text align='center'>{e.participant[0].username}</Text>
           </Card.Section>  
-            
-            
+          <Card.Section style={{marginBottom:5}}>
+            <Text align='center'>{e.city}</Text>
+          </Card.Section>
+          <Group position="center">
+          <ActionIcon onClick={handleDelete.bind(this, e._id)} color="red" size="md" variant="filled">
+          <Trash size={48} strokeWidth={2} color={"white"}/>
+          </ActionIcon></Group>
           </Card>)}
       </Container>
       <SearchAvail

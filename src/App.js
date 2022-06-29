@@ -14,6 +14,8 @@ import { useContext } from "react";
 import NotFound from "./pages/NotFound";
 import UserCalendar from "./pages/UserCalendar";
 import SearchAvailResults from "./pages/SearchAvailResults";
+import AvailabilitiesList from "./pages/AvailabilitiesList";
+import AvailDetails from "./pages/AvailDetails";
 
 function App() {
   const { isAuthenticated } = useContext(SessionContext);
@@ -40,6 +42,14 @@ function App() {
           <Route
             path="/user/pets/:petId"
             element={isAuthenticated ? <PetDetails /> : <NotAuth />}
+          />
+           <Route
+            path="/user/avail"
+            element={isAuthenticated ? <AvailabilitiesList /> : <NotAuth />}
+          />
+           <Route
+            path="/user/avail/:availID"
+            element={isAuthenticated ? <AvailDetails /> : <NotAuth />}
           />
           <Route
             path="/user/calendar/:userId"

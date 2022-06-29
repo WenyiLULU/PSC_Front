@@ -53,7 +53,7 @@ function SearchAvail({ searchModalOpen, setSearchModalOpen, user }) {
         />
         <TextInput
           label="City"
-          placeholder="Your city (should be user city)"
+          placeholder="Select a city"
           {...form.getInputProps("city")}
         />
         <Button type="submit">Select timeframe</Button>
