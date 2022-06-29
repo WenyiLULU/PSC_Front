@@ -8,7 +8,7 @@ import { useContext } from "react";
 const ImageDropzone = ({dropModalOpen, setDropModalOpen, user, setUser})=>{
   const { apiPostWithToken, apiWithToken } = useContext(SessionContext)
   const theme = useMantineTheme();
-  
+
   
   function ImageUploadIcon({
     status,
@@ -56,7 +56,7 @@ const ImageDropzone = ({dropModalOpen, setDropModalOpen, user, setUser})=>{
 
   return (
     <Modal opened={dropModalOpen} onClose={() => setDropModalOpen(false)} title='EditUser'>
-      
+      {/*<form onSubmit={form.onSubmit(handleSubmit)} enctype="multipart/form-data">*/}
         <Dropzone
             
             onDrop={(files) => {
