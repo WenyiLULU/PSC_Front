@@ -9,10 +9,12 @@ import SearchAvail from "../modals/SearchAvail";
 import { Button } from "@mantine/core";
 import ImageDropzone from "../modals/ImageDropzone";
 import UploadImage from "../modals/UploadImage";
+import TitleBar from "../components/TitleBar";
 
 function UserProfile() {
   const [user, setUser] = useState({});
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
 
   const { apiWithToken } = useContext(SessionContext);
   const { userId } = useParams();
@@ -20,6 +22,7 @@ function UserProfile() {
     try {
       const userInfo = await apiWithToken(`user/${userId}`);
       setUser(userInfo);
+      setIsLoading(false);
     } catch (error) {
       console.log("error", error);
       navigate("*");
@@ -36,61 +39,73 @@ function UserProfile() {
   const [passwordModalOpen, setPasswordModalOpen] = useState(false);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [dropModalOpen, setDropModalOpen] = useState(false);
-  
 
   return (
     <>
-      <h1>Hello {username}</h1>
-      <p>
-        <strong>Email : </strong>
-        {email}
-      </p>
-      <p>
-        <strong>Country : </strong>
-        {country}
-      </p>
-      <p>
-        <strong>City : </strong>
-        {city}
-      </p>
-      <div style={{display:"flex", flexDirection:"column", width:"400px"}}>
-        <img src={image} alt="user" style={{width:"100%"}} />
-        
-        <StandardButton setModalOpen={setDropModalOpen}>
-          Change photo
-        </StandardButton>
-      </div>
-      <StandardButton setModalOpen={setEditModalOpen}>
-        Edit profile
-      </StandardButton>
-      <StandardButton setModalOpen={setPasswordModalOpen}>
-        Edit password
-      </StandardButton>
-      
-      <EditUser
-        editModalOpen={editModalOpen}
-        setEditModalOpen={setEditModalOpen}
-        user={user}
-        setUser={setUser}
-      />
-      <EditPassword
-        passwordModalOpen={passwordModalOpen}
-        setPasswordModalOpen={setPasswordModalOpen}
-        user={user}
-        setUser={setUser}
-      />
-      <SearchAvail
-        searchModalOpen={searchModalOpen}
-        setSearchModalOpen={setSearchModalOpen}
-        user={user}
-      />
-      <ImageDropzone
-        dropModalOpen={dropModalOpen}
-        setDropModalOpen={setDropModalOpen}
-        user={user}
-        setUser={setUser}
-      />
-      
+      {isLoading && <p>Loading...</p>}
+      {!isLoading && (
+        <>
+          <TitleBar
+            title={`Hello ${username}!`}
+            options={
+              <>
+                <StandardButton setModalOpen={setEditModalOpen}>
+                  Edit profile
+                </StandardButton>
+                <StandardButton setModalOpen={setPasswordModalOpen}>
+                  Edit password
+                </StandardButton>
+              </>
+            }
+          />
+          <p>
+            <strong>Email : </strong>
+            {email}
+          </p>
+          <p>
+            <strong>Country : </strong>
+            {country}
+          </p>
+          <p>
+            <strong>City : </strong>
+            {city}
+          </p>
+          <div
+            style={{ display: "flex", flexDirection: "column", width: "400px" }}
+          >
+            <img src={image} alt="user" style={{ width: "100%" }} />
+
+            <StandardButton setModalOpen={setDropModalOpen}>
+              Change photo
+            </StandardButton>
+          </div>
+
+          <EditUser
+            editModalOpen={editModalOpen}
+            setEditModalOpen={setEditModalOpen}
+            user={user}
+            setUser={setUser}
+          />
+          <EditPassword
+            passwordModalOpen={passwordModalOpen}
+            setPasswordModalOpen={setPasswordModalOpen}
+            user={user}
+            setUser={setUser}
+          />
+          <SearchAvail
+            searchModalOpen={searchModalOpen}
+            setSearchModalOpen={setSearchModalOpen}
+            user={user}
+          />
+          <ImageDropzone
+            dropModalOpen={dropModalOpen}
+            setDropModalOpen={setDropModalOpen}
+            user={user}
+            setUser={setUser}
+          />
+        </>
+      )}
+      ;
     </>
   );
 }

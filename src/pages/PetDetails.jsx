@@ -4,6 +4,9 @@ import DeleteButton from "../components/DeleteButtonIcon";
 import PetUpdate from "../modals/PetUpdate";
 import StandardButton from "../components/StandardButton";
 import { SessionContext } from "../context/SessionContext";
+import ImageDropzonePets from "../modals/ImageDropzonePets";
+import { Badge, Button, Image, SimpleGrid } from "@mantine/core";
+import TitleBar from "../components/TitleBar";
 
 const PetDetails = () => {
   const { apiWithToken, isAuthenticated, apiDeleteWithToken } =
@@ -13,6 +16,7 @@ const PetDetails = () => {
   //   console.log(">>>> petId: ", petId);
   const navigate = useNavigate();
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [dropModalOpen, setDropModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchPet = async () => {
@@ -67,30 +71,64 @@ const PetDetails = () => {
       {!isLoading && (
         <>
           <div>
-            <h1>{name}</h1>
+            <TitleBar
+              title={name}
+              options={
+                <>
+                  <StandardButton setModalOpen={setEditModalOpen}>
+                    Edit Info
+                  </StandardButton>
+                  <StandardButton setModalOpen={setDropModalOpen}>
+                    Add photos
+                  </StandardButton>
+                  <DeleteButton handleDelete={handleDelete} />
+                </>
+              }
+            />
             <p>Age: {age}</p>
-            <p>Habits:</p>
-            <ul>
+            <p>
+              Habits:{" "}
               {habits.map((element, index) => (
-                <li key={index}>{element}</li>
+                <Badge color="gray" variant="light" align="center" key={index}>
+                  {element}
+                </Badge>
               ))}
-            </ul>
-            <p>Special Needs: </p>
-            <ul>
+            </p>
+
+            <p>
+              Special Needs:{" "}
               {specialNeeds.map((element, index) => (
-                <li key={index}>{element}</li>
+                <Badge color="gray" variant="light" align="center" key={index}>
+                  {element}
+                </Badge>
               ))}
-            </ul>
+            </p>
+            <ul></ul>
             <p>Category: {category}</p>
             <p>Size: {sizeText()}</p>
+            <SimpleGrid
+              breakpoints={[
+                { maxWidth: 2000, cols: 6, spacing: "md" },
+                { maxWidth: 1750, cols: 5, spacing: "md" },
+                { maxWidth: 1500, cols: 3, spacing: "md" },
+                { maxWidth: 1100, cols: 2, spacing: "sm" },
+                { maxWidth: 800, cols: 1, spacing: "sm" },
+              ]}
+            >
+              {img.map((photo, index) => (
+                <Image key={index} radius="lg" src={photo} alt="my pet photo" />
+              ))}
+            </SimpleGrid>
 
-            <DeleteButton handleDelete={handleDelete} />
-            <StandardButton setModalOpen={setEditModalOpen}>
-              Edit Info
-            </StandardButton>
             <PetUpdate
               modalOpen={editModalOpen}
               setModalOpen={setEditModalOpen}
+              pet={pet}
+              setPet={setPet}
+            />
+            <ImageDropzonePets
+              dropModalOpen={dropModalOpen}
+              setDropModalOpen={setDropModalOpen}
               pet={pet}
               setPet={setPet}
             />

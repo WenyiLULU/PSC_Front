@@ -1,8 +1,19 @@
-import { ActionIcon, Badge, Button, Card, Container, Group, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Badge,
+  Button,
+  Card,
+  Container,
+  Group,
+  SimpleGrid,
+  Text,
+} from "@mantine/core";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Trash } from "tabler-icons-react";
+import AppointmentCard from "../components/AppointmentCard";
 import DeleteButton from "../components/DeleteButtonIcon";
+import TitleBar from "../components/TitleBar";
 import { SessionContext } from "../context/SessionContext";
 import SearchAvail from "../modals/SearchAvail";
 
@@ -10,9 +21,10 @@ function Dashboard() {
   const [user, setUser] = useState({});
   const [appointments, setAppointments] = useState({});
   const navigate = useNavigate();
-  const { userId, apiWithToken, isAuthenticated, apiDeleteWithToken } = useContext(SessionContext);
+  const { userId, apiWithToken, isAuthenticated, apiDeleteWithToken } =
+    useContext(SessionContext);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchUser = async () => {
     try {
@@ -23,30 +35,31 @@ function Dashboard() {
       navigate("*");
     }
   };
-//   
+  //
   const fetchAppointments = async () => {
     try {
-      const userAppointments = await apiWithToken('appointment')
-      console.log(userAppointments)
-      const filteredAppointments = await userAppointments.filter(e => (e.creator._id === userId || e.participant[0]._id===userId))
-      setAppointments(filteredAppointments)
-      console.log(filteredAppointments)
-      setIsLoading(false)
+      const userAppointments = await apiWithToken("appointment");
+      const filteredAppointments = await userAppointments.filter(
+        (e) => e.creator === userId || e.participant.includes(userId)
+      );
+      setAppointments(filteredAppointments);
+      console.log(filteredAppointments);
+      setIsLoading(false);
     } catch (error) {
       console.log("error", error);
     }
-  }
+  };
 
   const deleteAppointment = async (appId) => {
     try {
       await apiDeleteWithToken(`appointment/${appId}`);
       console.log(">>>> deleted");
-      fetchAppointments()
+      fetchAppointments();
     } catch (error) {
       console.log(">>> error: ", error);
       // navigate("*");
     }
-  }
+  };
 
   useEffect(() => {
     userId ? fetchUser() : navigate("/notauth");
@@ -54,52 +67,55 @@ function Dashboard() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      fetchAppointments()
+      fetchAppointments();
     }
-  }, [])
+  }, []);
 
   const handleDelete = (appId) => {
-    deleteAppointment(appId)
-  }
+    deleteAppointment(appId);
+  };
 
   return (
     <>
-    {isLoading && <p>Loading...</p>}
-    {!isLoading && <><div>
-        <Button
-          onClick={() => {
-            setSearchModalOpen(true);
-          }}
-        >
-          Become a pet sitter / Find a pet sitter
-        </Button> 
-      </div>
-      <Container size='md' px='md' style={{margin:10}}>
-          {appointments.map(e =>  
-          <Card style={{width:250}}  shadow="sm" p="lg">
-          <Card.Section align='center' >
-            <Badge color="red" variant="light" align='center'>{e.startDate.toString().slice(0,10)} - {e.endDate.toString().slice(0,10)}</Badge>
-          </Card.Section>
-          <Card.Section  style={{marginBottom:5, marginTop:5}}>
-            <Text align='center'>{e.creator.username}</Text>
-          </Card.Section>
-          <Card.Section style={{marginBottom:5}}>
-            <Text align='center'>{e.participant[0].username}</Text>
-          </Card.Section>  
-          <Card.Section style={{marginBottom:5}}>
-            <Text align='center'>{e.city}</Text>
-          </Card.Section>
-          <Group position="center">
-          <ActionIcon onClick={handleDelete.bind(this, e._id)} color="red" size="md" variant="filled">
-          <Trash size={48} strokeWidth={2} color={"white"}/>
-          </ActionIcon></Group>
-          </Card>)}
-      </Container>
-      <SearchAvail
-        searchModalOpen={searchModalOpen}
-        setSearchModalOpen={setSearchModalOpen}
-        user={user}
-      /></>}
+      {isLoading && <p>Loading...</p>}
+      {!isLoading && (
+        <>
+          <TitleBar
+            title={"Dashboard"}
+            options={
+              <Button
+                onClick={() => {
+                  setSearchModalOpen(true);
+                }}
+              >
+                New Appointment
+              </Button>
+            }
+          />
+          <SimpleGrid
+            breakpoints={[
+              { maxWidth: 2500, cols: 3, spacing: "md" },
+              { maxWidth: 1499, cols: 2, spacing: "sm" },
+              { maxWidth: 1000, cols: 1, spacing: "sm" },
+            ]}
+          >
+            {appointments.map((e, eIndex) => (
+              <AppointmentCard
+                key={eIndex}
+                eIndex={eIndex}
+                e={e}
+                user={user}
+                handleDelete={handleDelete}
+              />
+            ))}
+          </SimpleGrid>
+          <SearchAvail
+            searchModalOpen={searchModalOpen}
+            setSearchModalOpen={setSearchModalOpen}
+            user={user}
+          />
+        </>
+      )}
     </>
   );
 }

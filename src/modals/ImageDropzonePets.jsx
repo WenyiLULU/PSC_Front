@@ -6,20 +6,14 @@ import {
   Modal,
 } from "@mantine/core";
 import { Upload, Photo, X, Icon as TablerIcon } from "tabler-icons-react";
-import { Dropzone, DropzoneStatus, MIME_TYPES } from "@mantine/dropzone";
+import { Dropzone, DropzoneStatus, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import { useForm } from "@mantine/form";
 import { SessionContext } from "../context/SessionContext";
-import { useContext, useState } from "react";
-import { useEffect } from "react";
+import { useContext } from "react";
 
-const ImageDropzone = ({ dropModalOpen, setDropModalOpen, user, setUser }) => {
+const ImageDropzone = ({ dropModalOpen, setDropModalOpen, pet, setPet }) => {
   const { apiPostWithToken, apiWithToken } = useContext(SessionContext);
-  const [accepted, setAccepted] = useState(false);
-  const [selected, setSelected] = useState(false);
-
-  const getIconColor = () => {
-    return selected ? "blue" : "gray";
-  };
+  const theme = useMantineTheme();
 
   function ImageUploadIcon({ status, ...props }) {
     if (status.accepted) {
@@ -39,11 +33,7 @@ const ImageDropzone = ({ dropModalOpen, setDropModalOpen, user, setUser }) => {
       spacing="xl"
       style={{ minHeight: 220, pointerEvents: "none" }}
     >
-      <ImageUploadIcon
-        status={status}
-        style={{ color: getIconColor() }}
-        size={80}
-      />
+      <ImageUploadIcon status={status} style={{ color: "blue" }} size={80} />
 
       <div>
         <Text size="xl" align="center" inline>
@@ -58,12 +48,9 @@ const ImageDropzone = ({ dropModalOpen, setDropModalOpen, user, setUser }) => {
 
   const handlerOnDrop = async (formData) => {
     try {
-      const response = await apiPostWithToken(
-        `user/${user._id}/image`,
-        formData
-      );
-      const newUser = await apiWithToken(`user/${user._id}`);
-      setUser(newUser);
+      const response = await apiPostWithToken(`pet/${pet._id}/img`, formData);
+      const newPet = await apiWithToken(`pet/${pet._id}`);
+      setPet(newPet);
       if (response.status === "KO") {
         throw new Error(response.message);
       }
@@ -72,16 +59,6 @@ const ImageDropzone = ({ dropModalOpen, setDropModalOpen, user, setUser }) => {
     }
   };
 
-  useEffect(() => {
-    console.log(accepted);
-    accepted && setDropModalOpen(false);
-  }, [accepted]);
-
-  useEffect(() => {
-    console.log(accepted);
-    dropModalOpen && setAccepted(false);
-  }, [dropModalOpen]);
-
   return (
     <Modal
       opened={dropModalOpen}
@@ -89,24 +66,26 @@ const ImageDropzone = ({ dropModalOpen, setDropModalOpen, user, setUser }) => {
       title="EditUser"
     >
       <Dropzone
+        // loading
         onDrop={(files) => {
           console.log("accepted files", files);
-          setAccepted(true);
+          //const newUser = {...user}
+          //newUser.file = {userPhoto:files[0]}
           const formData = new FormData();
-          formData.append("userPhoto", files[0]);
+          formData.append("petPhoto", files[0]);
+          console.log(files);
           handlerOnDrop(formData);
         }}
-        onReject={(files) => {
-          console.log("rejected files", files);
-          setAccepted(false);
-        }}
+        onReject={(files) => console.log("rejected files", files)}
         maxSize={3 * 1024 ** 2}
-        accept={[MIME_TYPES.png, MIME_TYPES.jpeg]}
+        accept={IMAGE_MIME_TYPE}
       >
         {(status) => {
-          return dropzoneChildren(status);
+          console.log("status", status);
+          return dropzoneChildren(status, theme);
         }}
       </Dropzone>
+      {/*</form>*/}
     </Modal>
   );
 };

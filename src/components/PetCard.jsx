@@ -21,11 +21,7 @@ function PetCard({ onePet }) {
       <Text size="lg" weight={500} align="left">
         {onePet.name}
       </Text>
-      <Image
-        radius="lg"
-        src="https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-800x825.jpg"
-        alt="dog"
-      />
+      <Image radius="lg" height={300} src={onePet.img[0]} alt="pet photo" />
       <Space h="md" />
       <Button component={Link} to={`/user/pets/${onePet._id}`}>
         details

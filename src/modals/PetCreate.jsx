@@ -16,6 +16,7 @@ import { useNavigate, useParams } from "react-router-dom";
 function CreatePet({ createPetModal, setCreatePetModal }) {
   // const { userId } = useParams();
   const { apiPostWithToken, userId } = useContext(SessionContext);
+  const navigate = useNavigate();
   const [selectValue, setSelectValue] = useState();
   const [habits, setHabits] = useState([
     "Sociable",
@@ -30,8 +31,6 @@ function CreatePet({ createPetModal, setCreatePetModal }) {
     "Less exercise",
     "Have the leash all the time",
   ]);
-
-  const navigate = useNavigate();
 
   const form = useForm({
     initialValues: {
@@ -68,6 +67,7 @@ function CreatePet({ createPetModal, setCreatePetModal }) {
     // console.log(">>>> data: ", data);
     createPet(data);
     setCreatePetModal(false);
+    navigate();
   };
 
   return (
