@@ -1,13 +1,10 @@
 import {
   Group,
   Text,
-  useMantineTheme,
-  MantineTheme,
   Modal,
 } from "@mantine/core";
 import { Upload, Photo, X, Icon as TablerIcon } from "tabler-icons-react";
-import { Dropzone, DropzoneStatus, MIME_TYPES } from "@mantine/dropzone";
-import { useForm } from "@mantine/form";
+import { Dropzone, MIME_TYPES } from "@mantine/dropzone";
 import { SessionContext } from "../context/SessionContext";
 import { useContext, useState } from "react";
 import { useEffect } from "react";
