@@ -1,7 +1,7 @@
 import { Button, Card, Text } from "@mantine/core"
 import { useContext } from "react"
 import { useEffect, useState } from "react"
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { SessionContext } from "../context/SessionContext"
 import { apiBase } from "../utils/reqBackEnd"
 import CreateAppointment from "./CreateAppointment"
@@ -15,6 +15,7 @@ function SearchAvailResults () {
     const [appointModel, setAppointModel] = useState(false)
     const { isAuthenticated } = useContext(SessionContext)
     const {apiWithToken} = useContext(SessionContext)
+    const navigate = useNavigate()
 
     const fetchAvail = async () => {
         const response = await apiWithToken('avail')
@@ -38,6 +39,7 @@ function SearchAvailResults () {
 
     useEffect(() => {
         fetchAvail()
+        // checkMatch()
         console.log('State:', location.state)
     }, [])
 
@@ -45,6 +47,10 @@ function SearchAvailResults () {
     //     if (isAuthenticated)
     //      checkMatch() 
     // }, [isAuthenticated])
+    const handleCreate = (availId) => {
+        const data = {startDate: location.state.startDate, endDate: location.state.endDate, name: location.state.name, id: location.state.author}
+        navigate(`/result/${availId}`, {state: data})
+    }
 
     return <>
             {isLoading && <p>...Loading</p>}
@@ -65,10 +71,9 @@ function SearchAvailResults () {
             {location.state.city}
             </Text>
             
-            <Button align='center' component={Link}
-              to={`/avail/${singleAvail._id}`} requestData={location.state}>Create appointment</Button>
+            <Button align='center' onClick={()=>handleCreate(singleAvail._id)} >Create appointment</Button>
             </Card>
-            
+            {/*  <CreateAppointment requestData={location.state} userData={singleAvail}/>*/}
             </div>
             )}
              

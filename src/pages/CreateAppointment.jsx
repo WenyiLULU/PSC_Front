@@ -1,19 +1,24 @@
 import { Button, Card, Modal, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useContext, useEffect, useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
 import { SessionContext } from "../context/SessionContext";
 
 function CreateAppointment({ requestData}) {
+    const location = useLocation();
     const {availId} = useParams()
     const form = useForm({})
-    const { apiPostWithToken, apiWithToken } = useContext(SessionContext);
+    const { apiPostWithToken, user, apiWithToken } = useContext(SessionContext);
     const navigate = useNavigate()
+    const [isLoading, setIsLoading] = useState(true)
     const [userData, setUserData] = useState([])
 
     const fetchSingleAvail = async (id) => {
-      const response = await apiWithToken(`avail/${availId}`)
+      const response = await apiWithToken(`avail/${id}`)
       console.log('Response:', response)
+      await setUserData(response)
+      setIsLoading(false)
+      
     }
 
     const createAppointment = async (newAppointment) => {
@@ -23,28 +28,36 @@ function CreateAppointment({ requestData}) {
       };
 
     const handleSubmit = () => {
-              const data = {city: userData.city, startDate: requestData.startDate, endDate: requestData.endDate, availabiltyId: userData._id, creator: requestData.author, participant: userData.author._id}
+              const data = {city: userData.city, startDate: location.state.startDate, endDate: location.state.endDate, availabiltyId: userData._id, creator: userData.author._id, participant: location.state.id}
+              console.log(data)
         createAppointment(data)
         navigate('/user/dashboard')
     }
 
     useEffect(() => {
-      console.log('Request', requestData)
+      console.log('reqData:', location.state.id)
+      fetchSingleAvail(availId)
+      console.log('userData', userData)
+      
+      
     },[])
 
   return (
     <>
-      
-      <form onSubmit={form.onSubmit(handleSubmit)}>
-        <Text>Type: {requestData.actionType.toUpperCase()}</Text>
-        <Text>City: {requestData.city}</Text>
-        <Text>From: {requestData.name}</Text>
-        <Text>To: {userData.author.username}</Text>
+      {isLoading && <p>Loading...</p>}
+      {!isLoading &&  <form onSubmit={form.onSubmit(handleSubmit)}>
+        <Text>Type: {userData.actionType.toUpperCase()}</Text>
+        <Text>City: {userData.city}</Text>
+        <Text>From: {userData.author.username}</Text>
+        <Text>To: {location.state.name}</Text>
         <Text>
-          Time: {requestData.startDate.toString().slice(0,10)} TO {requestData.endDate.toString().slice(0,10)}
+          Time: {location.state.startDate.toString().slice(0,10)} TO {location.state.endDate.toString().slice(0,10)}
         </Text>
         <Button type="submit">Request Appointment</Button>
       </form>
+      
+      }
+     
     </>
   );
 }
