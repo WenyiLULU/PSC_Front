@@ -1,4 +1,4 @@
-import { Button, Card, Container } from "@mantine/core";
+import { Button, Card, Container, Text } from "@mantine/core";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SessionContext } from "../context/SessionContext";
@@ -10,6 +10,7 @@ function Dashboard() {
   const navigate = useNavigate();
   const { userId, apiWithToken, isAuthenticated } = useContext(SessionContext);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true)
 
   const fetchUser = async () => {
     try {
@@ -25,8 +26,9 @@ function Dashboard() {
     try {
       const userAppointments = await apiWithToken('appointment')
       const filteredAppointments = await userAppointments.filter(e => (e.creator === userId) || (e.participant.includes(userId)))
-      console.log(filteredAppointments)
       setAppointments(filteredAppointments)
+      console.log(filteredAppointments)
+      setIsLoading(false)
     } catch (error) {
       console.log("error", error);
     }
@@ -44,7 +46,8 @@ function Dashboard() {
 
   return (
     <>
-      <div>
+    {isLoading && <p>Loading...</p>}
+    {!isLoading && <><div>
         <Button
           onClick={() => {
             setSearchModalOpen(true);
@@ -56,17 +59,17 @@ function Dashboard() {
       <Container size='md' px='md'>
           {appointments.map(e =>  
           <Card >
-            {e.startDate.slice(0,9)} - {e.endDate.slice(0,9)}
-            User
-            User2
-            {e.creator}
+            <Text>{e.startDate.slice(0,10)} - {e.endDate.slice(0,10)}</Text>
+            <Text>{user.username}</Text>
+            <Text>{e.participant[0].username}</Text>
+            
           </Card>)}
       </Container>
       <SearchAvail
         searchModalOpen={searchModalOpen}
         setSearchModalOpen={setSearchModalOpen}
         user={user}
-      />
+      /></>}
     </>
   );
 }
