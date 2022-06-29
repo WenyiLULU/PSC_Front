@@ -24,6 +24,13 @@ function CreatePet({ createPetModal, setCreatePetModal }) {
     "Friendly to other spieces",
   ]);
 
+  const [needs, setNeeds] = useState([
+    "Lactose-free milk",
+    "Extra excercise",
+    "Less exercise",
+    "Have the leash all the time",
+  ]);
+
   const navigate = useNavigate();
 
   const form = useForm({
@@ -82,6 +89,14 @@ function CreatePet({ createPetModal, setCreatePetModal }) {
           {...form.getInputProps("age")}
         />
 
+        <TextInput
+          label="Breed"
+          placeholder="Your pet's breed"
+          {...form.getInputProps("breed")}
+        />
+
+        <p>Placeholder for Image</p>
+
         <MultiSelect
           label="Habits"
           data={habits}
@@ -92,6 +107,18 @@ function CreatePet({ createPetModal, setCreatePetModal }) {
           creatable
           getCreateLabel={(query) => `+ Create ${query}`}
           onCreate={(query) => setHabits((current) => [...current, query])}
+        />
+
+        <MultiSelect
+          label="Special Needs"
+          data={needs}
+          limit={5}
+          placeholder="Select special needs"
+          {...form.getInputProps("specialNeeds")}
+          searchable
+          creatable
+          getCreateLabel={(query) => `+ Create ${query}`}
+          onCreate={(query) => setNeeds((current) => [...current, query])}
         />
 
         <Select
@@ -120,7 +147,7 @@ function CreatePet({ createPetModal, setCreatePetModal }) {
         />
 
         <Group position="right" mt="md">
-          <Button type="submit">Create account</Button>
+          <Button type="submit">Update</Button>
         </Group>
       </form>
     </Modal>
