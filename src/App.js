@@ -16,6 +16,7 @@ import UserCalendar from "./pages/UserCalendar";
 import SearchAvailResults from "./pages/SearchAvailResults";
 import AvailabilitiesList from "./pages/AvailabilitiesList";
 import AvailDetails from "./pages/AvailDetails";
+import CreateAppointment from "./pages/CreateAppointment";
 
 function App() {
   const { isAuthenticated } = useContext(SessionContext);
@@ -69,9 +70,9 @@ function App() {
             element={isAuthenticated ? <SearchAvailResults /> : <NotAuth />}
           />
           <Route
-            path="/result/:avaliId"
+            path="/result/:availId"
             element={
-              isAuthenticated ? <h1> Appointment page </h1> : <NotAuth />
+              isAuthenticated ? <h1> <CreateAppointment /> </h1> : <NotAuth />
             }
           />
           <Route path="/notauth" element={<NotAuth />} />

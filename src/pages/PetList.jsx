@@ -4,8 +4,7 @@ import { useContext } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import PetCreate from "../modals/PetCreate";
 import StandardButton from "../components/StandardButton";
-import { SimpleGrid } from "@mantine/core";
-import PetCard from "../components/PetCard";
+import { Card, SimpleGrid } from "@mantine/core";
 import "../App.css";
 
 const PetList = () => {
@@ -57,8 +56,7 @@ const PetList = () => {
         {pets
           .filter((onePet) => onePet.owner === userId)
           .map((onePet) => (
-            <PetCard
-              shadow="sm"
+            <Card shadow="sm"
               p="xl"
               component={Link}
               to={`/pet/${onePet._id}`}
@@ -68,8 +66,10 @@ const PetList = () => {
                 },
               }}
               key={onePet._id}
-              onePet={onePet}
-            />
+              onePet={onePet}> 
+            </Card>
+              
+            
           ))}
       </SimpleGrid>
     </div>
