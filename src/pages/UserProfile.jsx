@@ -53,14 +53,12 @@ function UserProfile() {
         <strong>City : </strong>
         {city}
       </p>
-      <div>
-        <img src={image} alt="user" />
-        {/*<StandardButton setModalOpen={setDropModalOpen}>
-        Change photo
-      </StandardButton>*/}
-      <StandardButton setModalOpen={setDropModalOpen}>
-        Change photo
-      </StandardButton>
+      <div style={{display:"flex", flexDirection:"column", width:"400px"}}>
+        <img src={image} alt="user" style={{width:"100%"}} />
+        
+        <StandardButton setModalOpen={setDropModalOpen}>
+          Change photo
+        </StandardButton>
       </div>
       <StandardButton setModalOpen={setEditModalOpen}>
         Edit profile
@@ -92,12 +90,7 @@ function UserProfile() {
         user={user}
         setUser={setUser}
       />
-      {/*<UploadImage 
-        dropModalOpen={dropModalOpen}
-        setDropModalOpen={setDropModalOpen}
-        user={user}
-        setUser={setUser}
-  />*/}
+      
     </>
   );
 }
