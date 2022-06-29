@@ -7,6 +7,7 @@ import { SessionContext } from "../context/SessionContext";
 function CreateAppointment({ user, request, appointModel, setAppointModel }) {
     const form = useForm({})
     const { apiPostWithToken } = useContext(SessionContext);
+    const navigate = useNavigate()
 
     const createAppointment = async (newAppointment) => {
         const response = await apiPostWithToken("appointment/create", newAppointment);
@@ -19,6 +20,7 @@ function CreateAppointment({ user, request, appointModel, setAppointModel }) {
         const data = {city: request.city, startDate: Date(request.startDate), endDate: Date(request.endDate), availabiltyId: user._id, creator: request.author, participant: user.author._id}
         setAppointModel(false)
         createAppointment(data)
+        navigate('/user/dashboard')
     }
 
   return (

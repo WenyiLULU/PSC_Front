@@ -6,8 +6,9 @@ import SearchAvail from "../modals/SearchAvail";
 
 function Dashboard() {
   const [user, setUser] = useState({});
+  const [appointments, setAppointments] = useState({});
   const navigate = useNavigate();
-  const { userId, apiWithToken } = useContext(SessionContext);
+  const { userId, apiWithToken, isAuthenticated } = useContext(SessionContext);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
 
   const fetchUser = async () => {
@@ -20,9 +21,26 @@ function Dashboard() {
     }
   };
 
+  const fetchAppointments = async () => {
+    try {
+      const userAppointments = await apiWithToken('appointment')
+      const filteredAppointments = await userAppointments.filter(e => (e.creator === userId) || (e.participant.includes(userId)))
+      console.log(filteredAppointments)
+      setAppointments(filteredAppointments)
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+
   useEffect(() => {
     userId ? fetchUser() : navigate("/notauth");
   }, [userId]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchAppointments()
+    }
+  }, [])
 
   return (
     <>
