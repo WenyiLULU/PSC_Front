@@ -5,10 +5,13 @@ import { Trash } from "tabler-icons-react";
 const AppointmentCard = ({ user, e, handleDelete }) => {
   return (
     <Card shadow="sm" p="lg">
-      <Card.Section align="center">
+      <Card.Section>
         <Badge color="red" variant="light" align="center">
           {e.startDate.slice(0, 10)} - {e.endDate.slice(0, 10)}
         </Badge>
+      </Card.Section>
+      <Card.Section style={{ marginBottom: 5, marginTop: 5 }}>
+        <Text align="center">{e._id}</Text>
       </Card.Section>
       <Card.Section style={{ marginBottom: 5, marginTop: 5 }}>
         <Text align="center">{user.username}</Text>
@@ -18,6 +21,11 @@ const AppointmentCard = ({ user, e, handleDelete }) => {
       </Card.Section>
       <Card.Section style={{ marginBottom: 5 }}>
         <Text align="center">{e.city}</Text>
+      </Card.Section>
+      <Card.Section style={{ marginBottom: 5 }}>
+        {e.pets.map((pet) => (
+          <Text align="center">{pet.name}</Text>
+        ))}
       </Card.Section>
       <Group position="center">
         <ActionIcon

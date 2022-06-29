@@ -71,7 +71,6 @@ const PetDetails = () => {
       {!isLoading && (
         <>
           <div>
-            <h1>{name}</h1>
             <TitleBar
               title={name}
               options={
