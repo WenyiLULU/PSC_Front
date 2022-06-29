@@ -13,6 +13,7 @@ const PetDetails = () => {
   //   console.log(">>>> petId: ", petId);
   const navigate = useNavigate();
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchPet = async () => {
     try {
@@ -20,6 +21,7 @@ const PetDetails = () => {
       //   console.log(">>>> Response: ", data);
       console.log(data.habits);
       setPet(data);
+      setIsLoading(false);
     } catch (error) {
       console.log(">>> error: ", error);
       // navigate("*");
@@ -45,33 +47,57 @@ const PetDetails = () => {
     }
   };
 
+  const sizeText = () => {
+    if (size === "s") {
+      return <span>Small</span>;
+    } else if (size === "m") {
+      return <span>Medium</span>;
+    } else if (size === "l") {
+      return <span>Large</span>;
+    }
+  };
+
   const handleDelete = () => {
     deletePet();
   };
 
   return (
-    <div>
-      <h1>{name}</h1>
-      <p>Age: {age}</p>
-      <p>Habits:</p>
-      {/* <ul>
-        {habits.map((element) => (
-          <li>{element}</li>
-        ))}
-      </ul> */}
-      <p>Special Needs: {specialNeeds}</p>
-      <p>Category: {category}</p>
-      <p>Size: {size}</p>
+    <>
+      {isLoading && <p>...Loading</p>}
+      {!isLoading && (
+        <>
+          <div>
+            <h1>{name}</h1>
+            <p>Age: {age}</p>
+            <p>Habits:</p>
+            <ul>
+              {habits.map((element, index) => (
+                <li key={index}>{element}</li>
+              ))}
+            </ul>
+            <p>Special Needs: </p>
+            <ul>
+              {specialNeeds.map((element, index) => (
+                <li key={index}>{element}</li>
+              ))}
+            </ul>
+            <p>Category: {category}</p>
+            <p>Size: {sizeText()}</p>
 
-      <DeleteButton handleDelete={handleDelete} />
-      <StandardButton setModalOpen={setEditModalOpen}>Edit Info</StandardButton>
-      <PetUpdate
-        modalOpen={editModalOpen}
-        setModalOpen={setEditModalOpen}
-        pet={pet}
-        setPet={setPet}
-      />
-    </div>
+            <DeleteButton handleDelete={handleDelete} />
+            <StandardButton setModalOpen={setEditModalOpen}>
+              Edit Info
+            </StandardButton>
+            <PetUpdate
+              modalOpen={editModalOpen}
+              setModalOpen={setEditModalOpen}
+              pet={pet}
+              setPet={setPet}
+            />
+          </div>
+        </>
+      )}
+    </>
   );
 };
 
