@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 
 const ImageDropzone = ({dropModalOpen, setDropModalOpen, user, setUser})=>{
   const { apiPostWithToken, apiWithToken } = useContext(SessionContext)
-  const [accepted, setAccepted] = useState()
+  const [accepted, setAccepted] = useState(false)
   const [selected, setSelected] = useState(false)
  
   const getIconColor= ()=>{
