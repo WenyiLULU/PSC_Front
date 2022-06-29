@@ -17,7 +17,7 @@ function CreateAppointment({ user, request, appointModel, setAppointModel }) {
 
     const handleSubmit = () => {
         console.log(request)
-        const data = {city: request.city, startDate: Date(request.startDate), endDate: Date(request.endDate), availabiltyId: user._id, creator: request.author, participant: user.author._id}
+        const data = {city: request.city, startDate: request.startDate, endDate: request.endDate, availabiltyId: user._id, creator: request.author, participant: user.author._id}
         setAppointModel(false)
         createAppointment(data)
         navigate('/user/dashboard')

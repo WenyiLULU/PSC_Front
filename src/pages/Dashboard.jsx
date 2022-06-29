@@ -23,11 +23,12 @@ function Dashboard() {
       navigate("*");
     }
   };
-
+//  
   const fetchAppointments = async () => {
     try {
       const userAppointments = await apiWithToken('appointment')
-      const filteredAppointments = await userAppointments.filter(e => (e.creator === userId) || (e.participant.includes(userId)))
+      console.log(userAppointments)
+      const filteredAppointments = await userAppointments.filter(e => ((e.creator === userId) || e.participant[0]._id===userId))
       setAppointments(filteredAppointments)
       console.log(filteredAppointments)
       setIsLoading(false)
@@ -70,17 +71,17 @@ function Dashboard() {
             setSearchModalOpen(true);
           }}
         >
-          Become a pet sitter /Find a pet sitter
+          Become a pet sitter / Find a pet sitter
         </Button> 
       </div>
       <Container size='md' px='md' style={{margin:10}}>
           {appointments.map(e =>  
           <Card style={{width:250}}  shadow="sm" p="lg">
           <Card.Section align='center' >
-            <Badge color="red" variant="light" align='center'>{e.startDate.slice(0,10)} - {e.endDate.slice(0,10)}</Badge>
+            <Badge color="red" variant="light" align='center'>{e.startDate.toString().slice(0,10)} - {e.endDate.toString().slice(0,10)}</Badge>
           </Card.Section>
           <Card.Section  style={{marginBottom:5, marginTop:5}}>
-            <Text align='center'>{user.username}</Text>
+            <Text align='center'>{e.creator.username}</Text>
           </Card.Section>
           <Card.Section style={{marginBottom:5}}>
             <Text align='center'>{e.participant[0].username}</Text>
