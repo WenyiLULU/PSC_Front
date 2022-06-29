@@ -11,7 +11,7 @@ import { useForm } from "@mantine/form";
 import { SessionContext } from "../context/SessionContext";
 import { useContext } from "react";
 
-const ImageDropzone = ({ dropModalOpen, setDropModalOpen, user, setUser }) => {
+const ImageDropzone = ({ dropModalOpen, setDropModalOpen, pet, setPet }) => {
   const { apiPostWithToken, apiWithToken } = useContext(SessionContext);
   const theme = useMantineTheme();
 
@@ -48,12 +48,9 @@ const ImageDropzone = ({ dropModalOpen, setDropModalOpen, user, setUser }) => {
 
   const handlerOnDrop = async (formData) => {
     try {
-      const response = await apiPostWithToken(
-        `user/${user._id}/image`,
-        formData
-      );
-      const newUser = await apiWithToken(`user/${user._id}`);
-      setUser(newUser);
+      const response = await apiPostWithToken(`pet/${pet._id}/img`, formData);
+      const newPet = await apiWithToken(`pet/${pet._id}`);
+      setPet(newPet);
       if (response.status === "KO") {
         throw new Error(response.message);
       }
@@ -69,12 +66,14 @@ const ImageDropzone = ({ dropModalOpen, setDropModalOpen, user, setUser }) => {
       title="EditUser"
     >
       <Dropzone
+        // loading
         onDrop={(files) => {
           console.log("accepted files", files);
           //const newUser = {...user}
           //newUser.file = {userPhoto:files[0]}
           const formData = new FormData();
-          formData.append("userPhoto", files[0]);
+          formData.append("petPhoto", files[0]);
+          console.log(files);
           handlerOnDrop(formData);
         }}
         onReject={(files) => console.log("rejected files", files)}
