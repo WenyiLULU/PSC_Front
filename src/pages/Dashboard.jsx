@@ -58,10 +58,17 @@ function Dashboard() {
       </div>
       <Container size='md' px='md'>
           {appointments.map(e =>  
-          <Card >
-            <Text>{e.startDate.slice(0,10)} - {e.endDate.slice(0,10)}</Text>
-            <Text>{user.username}</Text>
-            <Text>{e.participant[0].username}</Text>
+          <Card style={{width:250}}  shadow="sm" p="lg">
+          <Card.Section>
+            <Text align='center'>{e.startDate.slice(0,10)} - {e.endDate.slice(0,10)}</Text>
+          </Card.Section>
+          <Card.Section>
+            <Text align='center'>{user.username}</Text>
+          </Card.Section>  
+          <Card.Section>
+            <Text align='center'>{e.participant[0].username}</Text>
+          </Card.Section>  
+            
             
           </Card>)}
       </Container>
