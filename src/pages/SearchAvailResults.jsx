@@ -50,13 +50,13 @@ function SearchAvailResults () {
             {!isLoading && <><div>
             <p>City: {location.state.city}</p>
             <p>Type of search: {location.state.actionType}</p>
-            <p>Start Date: {Date(location.state.startDate)}</p>
-            <p>End Date: {Date(location.state.endDate)}</p>
             </div>
             <h1>Results</h1>
             {match.map(e => 
             <div style={{width: 300}}>
             <Card name={e.author.username} align='center'>
+            <Text>Start Date: {(location.state.startDate).toString().slice(0,10)}</Text>
+            <Text>End Date: {(location.state.endDate).toString().slice(0,10)}</Text>
             <Text weight={500} align='center'>
             {e.author.username}
             </Text>

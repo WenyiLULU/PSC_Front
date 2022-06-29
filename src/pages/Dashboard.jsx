@@ -35,7 +35,7 @@ function Dashboard() {
       navigate("*");
     }
   };
-
+  //
   const fetchAppointments = async () => {
     try {
       const userAppointments = await apiWithToken("appointment");

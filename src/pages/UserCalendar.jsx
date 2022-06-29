@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { RangeCalendar } from "@mantine/dates";
 import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
-import { Button, Select, TextInput } from "@mantine/core";
+import { Button, Group, Select, Text, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { SessionContext } from "../context/SessionContext";
 import AvailabilitiesList from "./AvailabilitiesList";
@@ -49,7 +49,10 @@ function UserCalendar() {
 
   return (
     <>
+     
+      <Group>
       <form onSubmit={form.onSubmit(handleSubmit)}>
+      <Text align='center'>Create an availability</Text>
         <RangeCalendar
           value={calendarValue}
           onChange={setCalendarValue}
@@ -70,12 +73,14 @@ function UserCalendar() {
         />
         <TextInput
           label="City"
-          placeholder="Your city (should be user city)"
+          placeholder="Select a city"
           {...form.getInputProps("city")}
         />
-        <Button type="submit">Select timeframe</Button>
+        <Button type="submit" style={{marginRight:5}}>Select timeframe</Button>
         <Button component={NavLink} to="/user/avail">Edit availabilities</Button>
       </form>
+      </Group>
+      
     </>
   );
 }
