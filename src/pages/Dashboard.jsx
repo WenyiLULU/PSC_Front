@@ -1,4 +1,4 @@
-import { Button } from "@mantine/core";
+import { Button, Card, Container } from "@mantine/core";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SessionContext } from "../context/SessionContext";
@@ -53,6 +53,15 @@ function Dashboard() {
           Become a pet sitter /Find a pet sitter
         </Button>
       </div>
+      <Container size='md' px='md'>
+          {appointments.map(e =>  
+          <Card >
+            {e.startDate.slice(0,9)} - {e.endDate.slice(0,9)}
+            User
+            User2
+            {e.creator}
+          </Card>)}
+      </Container>
       <SearchAvail
         searchModalOpen={searchModalOpen}
         setSearchModalOpen={setSearchModalOpen}
