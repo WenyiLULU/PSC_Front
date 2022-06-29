@@ -7,6 +7,7 @@ import StandardButton from "../components/StandardButton";
 import { SimpleGrid } from "@mantine/core";
 import PetCard from "../components/PetCard";
 import "../App.css";
+import TitleBar from "../components/TitleBar";
 
 const PetList = () => {
   const { apiWithToken, isAuthenticated, userId } = useContext(SessionContext);
@@ -31,20 +32,23 @@ const PetList = () => {
     if (isAuthenticated) {
       fetchPets();
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, setPets]);
 
   return (
     <div>
-      <div className="titleBar">
-        <h1>My little friends</h1>
-        <StandardButton setModalOpen={setCreatePetModal}>
-          Add a Pet
-        </StandardButton>
-        <PetCreate
-          createPetModal={createPetModal}
-          setCreatePetModal={setCreatePetModal}
-        />
-      </div>
+      <TitleBar
+        title={"My Little Friends"}
+        options={
+          <StandardButton setModalOpen={setCreatePetModal}>
+            Add a Pet
+          </StandardButton>
+        }
+      />
+
+      <PetCreate
+        createPetModal={createPetModal}
+        setCreatePetModal={setCreatePetModal}
+      />
       <SimpleGrid
         breakpoints={[
           { maxWidth: 2000, cols: 6, spacing: "md" },
