@@ -6,7 +6,7 @@ import StandardButton from "../components/StandardButton";
 import EditUser from "../modals/EditUser";
 import EditPassword from "../modals/EditPassword";
 import SearchAvail from "../modals/SearchAvail";
-import { Button } from "@mantine/core";
+import { Button, Container, Image } from "@mantine/core";
 import ImageDropzone from "../modals/ImageDropzone";
 import UploadImage from "../modals/UploadImage";
 import TitleBar from "../components/TitleBar";
@@ -72,13 +72,20 @@ function UserProfile() {
           </p>
           <div
             style={{ display: "flex", flexDirection: "column", width: "400px" }}
-          >
-            <img src={image} alt="user" style={{ width: "100%" }} />
-
+          ></div>
+          <Container>
+            <Image
+              fit="cover"
+              height={500}
+              width={300}
+              radius="lg"
+              src={image}
+              alt="user"
+            />
             <StandardButton setModalOpen={setDropModalOpen}>
               Change photo
             </StandardButton>
-          </div>
+          </Container>
 
           <EditUser
             editModalOpen={editModalOpen}
@@ -92,11 +99,11 @@ function UserProfile() {
             user={user}
             setUser={setUser}
           />
-          <SearchAvail
+          {/* <SearchAvail
             searchModalOpen={searchModalOpen}
             setSearchModalOpen={setSearchModalOpen}
             user={user}
-          />
+          /> */}
           <ImageDropzone
             dropModalOpen={dropModalOpen}
             setDropModalOpen={setDropModalOpen}
@@ -105,7 +112,6 @@ function UserProfile() {
           />
         </>
       )}
-      ;
     </>
   );
 }
