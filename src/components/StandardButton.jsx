@@ -2,8 +2,7 @@ import { Button } from "@mantine/core";
 
 const StandardButton = ({ setModalOpen, children }) => {
   return (
-    <Button 
-      radius="lg" size="lg"
+    <Button
       onClick={() => {
         // condition if logged in => redirect to Dashboard
         // else => open login modal
