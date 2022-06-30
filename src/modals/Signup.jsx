@@ -2,11 +2,13 @@ import { useForm } from "@mantine/form";
 import { PasswordInput, Group, Button, Modal, TextInput } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import { SessionContext } from "../context/SessionContext"
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { signUp, logIn } from "../utils/reqBackEnd";
+import { useEffect } from "react";
 
 function Signup({ signupModalOpen, setSignupModalOpen }) {
     const { authenticateUser } = useContext(SessionContext)
+    const [ userCreated, setUserCreated] = useState(false)
     const navigate = useNavigate()
 
   const form = useForm({
@@ -30,7 +32,9 @@ function Signup({ signupModalOpen, setSignupModalOpen }) {
       if (response.status === 'KO') {
         throw new Error(response.message)
       }
-
+      if (response.status ==="OK"){
+        setUserCreated(true)
+      }
       //navigate('/user/dashboard')
     } catch (error) {
       form.setErrors({ username: error.message })
@@ -65,10 +69,15 @@ function Signup({ signupModalOpen, setSignupModalOpen }) {
     }
   }
 
-  const handleSubmit = (values) => {
-    createUser(values)
+  const handleSubmit = async (values) => {
+    await createUser(values)
+    setSignupModalOpen(false)
     logUser({email: values.email, password:values.password})
   }
+  useEffect(()=>{
+    setUserCreated(false)
+  }, [])
+  
 
   return (
     <Modal opened={signupModalOpen} onClose={() => setSignupModalOpen(false)} title='Signup'>
