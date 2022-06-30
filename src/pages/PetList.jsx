@@ -15,6 +15,7 @@ const PetList = () => {
   const [createPetModal, setCreatePetModal] = useState(false);
   const [pets, setPets] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [needRefresh, setNeedRefresh] = useState(false)
 
   // console.log("pets: ", pets);
 
