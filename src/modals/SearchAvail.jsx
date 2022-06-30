@@ -2,7 +2,7 @@ import { Button, Modal, MultiSelect, Select, TextInput } from "@mantine/core";
 import { RangeCalendar } from "@mantine/dates";
 import { useForm } from "@mantine/form";
 import { useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function SearchAvail({ searchModalOpen, setSearchModalOpen, user, userPets, setUserPets }) {
   const [searchDates, setSearchDates] = useState([Date | null, Date | null]);

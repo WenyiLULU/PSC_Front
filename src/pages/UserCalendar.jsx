@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import AvailabilitiesList from "./AvailabilitiesList";
 import TitleBar from "../components/TitleBar";
 import StandardButton from "../components/StandardButton";
 import AvailabilityCreate from "../modals/AvailabilityCreate";
@@ -24,7 +23,6 @@ function UserCalendar() {
   const navigate = useNavigate();
   const [needRefresh, setNeedRefresh] = useState(false);
 
-  const { name } = userPets;
 
   const fetchAvail = async () => {
     const petsData = await pets.filter((e) => e.owner === userId);
