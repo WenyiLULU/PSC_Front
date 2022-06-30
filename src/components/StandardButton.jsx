@@ -14,11 +14,11 @@ const StandardButton = ({ setModalOpen, children }) => {
       }} 
       sx={()=>({
         height:"40px", 
-        width:"100px",
+        width:"130px",
         margin:"0 10px",
         '@media (max-width: 400px)': {
         height:"30px", 
-        width:"100px",
+        width:"130px",
         margin:"0 5px",
         }
       })}
