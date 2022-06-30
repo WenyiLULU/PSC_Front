@@ -1,13 +1,15 @@
-import { Button, Modal, Select, TextInput } from "@mantine/core";
+import { Button, Modal, MultiSelect, Select, TextInput } from "@mantine/core";
 import { RangeCalendar } from "@mantine/dates";
 import { useForm } from "@mantine/form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 
-function SearchAvail({ searchModalOpen, setSearchModalOpen, user }) {
+function SearchAvail({ searchModalOpen, setSearchModalOpen, user, userPets, setUserPets }) {
   const [searchDates, setSearchDates] = useState([Date | null, Date | null]);
 
   const [selectValue, setSelectValue] = useState();
+
+  const [petNames, setPetNames] = useState([])
 
   const navigate = useNavigate()
 
@@ -16,11 +18,19 @@ function SearchAvail({ searchModalOpen, setSearchModalOpen, user }) {
       actionType: "",
       city: "",
       dates: searchDates,
+      pets: "",
     },
   });
 
+  useEffect(() => {
+    
+    const petName = userPets.map(e => e.name)
+    console.log('AvailSearchPets:',petName)
+    setPetNames(petName)
+  }, [])
+
   const handleSubmit = (values) => {
-    const data = {startDate: values.dates[0], endDate: values.dates[1], author: user._id, actionType: values.actionType, city: values.city, name: user.username}
+    const data = {startDate: values.dates[0], endDate: values.dates[1], author: user._id, actionType: values.actionType, city: values.city, name: user.username, pets: values.userPets}
     setSearchModalOpen(false);
     navigate("/result", {state: data})
   };
@@ -50,6 +60,11 @@ function SearchAvail({ searchModalOpen, setSearchModalOpen, user }) {
             { value: "request", label: "Find offers" },
           ]}
           {...form.getInputProps("actionType")}
+        />
+        <MultiSelect
+          label="Your Pets"
+          data={petNames}
+          {...form.getInputProps("userPets")}
         />
         <TextInput
           label="City"

@@ -11,6 +11,7 @@ function AvailabilityCreate({ availModalOpen, setAvailModalOpen, userPets, setUs
   const { userId } = useParams();
   const { apiPostWithToken } = useContext(SessionContext);
   const [petNames, setPetNames] = useState([])
+  const [petIds, setPetIds] = useState([])
 
   const [calendarValue, setCalendarValue] = useState([
     Date | null,
@@ -30,8 +31,10 @@ function AvailabilityCreate({ availModalOpen, setAvailModalOpen, userPets, setUs
   });
   
   useEffect(() => {
-    const names = userPets.map(e => e.name)
-    setPetNames(names)
+    const petId = userPets.map(e => e.id)
+    setPetIds(petId)
+    const petName = userPets.map(e => e.name)
+    setPetNames(petName)
   }, [])
 
   const createAvailability = async (newAvailability) => {
