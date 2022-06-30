@@ -10,11 +10,12 @@ import {
   MultiSelect,
 } from "@mantine/core";
 import { SessionContext } from "../context/SessionContext";
+import { useNavigate } from "react-router-dom";
 
 function CreatePet({ createPetModal, setCreatePetModal }) {
   // const { userId } = useParams();
   const { apiPostWithToken, userId } = useContext(SessionContext);
-
+  const navigate = useNavigate();
   const [selectValue, setSelectValue] = useState();
   const [habits, setHabits] = useState([
     "Sociable",
@@ -47,6 +48,7 @@ function CreatePet({ createPetModal, setCreatePetModal }) {
     const response = await apiPostWithToken("pet/create", newPet);
     // const response = await axios.post(`${BASE_API_URL}/pet/create`, newPet);
     console.log(">>>> Response: ", response);
+    navigate("/user/pets");
   };
 
   const handleSubmit = (values) => {
@@ -91,8 +93,6 @@ function CreatePet({ createPetModal, setCreatePetModal }) {
           placeholder="Your pet's breed"
           {...form.getInputProps("breed")}
         />
-
-        <p>Placeholder for Image</p>
 
         <MultiSelect
           label="Habits"
@@ -144,7 +144,7 @@ function CreatePet({ createPetModal, setCreatePetModal }) {
         />
 
         <Group position="right" mt="md">
-          <Button type="submit">Update</Button>
+          <Button type="submit">Add</Button>
         </Group>
       </form>
     </Modal>

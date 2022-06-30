@@ -118,7 +118,7 @@ const PetDetails = () => {
               {img.map((photo, index) => (
                 <Image
                   fit="cover"
-                  height={300}
+                  height={400}
                   key={index}
                   radius="lg"
                   src={photo}

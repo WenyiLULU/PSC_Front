@@ -24,63 +24,61 @@ function App() {
 
   return (
     <>
-    <PetContextProvider>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          {/* <Route path='/signup' element={<Signup />} />
+      <PetContextProvider>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            {/* <Route path='/signup' element={<Signup />} />
             <Route path='/login' element={<Login />} /> */}
-          <Route
-            path="/user/dashboard"
-            element={isAuthenticated ? <Dashboard /> : <NotAuth />}
-          />
-          <Route
-            path="/user/:userId"
-            element={isAuthenticated ? <UserProfile /> : <NotAuth />}
-          />
-          <Route
-            path="/user/pets"
-            element={isAuthenticated ? <PetList /> : <NotAuth />}
-          />
-          <Route
-            path="/user/pets/:petId"
-            element={isAuthenticated ? <PetDetails /> : <NotAuth />}
-          />
-           <Route
-            path="/user/avail"
-            element={isAuthenticated ? <AvailabilitiesList /> : <NotAuth />}
-          />
-           <Route
-            path="/user/avail/:availID"
-            element={isAuthenticated ? <AvailDetails /> : <NotAuth />}
-          />
-          <Route
-            path="/user/calendar/:userId"
-            element={
-              isAuthenticated ? (
-                <h1>
-                  {" "}
-                  <UserCalendar />{" "}
-                </h1>
-              ) : (
-                <NotAuth />
-              )
-            }
-          />
-          <Route
-            path="/result"
-            element={isAuthenticated ? <SearchAvailResults /> : <NotAuth />}
-          />
-          <Route
-            path="/result/:availId"
-            element={
-              isAuthenticated ? <h1> <CreateAppointment /> </h1> : <NotAuth />
-            }
-          />
-          <Route path="/notauth" element={<NotAuth />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Layout>
+            <Route
+              path="/user/dashboard"
+              element={isAuthenticated ? <Dashboard /> : <NotAuth />}
+            />
+            <Route
+              path="/user/:userId"
+              element={isAuthenticated ? <UserProfile /> : <NotAuth />}
+            />
+            <Route
+              path="/user/pets"
+              element={isAuthenticated ? <PetList /> : <NotAuth />}
+            />
+            <Route
+              path="/user/pets/:petId"
+              element={isAuthenticated ? <PetDetails /> : <NotAuth />}
+            />
+            <Route
+              path="/user/avail"
+              element={isAuthenticated ? <AvailabilitiesList /> : <NotAuth />}
+            />
+            <Route
+              path="/user/avail/:availID"
+              element={isAuthenticated ? <AvailDetails /> : <NotAuth />}
+            />
+            <Route
+              path="/user/calendar/:userId"
+              element={isAuthenticated ? <UserCalendar /> : <NotAuth />}
+            />
+            <Route
+              path="/result"
+              element={isAuthenticated ? <SearchAvailResults /> : <NotAuth />}
+            />
+            <Route
+              path="/result/:availId"
+              element={
+                isAuthenticated ? (
+                  <h1>
+                    {" "}
+                    <CreateAppointment />{" "}
+                  </h1>
+                ) : (
+                  <NotAuth />
+                )
+              }
+            />
+            <Route path="/notauth" element={<NotAuth />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Layout>
       </PetContextProvider>
     </>
   );

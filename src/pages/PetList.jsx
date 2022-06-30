@@ -68,7 +68,7 @@ const PetList = () => {
               to={`/pet/${onePet._id}`}
               sx={{
                 "&:hover": {
-                  backgroundColor: "red",
+                  backgroundColor: "white",
                 },
               }}
               key={onePet._id}
