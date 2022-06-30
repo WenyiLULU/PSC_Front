@@ -13,6 +13,7 @@ const PetList = () => {
   const { apiWithToken, isAuthenticated, userId } = useContext(SessionContext);
   const [createPetModal, setCreatePetModal] = useState(false);
   const [pets, setPets] = useState([]);
+  const [needRefresh, setNeedRefresh] = useState(false);
   // console.log("pets: ", pets);
 
   // FETCH PETS
@@ -34,6 +35,13 @@ const PetList = () => {
     }
   }, [isAuthenticated, setPets]);
 
+  useEffect(() => {
+    if (needRefresh) {
+      fetchPets();
+      setNeedRefresh(false);
+    }
+  }, [needRefresh]);
+
   return (
     <div>
       <TitleBar
@@ -48,6 +56,7 @@ const PetList = () => {
       <PetCreate
         createPetModal={createPetModal}
         setCreatePetModal={setCreatePetModal}
+        setNeedRefresh={setNeedRefresh}
       />
       <SimpleGrid
         breakpoints={[

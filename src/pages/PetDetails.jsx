@@ -85,9 +85,11 @@ const PetDetails = () => {
                 </>
               }
             />
-            <p>Age: {age}</p>
             <p>
-              Habits:{" "}
+              <strong>Age : </strong> {age}
+            </p>
+            <p>
+              <strong>Habits : </strong>{" "}
               {habits.map((element, index) => (
                 <Badge color="gray" variant="light" align="center" key={index}>
                   {element}
@@ -96,7 +98,7 @@ const PetDetails = () => {
             </p>
 
             <p>
-              Special Needs:{" "}
+              <strong>Special Needs : </strong>{" "}
               {specialNeeds.map((element, index) => (
                 <Badge color="gray" variant="light" align="center" key={index}>
                   {element}
@@ -104,8 +106,12 @@ const PetDetails = () => {
               ))}
             </p>
             <ul></ul>
-            <p>Category: {category}</p>
-            <p>Size: {sizeText()}</p>
+            <p>
+              <strong>Category : </strong> {category}
+            </p>
+            <p>
+              <strong>Size : </strong> {sizeText()}
+            </p>
             <SimpleGrid
               breakpoints={[
                 { maxWidth: 2000, cols: 6, spacing: "md" },

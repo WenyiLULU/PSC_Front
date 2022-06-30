@@ -12,7 +12,7 @@ import {
 import { SessionContext } from "../context/SessionContext";
 import { useNavigate } from "react-router-dom";
 
-function CreatePet({ createPetModal, setCreatePetModal }) {
+function CreatePet({ createPetModal, setCreatePetModal, setNeedRefresh }) {
   // const { userId } = useParams();
   const { apiPostWithToken, userId } = useContext(SessionContext);
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ function CreatePet({ createPetModal, setCreatePetModal }) {
     const response = await apiPostWithToken("pet/create", newPet);
     // const response = await axios.post(`${BASE_API_URL}/pet/create`, newPet);
     console.log(">>>> Response: ", response);
-    navigate("/user/pets");
+    setNeedRefresh(true);
   };
 
   const handleSubmit = (values) => {
