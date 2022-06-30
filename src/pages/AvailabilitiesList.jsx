@@ -8,6 +8,7 @@ function AvailabilitiesList() {
     const [avail, setAvail] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const {apiWithToken, isAuthenticated, userId} = useContext(SessionContext)
+    
 
     const fetchAvail = async () => {
         const allAvail = await apiWithToken('avail')
