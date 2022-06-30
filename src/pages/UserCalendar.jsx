@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from "react";
-import AvailabilitiesList from "./AvailabilitiesList";
 import TitleBar from "../components/TitleBar";
 import StandardButton from "../components/StandardButton";
 import AvailabilityCreate from "../modals/AvailabilityCreate";
 import SearchAvail from "../modals/SearchAvail";
 import { SessionContext } from "../context/SessionContext";
 import { PetContext } from "../context/PetContext";
-import { SimpleGrid } from "@mantine/core";
+import { SimpleGrid, Image } from "@mantine/core";
 import AvailCard from "../components/AvailCard";
 import { useNavigate } from "react-router-dom";
+import loadingImg from "../assets/hamster_1.gif"
 
 function UserCalendar() {
   const [availModalOpen, setAvailModalOpen] = useState(false);
@@ -67,7 +67,7 @@ function UserCalendar() {
 
   return (
     <>
-      {isLoading && <p>Loading...</p>}
+      {isLoading && <Image src={loadingImg} alt="loading ..." />}
       {!isLoading && (
         <>
           <TitleBar
