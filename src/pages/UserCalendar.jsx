@@ -8,6 +8,7 @@ import { SessionContext } from "../context/SessionContext";
 import { PetContext } from "../context/PetContext";
 import { SimpleGrid } from "@mantine/core";
 import AvailCard from "../components/AvailCard";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function UserCalendar() {
   const [availModalOpen, setAvailModalOpen] = useState(false);
@@ -15,17 +16,20 @@ function UserCalendar() {
   const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [avail, setAvail] = useState([]);
-  const [userPets, setUserPets] = useState([])
+  const [userPets, setUserPets] = useState([]);
 
-  const { pets } = useContext(PetContext)
-  const { apiWithToken, userId, apiDeleteWithToken } = useContext(SessionContext);
+  const { pets } = useContext(PetContext);
+  const { apiWithToken, userId, apiDeleteWithToken } =
+    useContext(SessionContext);
+  const navigate = useNavigate();
+  const [needRefresh, setNeedRefresh] = useState(false);
 
-  const {name} = userPets
+  const { name } = userPets;
 
   const fetchAvail = async () => {
-    const petsData = await pets.filter(e=> e.owner === userId)
-    console.log('Your pets:' ,petsData) 
-    setUserPets(petsData)
+    const petsData = await pets.filter((e) => e.owner === userId);
+    console.log("Your pets:", petsData);
+    setUserPets(petsData);
     const allAvail = await apiWithToken("avail");
     console.log(">>> All avail: ", allAvail[0].author._id, userId);
     const filterAvail = allAvail.filter((avail) => avail.author._id === userId);
@@ -38,11 +42,20 @@ function UserCalendar() {
     fetchAvail();
   }, []);
 
+  useEffect(() => {
+    if (needRefresh) {
+      fetchAvail();
+      setNeedRefresh(false);
+    }
+  }, [needRefresh]);
+
   const deleteAvail = async (appId) => {
     try {
       await apiDeleteWithToken(`avail/${appId}`);
       console.log(">>>> deleted");
+      navigate(`/user/calendar/${userId}`);
       fetchAvail();
+      // setNeedRefresh = { setNeedRefresh };
     } catch (error) {
       console.log(">>> error: ", error);
       // navigate("*");
@@ -95,6 +108,7 @@ function UserCalendar() {
             setAvailModalOpen={setAvailModalOpen}
             userPets={userPets}
             setUserPets={setUserPets}
+            setNeedRefresh={setNeedRefresh}
           />
           <SearchAvail
             searchModalOpen={searchModalOpen}
