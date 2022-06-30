@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AppointmentCard from "../components/AppointmentCard";
 import TitleBar from "../components/TitleBar";
+import { PetContext } from "../context/PetContext";
 import { SessionContext } from "../context/SessionContext";
 import SearchAvail from "../modals/SearchAvail";
 
@@ -14,6 +15,9 @@ function Dashboard() {
     useContext(SessionContext);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [userPets, setUserPets] = useState([])
+
+  const { pets } = useContext(PetContext)
 
   const fetchUser = async () => {
     try {
@@ -53,6 +57,11 @@ function Dashboard() {
     }
   };
 
+  const fetchUserPets = async () => {
+    const petsData = await pets.filter(e=> e.owner === userId)
+    setUserPets(petsData)
+  }
+
   useEffect(() => {
     userId ? fetchUser() : navigate("/notauth");
   }, [userId]);
@@ -60,6 +69,7 @@ function Dashboard() {
   useEffect(() => {
     if (isAuthenticated) {
       fetchAppointments();
+      fetchUserPets()
     }
   }, []);
 
@@ -124,6 +134,8 @@ function Dashboard() {
             searchModalOpen={searchModalOpen}
             setSearchModalOpen={setSearchModalOpen}
             user={user}
+            userPets={userPets}
+            setUserPets={setUserPets}
           />
         </>
       )}
