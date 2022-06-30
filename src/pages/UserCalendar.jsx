@@ -1,108 +1,65 @@
-import { useContext, useState } from "react";
-import { RangeCalendar } from "@mantine/dates";
-import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
-import { Button, Group, Select, Text, TextInput } from "@mantine/core";
-import { useForm } from "@mantine/form";
-import { SessionContext } from "../context/SessionContext";
+import { useContext, useEffect, useState } from "react";
 import AvailabilitiesList from "./AvailabilitiesList";
 import TitleBar from "../components/TitleBar";
 import StandardButton from "../components/StandardButton";
-import { PetContext } from "../context/PetContext";
-
+import AvailabilityCreate from "../modals/AvailabilityCreate";
+import SearchAvail from "../modals/SearchAvail";
+import { SessionContext } from "../context/SessionContext";
 
 function UserCalendar() {
-  const { userId } = useParams();
-  const { pets } = useContext(PetContext)
-
-  const { apiPostWithToken } = useContext(SessionContext);
-
-  const [calendarValue, setCalendarValue] = useState([
-    Date | null,
-    Date | null,
-  ]);
-
-  const [selectValue, setSelectValue] = useState();
-
-  const navigate = useNavigate();
   const [availModalOpen, setAvailModalOpen] = useState(false);
-  const [appointModalOpen, setAppointModalOpen] = useState(false);
-  const form = useForm({
-    initialValues: {
-      city: "",
-      actionType: "",
-      dates: calendarValue,
-    },
-  });
+  const [searchModalOpen, setSearchModalOpen] = useState(false);
+  const [user, setUser] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [avail, setAvail] = useState([]);
 
-  const createAvailability = async (newAvailability) => {
-    const response = await apiPostWithToken("avail/create", newAvailability);
-    console.log("Response", response);
-    navigate("/user/dashboard");
+  const { apiWithToken, userId } = useContext(SessionContext);
+
+  const fetchAvail = async () => {
+    const allAvail = await apiWithToken("avail");
+    const filterAvail = await allAvail.filter((e) => e.author._id === userId);
+    console.log(filterAvail);
+    setAvail(filterAvail);
+    setIsLoading(false);
   };
 
-  const handleSubmit = (values) => {
-    // setValue(value)
-    const data = {
-      startDate: values.dates[0],
-      endDate: values.dates[1],
-      author: userId,
-      actionType: values.actionType,
-      city: values.city,
-    };
-    console.log("data: ", data);
-    createAvailability(data);
-  };
+  useEffect(() => {
+    fetchAvail();
+  }, []);
 
   return (
     <>
-      <TitleBar
-        title={"My Calendar"}
-        options={
-          <>
-            <StandardButton setModalOpen={setAvailModalOpen}>
-              Add Availabilty
-            </StandardButton>
-            <StandardButton setModalOpen={setAppointModalOpen}>
-              New Appointment
-            </StandardButton>
-          </>
-        }
-      />
-      <Group>
-        <form onSubmit={form.onSubmit(handleSubmit)}>
-          <Text align="center">Create an availability</Text>
-          <RangeCalendar
-            value={calendarValue}
-            onChange={setCalendarValue}
-            label="dates"
-            {...form.getInputProps("dates")}
+      {isLoading && <p>Loading...</p>}
+      {!isLoading && (
+        <>
+          <TitleBar
+            title={"My Calendar"}
+            options={
+              <>
+                <StandardButton setModalOpen={setAvailModalOpen}>
+                  Add Availabilty
+                </StandardButton>
+                <StandardButton setModalOpen={setSearchModalOpen}>
+                  New Appointment
+                </StandardButton>
+              </>
+            }
           />
-
-          <Select
-            value={selectValue}
-            onChange={setSelectValue}
-            
-            label="Type"
-            placeholder="Pick one"
-            data={[
-              { value: "offer", label: "Offer" },
-              { value: "request", label: "Request" },
-            ]}
-            {...form.getInputProps("actionType")}
+          <AvailabilitiesList />
+          <AvailabilityCreate
+            availModalOpen={availModalOpen}
+            setAvailModalOpen={setAvailModalOpen}
           />
-          <TextInput
-            label="City"
-            placeholder="Select a city"
-            {...form.getInputProps("city")}
+          <SearchAvail
+            searchModalOpen={searchModalOpen}
+            setSearchModalOpen={setSearchModalOpen}
+            user={user}
           />
-          <Button type="submit" style={{ marginRight: 5 }}>
-            Select timeframe
-          </Button>
-          <Button component={NavLink} to="/user/avail">
-            Edit availabilities
-          </Button>
-        </form>
-      </Group>
+          {/* <Button component={NavLink} to="/user/avail">
+        Edit availabilities
+      </Button> */}
+        </>
+      )}
     </>
   );
 }

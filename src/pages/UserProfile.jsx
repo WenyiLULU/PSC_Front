@@ -6,9 +6,10 @@ import StandardButton from "../components/StandardButton";
 import EditUser from "../modals/EditUser";
 import EditPassword from "../modals/EditPassword";
 import SearchAvail from "../modals/SearchAvail";
+import { Button, Container, Image } from "@mantine/core";
 import ImageDropzone from "../modals/ImageDropzone";
 import TitleBar from "../components/TitleBar";
-import {Pencil} from "tabler-icons-react"
+import { Pencil } from "tabler-icons-react";
 
 function UserProfile() {
   const [user, setUser] = useState({});
@@ -49,10 +50,10 @@ function UserProfile() {
             options={
               <>
                 <StandardButton setModalOpen={setEditModalOpen}>
-                <Pencil size={20}/> Profile
+                  <Pencil size={20} /> Profile
                 </StandardButton>
                 <StandardButton setModalOpen={setPasswordModalOpen}>
-                <Pencil size={20}/> Password
+                  <Pencil size={20} /> Password
                 </StandardButton>
               </>
             }
@@ -71,13 +72,20 @@ function UserProfile() {
           </p>
           <div
             style={{ display: "flex", flexDirection: "column", width: "400px" }}
-          >
-            <img src={image} alt="user" style={{ width: "100%" }} />
-
-            <StandardButton setModalOpen={setDropModalOpen} >
-              <Pencil size={20}/> Photo
+          ></div>
+          <Container>
+            <Image
+              fit="cover"
+              height={500}
+              width={300}
+              radius="lg"
+              src={image}
+              alt="user"
+            />
+            <StandardButton setModalOpen={setDropModalOpen}>
+              Change photo
             </StandardButton>
-          </div>
+          </Container>
 
           <EditUser
             editModalOpen={editModalOpen}
@@ -91,11 +99,11 @@ function UserProfile() {
             user={user}
             setUser={setUser}
           />
-          <SearchAvail
+          {/* <SearchAvail
             searchModalOpen={searchModalOpen}
             setSearchModalOpen={setSearchModalOpen}
             user={user}
-          />
+          /> */}
           <ImageDropzone
             dropModalOpen={dropModalOpen}
             setDropModalOpen={setDropModalOpen}
@@ -104,7 +112,6 @@ function UserProfile() {
           />
         </>
       )}
-      
     </>
   );
 }

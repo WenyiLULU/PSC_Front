@@ -1,22 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "@mantine/form";
 import {
   Group,
   Button,
   Modal,
-  Input,
   NumberInput,
   Select,
   TextInput,
   MultiSelect,
 } from "@mantine/core";
 import { SessionContext } from "../context/SessionContext";
-import { useNavigate, useParams } from "react-router-dom";
 
 function CreatePet({ createPetModal, setCreatePetModal }) {
   // const { userId } = useParams();
   const { apiPostWithToken, userId } = useContext(SessionContext);
-  const navigate = useNavigate();
+
   const [selectValue, setSelectValue] = useState();
   const [habits, setHabits] = useState([
     "Sociable",
@@ -67,7 +65,6 @@ function CreatePet({ createPetModal, setCreatePetModal }) {
     // console.log(">>>> data: ", data);
     createPet(data);
     setCreatePetModal(false);
-    navigate();
   };
 
   return (

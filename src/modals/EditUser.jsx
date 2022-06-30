@@ -1,104 +1,110 @@
 import { useForm } from "@mantine/form";
-import { Group, Button, Modal, TextInput, Checkbox, Textarea} from "@mantine/core";
-import { SessionContext } from "../context/SessionContext"
+import {
+  Group,
+  Button,
+  Modal,
+  TextInput,
+  Checkbox,
+  Textarea,
+} from "@mantine/core";
+import { SessionContext } from "../context/SessionContext";
 import { useContext } from "react";
 import { useEffect } from "react";
 
 function EditUser({ editModalOpen, setEditModalOpen, user, setUser }) {
-    const { apiPutWithToken, apiWithToken } = useContext(SessionContext)
-    
-    const form = useForm({
-        initialValues: {
-        username: "",
-        //email: email,
-        country: "",
-        city:"",
-        image:"",
-        owner:false,
-        sitter:false,  
-        description:"", 
-        experience:""
-        },
+  const { apiPutWithToken, apiWithToken } = useContext(SessionContext);
 
-    });
+  const form = useForm({
+    initialValues: {
+      username: "",
+      //email: email,
+      country: "",
+      city: "",
+      image: "",
+      owner: false,
+      sitter: false,
+      description: "",
+      experience: "",
+    },
+  });
 
-    useEffect(()=>{
-        if(user?.username){
-            const { username, country, city, owner, sitter, description, experience} = user
-            form.setValues({username,
-                country,
-                city,
-                owner,
-                sitter,  
-                description, 
-                experience})
-        }
-    }, [user])
-
-    const updateUser = async newUserInfo => {
-        try {
-        const response = await apiPutWithToken(`user/${user._id}`, newUserInfo)
-        const newUser = await apiWithToken(`user/${user._id}`)
-        setUser(newUser)
-        if (response.status === 'KO') {
-            throw new Error(response.message)
-        }
-
-        } catch (error) {
-        form.setErrors({ username: error.message })
-        }
+  useEffect(() => {
+    if (user?.username) {
+      const {
+        username,
+        country,
+        city,
+        owner,
+        sitter,
+        description,
+        experience,
+      } = user;
+      form.setValues({
+        username,
+        country,
+        city,
+        owner,
+        sitter,
+        description,
+        experience,
+      });
     }
+  }, [user]);
 
-    const handleSubmit = (values) => {
-        console.log("values",values)
-        updateUser(values)        
-        setEditModalOpen(false)
+  const updateUser = async (newUserInfo) => {
+    try {
+      const response = await apiPutWithToken(`user/${user._id}`, newUserInfo);
+      const newUser = await apiWithToken(`user/${user._id}`);
+      setUser(newUser);
+      if (response.status === "KO") {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      form.setErrors({ username: error.message });
     }
-   
-    return (
-        <Modal opened={editModalOpen} onClose={() => setEditModalOpen(false)} title='EditUser'>
-            <form onSubmit={form.onSubmit(handleSubmit)} >
-                <TextInput
-                    label="Username"
-                    {...form.getInputProps("username")} 
-                />
+  };
 
-                <TextInput
-                    label="Country"
-                    {...form.getInputProps("country")}
-                />
+  const handleSubmit = (values) => {
+    console.log("values", values);
+    updateUser(values);
+    setEditModalOpen(false);
+  };
 
-                <TextInput
-                    label="City" 
-                    {...form.getInputProps("city")}
-                />
-                <Checkbox
-                    label="I'm a pets owner"
-                    color="lime"
-                    {...form.getInputProps("owner")}
-                />
-                <Checkbox
-                    label="I want to be a pet sitter"
-                    color="lime"
-                    {...form.getInputProps("sitter")}
-                />
-                <Textarea
-                    label="About you"
-                    {...form.getInputProps("description")}
-                />
+  return (
+    <Modal
+      opened={editModalOpen}
+      onClose={() => setEditModalOpen(false)}
+      title="EditUser"
+    >
+      <form onSubmit={form.onSubmit(handleSubmit)}>
+        <TextInput label="Username" {...form.getInputProps("username")} />
 
-                <Textarea
-                    label="Experience in taking care of pets (please specify)"                
-                    {...form.getInputProps("experience")}
-                />
+        <TextInput label="Country" {...form.getInputProps("country")} />
 
-                <Group position="right" mt="md">
-                    <Button type="submit">Save</Button>
-                </Group>
-            </form>
-        </Modal>
-    );
-    }
+        <TextInput label="City" {...form.getInputProps("city")} />
+        <Checkbox
+          label="I'm a pets owner"
+          color="lime"
+          {...form.getInputProps("owner")}
+        />
+        <Checkbox
+          label="I want to be a pet sitter"
+          color="lime"
+          {...form.getInputProps("sitter")}
+        />
+        <Textarea label="About you" {...form.getInputProps("description")} />
 
+        <Textarea
+          label="Experience in taking care of pets (please specify)"
+          {...form.getInputProps("experience")}
+        />
 
-export default EditUser
+        <Group position="right" mt="md">
+          <Button type="submit">Save</Button>
+        </Group>
+      </form>
+    </Modal>
+  );
+}
+
+export default EditUser;
