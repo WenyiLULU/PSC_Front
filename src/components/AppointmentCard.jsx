@@ -3,16 +3,11 @@ import {
   Avatar,
   Badge,
   Card,
-  CardSection,
   Group,
   Space,
   Text,
   Title,
-  Container,
   Grid,
-  SimpleGrid,
-  Box,
-  AspectRatio,
   Stack,
 } from "@mantine/core";
 import React from "react";

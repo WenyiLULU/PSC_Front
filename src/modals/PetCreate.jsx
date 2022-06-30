@@ -10,14 +10,12 @@ import {
   MultiSelect,
 } from "@mantine/core";
 import { SessionContext } from "../context/SessionContext";
-import { useNavigate } from "react-router-dom";
 import { PetContext } from "../context/PetContext";
 
 function CreatePet({ createPetModal, setCreatePetModal, setNeedRefresh }) {
   // const { userId } = useParams();
   const { apiPostWithToken, userId } = useContext(SessionContext);
   const { setRefreshPetContext } = useContext(PetContext)
-  const navigate = useNavigate();
   const [selectValue, setSelectValue] = useState();
   const [habits, setHabits] = useState([
     "Sociable",

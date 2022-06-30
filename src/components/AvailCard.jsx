@@ -1,4 +1,4 @@
-import { ActionIcon, Badge, Card, Container, Group, Text } from "@mantine/core";
+import { ActionIcon, Badge, Card, Group, Text } from "@mantine/core";
 import React from "react";
 import { Link } from "react-router-dom";
 import { Trash } from "tabler-icons-react";

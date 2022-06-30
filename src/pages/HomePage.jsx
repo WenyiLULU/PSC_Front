@@ -4,7 +4,7 @@ import StartButton from "../components/StartButton";
 import Signup from "../modals/Signup";
 import dog from "../assets/dog_1.gif"
 
-import { BackgroundImage, Center, Text, Box, Title,Image } from '@mantine/core';
+import { BackgroundImage, Center, Box, Image } from '@mantine/core';
 import bacgroudImg from "../assets/background.png"
 import logo from "../assets/logo_v3_shadow.svg"
 
