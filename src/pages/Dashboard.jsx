@@ -1,18 +1,10 @@
 import {
-  ActionIcon,
-  Badge,
   Button,
-  Card,
-  Container,
-  Group,
   SimpleGrid,
-  Text,
 } from "@mantine/core";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Trash } from "tabler-icons-react";
 import AppointmentCard from "../components/AppointmentCard";
-import DeleteButton from "../components/DeleteButtonIcon";
 import TitleBar from "../components/TitleBar";
 import { SessionContext } from "../context/SessionContext";
 import SearchAvail from "../modals/SearchAvail";
@@ -84,6 +76,25 @@ function Dashboard() {
             title={"Dashboard"}
             options={
               <Button
+              radius="lg"
+              size="xs"
+              variant="outline" 
+              color="#7FC9CD" 
+              style={{
+                background:"#e0f5eb",
+                boxShadow: "2px 2px #302e36",
+                margin:"0 10px",   
+              }} 
+              sx={()=>({
+                height:"40px", 
+                width:"150px",
+                margin:"0 10px",
+                '@media (max-width: 400px)': {
+                height:"30px", 
+                width:"150px",
+                margin:"0 5px",
+                }
+              })}
                 onClick={() => {
                   setSearchModalOpen(true);
                 }}

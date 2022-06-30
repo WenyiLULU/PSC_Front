@@ -6,10 +6,9 @@ import StandardButton from "../components/StandardButton";
 import EditUser from "../modals/EditUser";
 import EditPassword from "../modals/EditPassword";
 import SearchAvail from "../modals/SearchAvail";
-import { Button } from "@mantine/core";
 import ImageDropzone from "../modals/ImageDropzone";
-import UploadImage from "../modals/UploadImage";
 import TitleBar from "../components/TitleBar";
+import {Pencil} from "tabler-icons-react"
 
 function UserProfile() {
   const [user, setUser] = useState({});
@@ -50,10 +49,10 @@ function UserProfile() {
             options={
               <>
                 <StandardButton setModalOpen={setEditModalOpen}>
-                  Edit profile
+                <Pencil size={20}/> Profile
                 </StandardButton>
                 <StandardButton setModalOpen={setPasswordModalOpen}>
-                  Edit password
+                <Pencil size={20}/> Password
                 </StandardButton>
               </>
             }
@@ -75,8 +74,8 @@ function UserProfile() {
           >
             <img src={image} alt="user" style={{ width: "100%" }} />
 
-            <StandardButton setModalOpen={setDropModalOpen}>
-              Change photo
+            <StandardButton setModalOpen={setDropModalOpen} >
+              <Pencil size={20}/> Photo
             </StandardButton>
           </div>
 
@@ -105,7 +104,7 @@ function UserProfile() {
           />
         </>
       )}
-      ;
+      
     </>
   );
 }

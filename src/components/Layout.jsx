@@ -3,11 +3,9 @@ import {
   ActionIcon,
   Anchor,
   AppShell,
-  Box,
   Header,
   Image,
   Navbar,
-  Title,
   MediaQuery,
   Burger,
   Text,
@@ -18,7 +16,7 @@ import { NavLink, useMatch } from "react-router-dom";
 import logo from "../assets/logo_b.svg";
 import logoutIcon from "../assets/logout.png";
 import { SessionContext } from "../context/SessionContext";
-
+import { LayoutDashboard, CalendarStats, Bone, User } from 'tabler-icons-react'
 function Layout({ children }) {
   const theme = useMantineTheme();
   const match = useMatch("/");
@@ -34,10 +32,8 @@ function Layout({ children }) {
         <AppShell
           styles={{
             main: {
-              background:
-                theme.colorScheme === "dark"
-                  ? theme.colors.dark[8]
-                  : theme.colors.gray[0],
+              background: "#95b1db",
+              color:"#302e36",
             },
           }}
           navbarOffsetBreakpoint="sm"
@@ -49,31 +45,35 @@ function Layout({ children }) {
               hiddenBreakpoint="sm"
               hidden={!opened}
               width={{ sm: 200, lg: 200 }}
+              style={{
+                background:"#e0f5eb",
+                }}
+                
             >
               <Anchor
                 component={NavLink}
                 to={isAuthenticated ? "/user/dashboard" : "/notauth"}
               >
-                Dashboard
+                <LayoutDashboard size={20} /> Dashboard
               </Anchor>
               <hr />
               <Anchor
                 component={NavLink}
                 to={isAuthenticated ? `/user/calendar/${userId}` : "/notauth"}
               >
-                My Calendar
+                <CalendarStats size={20} /> My Calendar
               </Anchor>
               <Anchor
                 component={NavLink}
                 to={isAuthenticated ? "/user/pets" : "/notauth"}
               >
-                My Pets
+                <Bone size={20} /> My Pets
               </Anchor>
               <Anchor
                 component={NavLink}
                 to={isAuthenticated ? `/user/${userId}` : "/notauth"}
               >
-                My Profile
+                <User size={20} /> My Profile
               </Anchor>
 
               <hr />
@@ -88,7 +88,12 @@ function Layout({ children }) {
             </Footer>
           }
           header={
-            <Header height={70} p="md">
+            <Header 
+              height={70} 
+              p="md" 
+              style={{
+              background:"#e0f5eb",
+              }}>
               <div
                 style={{
                   display: "flex",
