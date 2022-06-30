@@ -54,7 +54,7 @@ function CreateAppointment({ requestData }) {
     };
     console.log(data);
     createAppointment(data);
-    // navigate("/user/dashboard");
+    navigate("/user/dashboard");
   };
 
   useEffect(() => {

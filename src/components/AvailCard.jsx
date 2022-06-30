@@ -1,4 +1,4 @@
-import { ActionIcon, Card, Group, Text } from "@mantine/core";
+import { ActionIcon, Card, Container, Group, Text } from "@mantine/core";
 import React from "react";
 import { Link } from "react-router-dom";
 import { Trash } from "tabler-icons-react";
@@ -22,6 +22,15 @@ const AvailCard = ({ oneAvail, handleDelete }) => {
         {oneAvail.endDate.slice(0, 10)}
       </Text>
       <Text>Type: {oneAvail.actionType}</Text>
+      {oneAvail.actionType === "request" && (
+        <Text>
+          Pets:
+          {oneAvail.pets.map((onePet) => (
+            <span> {onePet}</span>
+          ))}
+        </Text>
+      )}
+      {oneAvail.actionType === "offer" && <Text>Pets: to be confirmed</Text>}
       <Text>City: {oneAvail.city}</Text>
 
       <Group position="right">

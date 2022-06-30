@@ -38,6 +38,13 @@ const PetList = () => {
     }
   }, [isAuthenticated, setPets]);
 
+  useEffect(() => {
+    if (needRefresh) {
+      fetchPets();
+      setNeedRefresh(false);
+    }
+  }, [needRefresh]);
+
   return (
     isLoading ? <Image src={loadingImg} alt="loading ..." />
     : <div>
@@ -53,6 +60,7 @@ const PetList = () => {
       <PetCreate
         createPetModal={createPetModal}
         setCreatePetModal={setCreatePetModal}
+        setNeedRefresh={setNeedRefresh}
       />
       <SimpleGrid
         breakpoints={[
