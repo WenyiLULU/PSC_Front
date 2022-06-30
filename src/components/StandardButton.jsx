@@ -8,7 +8,7 @@ const StandardButton = ({ setModalOpen, children }) => {
       variant="outline" 
       color="#7FC9CD" 
       style={{
-        boxShadow: "2px 2px #302e36",
+        boxShadow: "2px 2px 4px 0 #302e36",
         margin:"0 10px", 
         background:"#e0f5eb",  
       }} 
