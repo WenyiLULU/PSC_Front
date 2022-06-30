@@ -6,10 +6,10 @@ import StandardButton from "../components/StandardButton";
 import EditUser from "../modals/EditUser";
 import EditPassword from "../modals/EditPassword";
 import SearchAvail from "../modals/SearchAvail";
-import { Center, Checkbox, Image } from "@mantine/core";
+import { SimpleGrid, Checkbox, Image, Center } from "@mantine/core";
 import ImageDropzone from "../modals/ImageDropzone";
 import TitleBar from "../components/TitleBar";
-import { Pencil } from "tabler-icons-react";
+import { Pencil, SquareCheck, Square } from "tabler-icons-react";
 
 function UserProfile() {
   const [user, setUser] = useState({});
@@ -33,11 +33,11 @@ function UserProfile() {
     userId ? fetchUser() : navigate("/notauth");
   }, [userId]);
 
-  const { username, email, country, city, image, owner, sitter, description } = user;
+  const { username, email, country, city, image, owner, sitter, description, experience } = user;
   
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [passwordModalOpen, setPasswordModalOpen] = useState(false);
-  const [searchModalOpen, setSearchModalOpen] = useState(false);
+  //const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [dropModalOpen, setDropModalOpen] = useState(false);
 
   return (
@@ -61,26 +61,29 @@ function UserProfile() {
               </>
             }
           />
-          <Center 
-            sx={()=>({
-              
-              '@media (max-width: 400px)': {
-                display:"flex",
-                flexDirection:"column"
-              }
-            })}
+          <SimpleGrid
+            breakpoints={[
+              { maxWidth: 3000, cols: 2, spacing: "md" },
+              { maxWidth: 800, cols: 1, spacing: "sm" },
+            ]}
           >
-
-            <Image
-              fit="contain"
-              height={300}
-              width={300}
-              radius="lg"
-              src={image}
-              alt="user"
-            />
-
-            <div style={{margin:"30px"}}>
+            <Center style={{padding:"20px"}}>
+              <Image
+                fit="cover"
+                
+                radius="lg"
+                src={image}
+                alt="user"
+                sx={()=>({
+                  width:"80%",
+                  '@media (max-width: 1300px)': {
+                    width:"100%",
+                  }
+                })}
+              />
+            </Center>
+            
+            <div style={{margin:"20px 30px"}}>
               <p>
               <strong>Email : </strong>
               {email}
@@ -94,22 +97,24 @@ function UserProfile() {
                 {city}
               </p>
               <div >
-              <Checkbox
-                label="Pets owner"
-                checked={owner}
-                style={{marginTop:"10px"}}
-              />
-              <Checkbox
-                label="Pets sitter"
-                checked={sitter}
-                style={{
-                  marginTop:"10px"
-                }}
-              />
+              <div style={{display:"flex", alignItems:"center"}}>
+                {owner ? <SquareCheck color={'#95b1db'} size={30}/> : <Square color={'#95b1db'} size={30}/> } 
+                 Pets owner
+              </div>
+                
+              <div style={{display:"flex", alignItems:"center"}}>
+                {sitter ? <SquareCheck color={'#95b1db'} size={30}/> : <Square color={'#95b1db'} size={30}/> } 
+                 Pets Sitter
+              </div>
+              
               </div>
               <p>
                 <strong>About Me : </strong>
                 {description}
+              </p>
+              <p>
+                <strong>My experience : </strong>
+                {experience}
               </p>
             
             </div>
@@ -125,8 +130,8 @@ function UserProfile() {
               user={user}
               setUser={setUser}
             />
-            
-          </Center>
+          </SimpleGrid>
+          
           
           {/* <SearchAvail
             searchModalOpen={searchModalOpen}

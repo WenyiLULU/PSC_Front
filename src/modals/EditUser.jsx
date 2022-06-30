@@ -6,13 +6,17 @@ import {
   TextInput,
   Checkbox,
   Textarea,
+  Select
 } from "@mantine/core";
 import { SessionContext } from "../context/SessionContext";
 import { useContext } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function EditUser({ editModalOpen, setEditModalOpen, user, setUser }) {
   const { apiPutWithToken, apiWithToken } = useContext(SessionContext);
+  const [selectValue, setSelectValue] = useState();
+  
+
 
   const form = useForm({
     initialValues: {
@@ -51,6 +55,7 @@ function EditUser({ editModalOpen, setEditModalOpen, user, setUser }) {
     }
   }, [user]);
 
+
   const updateUser = async (newUserInfo) => {
     try {
       const response = await apiPutWithToken(`user/${user._id}`, newUserInfo);
@@ -84,19 +89,28 @@ function EditUser({ editModalOpen, setEditModalOpen, user, setUser }) {
         <TextInput label="City" {...form.getInputProps("city")} />
         <Checkbox
           label="I'm a pets owner"
-          color="lime"
+          color="cyan"
           {...form.getInputProps("owner")}
+          
         />
         <Checkbox
           label="I want to be a pet sitter"
-          color="lime"
+          color="cyan"
           {...form.getInputProps("sitter")}
         />
         <Textarea label="About you" {...form.getInputProps("description")} />
 
-        <Textarea
-          label="Experience in taking care of pets (please specify)"
+        <Select
+          value={selectValue}
+          onChange={setSelectValue}
+          label="Experience"
+          placeholder="Choose your experience of taking care of pets"
           {...form.getInputProps("experience")}
+          data={[
+            { value: "Beginner", label: "Beginner" },
+            { value: "More than 3 years", label: "More than 3 years" },
+            { value: "Professional", label: "Professional" },
+          ]}
         />
 
         <Group position="right" mt="md">

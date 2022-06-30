@@ -12,12 +12,12 @@ const StartButton = ({ setLoginModalOpen }) => {
       sx={()=>({
         height:"40px", 
         width:"300px",
-        boxShadow: "4px 4px #302e36",
+        boxShadow: "4px 4px 5px 0 #302e36",
         
         '@media (max-width: 400px)': {
         height:"30px", 
         width:"200px",
-        boxShadow: "3px 3px #302e36",
+        boxShadow: "3px 3px 5px 0 #302e36",
         frontSize:"15px",
         }
       })}
