@@ -6,7 +6,7 @@ import StandardButton from "../components/StandardButton";
 import EditUser from "../modals/EditUser";
 import EditPassword from "../modals/EditPassword";
 import SearchAvail from "../modals/SearchAvail";
-import { Button, Container, Image } from "@mantine/core";
+import { Center, Checkbox, Image } from "@mantine/core";
 import ImageDropzone from "../modals/ImageDropzone";
 import TitleBar from "../components/TitleBar";
 import { Pencil } from "tabler-icons-react";
@@ -33,8 +33,8 @@ function UserProfile() {
     userId ? fetchUser() : navigate("/notauth");
   }, [userId]);
 
-  const { username, email, country, city, image } = user;
-
+  const { username, email, country, city, image, owner, sitter, description } = user;
+  
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [passwordModalOpen, setPasswordModalOpen] = useState(false);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
@@ -49,6 +49,9 @@ function UserProfile() {
             title={`Hello ${username}!`}
             options={
               <>
+                <StandardButton setModalOpen={setDropModalOpen} >
+                  <Pencil size={20} /> Photo
+                </StandardButton>
                 <StandardButton setModalOpen={setEditModalOpen}>
                   <Pencil size={20} /> Profile
                 </StandardButton>
@@ -58,47 +61,73 @@ function UserProfile() {
               </>
             }
           />
-          <p>
-            <strong>Email : </strong>
-            {email}
-          </p>
-          <p>
-            <strong>Country : </strong>
-            {country}
-          </p>
-          <p>
-            <strong>City : </strong>
-            {city}
-          </p>
-          <div
-            style={{ display: "flex", flexDirection: "column", width: "400px" }}
-          ></div>
-          <Container>
+          <Center 
+            sx={()=>({
+              
+              '@media (max-width: 400px)': {
+                display:"flex",
+                flexDirection:"column"
+              }
+            })}
+          >
+
             <Image
-              fit="cover"
-              height={500}
+              fit="contain"
+              height={300}
               width={300}
               radius="lg"
               src={image}
               alt="user"
             />
-            <StandardButton setModalOpen={setDropModalOpen}>
-              Change photo
-            </StandardButton>
-          </Container>
 
-          <EditUser
-            editModalOpen={editModalOpen}
-            setEditModalOpen={setEditModalOpen}
-            user={user}
-            setUser={setUser}
-          />
-          <EditPassword
-            passwordModalOpen={passwordModalOpen}
-            setPasswordModalOpen={setPasswordModalOpen}
-            user={user}
-            setUser={setUser}
-          />
+            <div style={{margin:"30px"}}>
+              <p>
+              <strong>Email : </strong>
+              {email}
+              </p>
+              <p>
+                <strong>Country : </strong>
+                {country}
+              </p>
+              <p>
+                <strong>City : </strong>
+                {city}
+              </p>
+              <div >
+              <Checkbox
+                label="Pets owner"
+                checked={owner}
+                style={{marginTop:"10px"}}
+              />
+              <Checkbox
+                label="Pets sitter"
+                checked={sitter}
+                style={{
+                  marginTop:"10px"
+                }}
+              />
+              </div>
+              <p>
+                <strong>About Me : </strong>
+                {description}
+              </p>
+            
+            </div>
+            <EditUser
+              editModalOpen={editModalOpen}
+              setEditModalOpen={setEditModalOpen}
+              user={user}
+              setUser={setUser}
+            />
+            <EditPassword
+              passwordModalOpen={passwordModalOpen}
+              setPasswordModalOpen={setPasswordModalOpen}
+              user={user}
+              setUser={setUser}
+            />
+            
+          </Center>
+          
           {/* <SearchAvail
             searchModalOpen={searchModalOpen}
             setSearchModalOpen={setSearchModalOpen}

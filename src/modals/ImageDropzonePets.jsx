@@ -2,12 +2,10 @@ import {
   Group,
   Text,
   useMantineTheme,
-  MantineTheme,
   Modal,
 } from "@mantine/core";
 import { Upload, Photo, X, Icon as TablerIcon } from "tabler-icons-react";
-import { Dropzone, DropzoneStatus, IMAGE_MIME_TYPE } from "@mantine/dropzone";
-import { useForm } from "@mantine/form";
+import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import { SessionContext } from "../context/SessionContext";
 import { useContext } from "react";
 
@@ -85,7 +83,6 @@ const ImageDropzone = ({ dropModalOpen, setDropModalOpen, pet, setPet }) => {
           return dropzoneChildren(status, theme);
         }}
       </Dropzone>
-      {/*</form>*/}
     </Modal>
   );
 };

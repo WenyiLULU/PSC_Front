@@ -86,25 +86,25 @@ function Dashboard() {
             title={"Dashboard"}
             options={
               <Button
-                radius="lg"
-                size="xs"
-                variant="outline"
-                color="#7FC9CD"
-                style={{
-                  background: "#e0f5eb",
-                  boxShadow: "2px 2px #302e36",
-                  margin: "0 10px",
-                }}
-                sx={() => ({
-                  height: "40px",
-                  width: "150px",
-                  margin: "0 10px",
-                  "@media (max-width: 400px)": {
-                    height: "30px",
-                    width: "150px",
-                    margin: "0 5px",
-                  },
-                })}
+              radius="lg"
+              size="xs"
+              variant="outline" 
+              color="#7FC9CD" 
+              style={{
+                background:"#e0f5eb",
+                boxShadow: "2px 2px 4px 0 #302e36",
+                margin:"0 10px",   
+              }} 
+              sx={()=>({
+                height:"40px", 
+                width:"150px",
+                margin:"0 10px",
+                '@media (max-width: 400px)': {
+                height:"30px", 
+                width:"150px",
+                margin:"0 5px",
+                }
+              })}
                 onClick={() => {
                   setSearchModalOpen(true);
                 }}
