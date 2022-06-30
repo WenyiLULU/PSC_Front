@@ -16,7 +16,7 @@ import { NavLink, useMatch } from "react-router-dom";
 import logo from "../assets/logo_b.svg";
 import logoutIcon from "../assets/logout.png";
 import { SessionContext } from "../context/SessionContext";
-import { LayoutDashboard, CalendarStats, Bone, User } from 'tabler-icons-react'
+import { LayoutDashboard, CalendarStats, Bone, User } from "tabler-icons-react";
 function Layout({ children }) {
   const theme = useMantineTheme();
   const match = useMatch("/");
@@ -33,7 +33,7 @@ function Layout({ children }) {
           styles={{
             main: {
               background: "#95b1db",
-              color:"#302e36",
+              color: "#302e36",
             },
           }}
           navbarOffsetBreakpoint="sm"
@@ -46,9 +46,8 @@ function Layout({ children }) {
               hidden={!opened}
               width={{ sm: 200, lg: 200 }}
               style={{
-                background:"#e0f5eb",
-                }}
-                
+                background: "#e0f5eb",
+              }}
             >
               <Anchor
                 component={NavLink}
@@ -88,12 +87,13 @@ function Layout({ children }) {
             </Footer>
           }
           header={
-            <Header 
-              height={70} 
-              p="md" 
+            <Header
+              height={70}
+              p="md"
               style={{
-              background:"#e0f5eb",
-              }}>
+                background: "#e0f5eb",
+              }}
+            >
               <div
                 style={{
                   display: "flex",

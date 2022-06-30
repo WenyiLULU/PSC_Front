@@ -30,7 +30,7 @@ function AvailabilityCreate({ availModalOpen, setAvailModalOpen }) {
   const createAvailability = async (newAvailability) => {
     const response = await apiPostWithToken("avail/create", newAvailability);
     console.log("Response", response);
-    navigate("/user/dashboard");
+    // navigate("/user/calendar/:userId");
   };
 
   const handleSubmit = (values) => {
@@ -44,6 +44,7 @@ function AvailabilityCreate({ availModalOpen, setAvailModalOpen }) {
     };
     console.log("data: ", data);
     createAvailability(data);
+    setAvailModalOpen(false);
   };
   return (
     <Modal
