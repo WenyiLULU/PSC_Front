@@ -1,21 +1,23 @@
-import { Button, Modal, Select, Text, TextInput } from "@mantine/core";
+import { Button, Modal, MultiSelect, Select, TextInput } from "@mantine/core";
 import { RangeCalendar } from "@mantine/dates";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "@mantine/form";
 import { useNavigate, useParams } from "react-router-dom";
 import { SessionContext } from "../context/SessionContext";
 
-function AvailabilityCreate({ availModalOpen, setAvailModalOpen }) {
+function AvailabilityCreate({ availModalOpen, setAvailModalOpen, userPets, setUserPets }) {
   const [selectValue, setSelectValue] = useState();
 
   const { userId } = useParams();
-
   const { apiPostWithToken } = useContext(SessionContext);
+  const [petNames, setPetNames] = useState([])
+  const [petIds, setPetIds] = useState([])
 
   const [calendarValue, setCalendarValue] = useState([
     Date | null,
     Date | null,
   ]);
+  
 
   const navigate = useNavigate();
 
@@ -23,14 +25,22 @@ function AvailabilityCreate({ availModalOpen, setAvailModalOpen }) {
     initialValues: {
       city: "",
       actionType: "",
+      userPets: "",
       dates: calendarValue,
     },
   });
+  
+  useEffect(() => {
+    const petId = userPets.map(e => e.id)
+    setPetIds(petId)
+    const petName = userPets.map(e => e.name)
+    setPetNames(petName)
+  }, [])
 
   const createAvailability = async (newAvailability) => {
     const response = await apiPostWithToken("avail/create", newAvailability);
     console.log("Response", response);
-    navigate("/user/dashboard");
+    // navigate("/user/calendar/:userId");
   };
 
   const handleSubmit = (values) => {
@@ -41,11 +51,14 @@ function AvailabilityCreate({ availModalOpen, setAvailModalOpen }) {
       author: userId,
       actionType: values.actionType,
       city: values.city,
+      pets: values.userPets
     };
     console.log("data: ", data);
     createAvailability(data);
+    setAvailModalOpen(false);
   };
-  return (
+  return (<>
+    
     <Modal
       opened={availModalOpen}
       onClose={() => setAvailModalOpen(false)}
@@ -70,6 +83,12 @@ function AvailabilityCreate({ availModalOpen, setAvailModalOpen }) {
           ]}
           {...form.getInputProps("actionType")}
         />
+
+        <MultiSelect
+          label="Your Pets"
+          data={petNames}
+          {...form.getInputProps("userPets")}
+        />
         <TextInput
           label="City"
           placeholder="Select a city"
@@ -80,6 +99,9 @@ function AvailabilityCreate({ availModalOpen, setAvailModalOpen }) {
         </Button>
       </form>
     </Modal>
+    
+    </>
+    
   );
 }
 

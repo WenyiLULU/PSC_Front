@@ -16,7 +16,7 @@ import { NavLink, useMatch } from "react-router-dom";
 import logo from "../assets/logo_w.svg";
 import logoutIcon from "../assets/logout.png";
 import { SessionContext } from "../context/SessionContext";
-import { LayoutDashboard, CalendarStats, Bone, User } from 'tabler-icons-react'
+import { LayoutDashboard, CalendarStats, Bone, User } from "tabler-icons-react";
 function Layout({ children }) {
   const theme = useMantineTheme();
   const match = useMatch("/");
@@ -102,9 +102,9 @@ function Layout({ children }) {
             </Footer>
           }
           header={
-            <Header 
-              height={70} 
-              p="md" 
+            <Header
+              height={70}
+              p="md"
               style={{
               background:"#95b1db",
               boxShadow:"0px 4px 10px 1px #b5b2bd",
