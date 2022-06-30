@@ -45,6 +45,7 @@ function AvailabilityCreate({ availModalOpen, setAvailModalOpen, userPets, setUs
 
   const handleSubmit = (values) => {
     // setValue(value)
+    if (values.actionType === 'offer') {values.userPets = []}
     const data = {
       startDate: values.dates[0],
       endDate: values.dates[1],
@@ -83,7 +84,7 @@ function AvailabilityCreate({ availModalOpen, setAvailModalOpen, userPets, setUs
           ]}
           {...form.getInputProps("actionType")}
         />
-
+        
         <MultiSelect
           label="Your Pets"
           data={petNames}

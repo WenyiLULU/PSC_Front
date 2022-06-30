@@ -8,6 +8,7 @@ import { SessionContext } from "../context/SessionContext";
 import { PetContext } from "../context/PetContext";
 import { SimpleGrid } from "@mantine/core";
 import AvailCard from "../components/AvailCard";
+import { useNavigate } from "react-router-dom";
 
 function UserCalendar() {
   const [availModalOpen, setAvailModalOpen] = useState(false);
@@ -20,7 +21,7 @@ function UserCalendar() {
   const { pets } = useContext(PetContext)
   const { apiWithToken, userId, apiDeleteWithToken } = useContext(SessionContext);
 
-  const {name} = userPets
+  const {navigate} = useNavigate()
 
   const fetchAvail = async () => {
     const petsData = await pets.filter(e=> e.owner === userId)
@@ -34,8 +35,19 @@ function UserCalendar() {
     setIsLoading(false);
   };
 
+  const fetchUser = async () => {
+    try {
+      const userInfo = await apiWithToken(`user/${userId}`);
+      setUser(userInfo);
+    } catch (error) {
+      console.log("error", error);
+      navigate("*");
+    }
+  };
+
   useEffect(() => {
     fetchAvail();
+    fetchUser()
   }, []);
 
   const deleteAvail = async (appId) => {
