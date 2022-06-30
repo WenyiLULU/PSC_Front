@@ -17,12 +17,14 @@ import SearchAvailResults from "./pages/SearchAvailResults";
 import AvailabilitiesList from "./pages/AvailabilitiesList";
 import AvailDetails from "./pages/AvailDetails";
 import CreateAppointment from "./pages/CreateAppointment";
+import { PetContextProvider } from "./context/PetContext";
 
 function App() {
   const { isAuthenticated } = useContext(SessionContext);
 
   return (
     <>
+    <PetContextProvider>
       <Layout>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -79,6 +81,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>
+      </PetContextProvider>
     </>
   );
 }

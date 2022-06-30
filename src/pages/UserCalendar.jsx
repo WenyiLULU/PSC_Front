@@ -7,9 +7,12 @@ import { SessionContext } from "../context/SessionContext";
 import AvailabilitiesList from "./AvailabilitiesList";
 import TitleBar from "../components/TitleBar";
 import StandardButton from "../components/StandardButton";
+import { PetContext } from "../context/PetContext";
+
 
 function UserCalendar() {
   const { userId } = useParams();
+  const { pets } = useContext(PetContext)
 
   const { apiPostWithToken } = useContext(SessionContext);
 
@@ -78,6 +81,7 @@ function UserCalendar() {
           <Select
             value={selectValue}
             onChange={setSelectValue}
+            
             label="Type"
             placeholder="Pick one"
             data={[
