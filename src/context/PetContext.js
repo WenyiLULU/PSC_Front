@@ -5,6 +5,8 @@ const PetContext = createContext()
 
 const PetContextProvider = ({children}) => {
     const [pets, setPets] = useState([])
+    const [refreshPetContext, setRefreshPetContext] = useState(false);
+
     const { isAuthenticated, apiWithToken } = useContext(SessionContext)
 
     const fetchPets = async () => {
@@ -24,7 +26,13 @@ const PetContextProvider = ({children}) => {
         }
       }, [isAuthenticated])
 
-      return <PetContext.Provider value={{ pets }}>{children}</PetContext.Provider>
+    useEffect(() => {
+        if (refreshPetContext) {
+          fetchPets();
+          setRefreshPetContext(false);
+        }
+      }, [refreshPetContext]);
+      return <PetContext.Provider value={{ pets, refreshPetContext,setRefreshPetContext }}>{children}</PetContext.Provider>
 }
 
-export {PetContext, PetContextProvider}
+export {PetContext, PetContextProvider }

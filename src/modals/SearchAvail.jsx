@@ -27,7 +27,7 @@ function SearchAvail({ searchModalOpen, setSearchModalOpen, user, userPets, setU
     const petName = userPets.map(e => e.name)
     console.log('AvailSearchPets:',petName)
     setPetNames(petName)
-  }, [])
+  },[userPets])
 
   const handleSubmit = (values) => {
     const data = {startDate: values.dates[0], endDate: values.dates[1], author: user._id, actionType: values.actionType, city: values.city, name: user.username, pets: values.userPets}

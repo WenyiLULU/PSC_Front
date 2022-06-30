@@ -11,10 +11,12 @@ import {
 } from "@mantine/core";
 import { SessionContext } from "../context/SessionContext";
 import { useNavigate } from "react-router-dom";
+import { PetContext } from "../context/PetContext";
 
 function CreatePet({ createPetModal, setCreatePetModal, setNeedRefresh }) {
   // const { userId } = useParams();
   const { apiPostWithToken, userId } = useContext(SessionContext);
+  const { setRefreshPetContext } = useContext(PetContext)
   const navigate = useNavigate();
   const [selectValue, setSelectValue] = useState();
   const [habits, setHabits] = useState([
@@ -49,6 +51,7 @@ function CreatePet({ createPetModal, setCreatePetModal, setNeedRefresh }) {
     // const response = await axios.post(`${BASE_API_URL}/pet/create`, newPet);
     console.log(">>>> Response: ", response);
     setNeedRefresh(true);
+    setRefreshPetContext(true)
   };
 
   const handleSubmit = (values) => {
@@ -142,7 +145,7 @@ function CreatePet({ createPetModal, setCreatePetModal, setNeedRefresh }) {
             { value: "l", label: "Large" },
           ]}
         />
-
+        <PetContext.Consumer></PetContext.Consumer>
         <Group position="right" mt="md">
           <Button type="submit">Add</Button>
         </Group>
