@@ -1,4 +1,4 @@
-import { ActionIcon, Card, Container, Group, Text } from "@mantine/core";
+import { ActionIcon, Badge, Card, Container, Group, Text } from "@mantine/core";
 import React from "react";
 import { Link } from "react-router-dom";
 import { Trash } from "tabler-icons-react";
@@ -17,9 +17,11 @@ const AvailCard = ({ oneAvail, handleDelete }) => {
         },
       }}
     >
-      <Text size="lg" weight={500} align="left">
-        Dates: {oneAvail.startDate.slice(0, 10)} -{" "}
-        {oneAvail.endDate.slice(0, 10)}
+      <Text>
+        <strong>Dates : </strong>{" "}
+        <Badge color="red" variant="light" align="center">
+          {oneAvail.startDate.slice(0, 10)} - {oneAvail.endDate.slice(0, 10)}
+        </Badge>
       </Text>
       <Text>Type: {oneAvail.actionType}</Text>
       {oneAvail.actionType === "request" && (
