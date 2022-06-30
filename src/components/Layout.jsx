@@ -13,7 +13,7 @@ import {
   Footer,
 } from "@mantine/core";
 import { NavLink, useMatch } from "react-router-dom";
-import logo from "../assets/logo_b.svg";
+import logo from "../assets/logo_w.svg";
 import logoutIcon from "../assets/logout.png";
 import { SessionContext } from "../context/SessionContext";
 import { LayoutDashboard, CalendarStats, Bone, User } from "tabler-icons-react";
@@ -30,10 +30,11 @@ function Layout({ children }) {
         <>{children}</>
       ) : (
         <AppShell
+
           styles={{
             main: {
-              background: "#95b1db",
-              color: "#302e36",
+              background: "#F0FAF5",
+              color:"#302e36",
             },
           }}
           navbarOffsetBreakpoint="sm"
@@ -41,13 +42,16 @@ function Layout({ children }) {
           navbar={
             <Navbar
               onClick={() => setOpened((o) => !o)}
-              p="md"
+              p="lg"
               hiddenBreakpoint="sm"
               hidden={!opened}
               width={{ sm: 200, lg: 200 }}
               style={{
-                background: "#e0f5eb",
-              }}
+                background:"#F0FAF5",
+                paddingLeft:"20px",
+                boxShadow:"4px 0px 10px 0px #b5b2bd"
+                }}
+                
             >
               <Anchor
                 component={NavLink}
@@ -82,8 +86,19 @@ function Layout({ children }) {
             </Navbar>
           }
           footer={
-            <Footer height={40} p="md">
-              Ironhack 2022
+            <Footer 
+              height={40} 
+              p="md"
+              style={{
+                display:"flex",
+                justifyContent:"space-between",
+                alignItems:"center",
+                background:"#95b1db",
+                color:"white"
+              }}
+            >
+              <Text>Ironhack 2022</Text>
+              <div>© Esteban B | Sebastian M | Wenyi L</div>
             </Footer>
           }
           header={
@@ -91,15 +106,18 @@ function Layout({ children }) {
               height={70}
               p="md"
               style={{
-                background: "#e0f5eb",
-              }}
-            >
+              background:"#95b1db",
+              boxShadow:"0px 4px 10px 1px #b5b2bd",
+              border:"0"
+              }}>
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
                   height: "100%",
+                  color:"white",
+                  fontWeight:"bold",
                 }}
               >
                 <MediaQuery largerThan="sm" styles={{ display: "none" }}>
@@ -107,7 +125,7 @@ function Layout({ children }) {
                     opened={opened}
                     onClick={() => setOpened((o) => !o)}
                     size="sm"
-                    color={theme.colors.gray[6]}
+                    color={theme.colors.gray[2]}
                     mr="xl"
                   />
                 </MediaQuery>
@@ -126,7 +144,7 @@ function Layout({ children }) {
                     src={logo}
                     alt="logo"
                   />
-                  <Text style={{ marginLeft: "2vw" }}>Pet Social Club</Text>
+                  <Text style={{ marginLeft: "2vw", fontSize:"22px" }}>Pet Social Club</Text>
                 </div>
               </div>
             </Header>
