@@ -5,15 +5,18 @@ import { Link } from "react-router-dom";
 import PetCreate from "../modals/PetCreate";
 import StandardButton from "../components/StandardButton";
 import PetCard from "../components/PetCard";
-import { SimpleGrid } from "@mantine/core";
+import { SimpleGrid, Image } from "@mantine/core";
 import "../App.css";
 import TitleBar from "../components/TitleBar";
+import loadingImg from "../assets/hamster_1.gif"
 
 const PetList = () => {
   const { apiWithToken, isAuthenticated, userId } = useContext(SessionContext);
   const [createPetModal, setCreatePetModal] = useState(false);
   const [pets, setPets] = useState([]);
-  const [needRefresh, setNeedRefresh] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [needRefresh, setNeedRefresh] = useState(false)
+
   // console.log("pets: ", pets);
 
   // FETCH PETS
@@ -23,6 +26,7 @@ const PetList = () => {
       const data = await apiWithToken("pet");
       // console.log(">>>> Response: ", data);
       setPets(data);
+      setIsLoading(false)
     } catch (error) {
       // console.log(">>> error: ", error);
       // navigate("*");
@@ -43,7 +47,8 @@ const PetList = () => {
   }, [needRefresh]);
 
   return (
-    <div>
+    isLoading ? <Image src={loadingImg} alt="loading ..." />
+    : <div>
       <TitleBar
         title={"My Little Friends"}
         options={

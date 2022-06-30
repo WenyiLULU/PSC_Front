@@ -5,11 +5,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import StandardButton from "../components/StandardButton";
 import EditUser from "../modals/EditUser";
 import EditPassword from "../modals/EditPassword";
-import SearchAvail from "../modals/SearchAvail";
-import { SimpleGrid, Checkbox, Image, Center } from "@mantine/core";
+import { SimpleGrid, Image, Center } from "@mantine/core";
 import ImageDropzone from "../modals/ImageDropzone";
 import TitleBar from "../components/TitleBar";
 import { Pencil, SquareCheck, Square } from "tabler-icons-react";
+import loadingImg from "../assets/hamster_1.gif"
 
 function UserProfile() {
   const [user, setUser] = useState({});
@@ -42,7 +42,7 @@ function UserProfile() {
 
   return (
     <>
-      {isLoading && <p>Loading...</p>}
+      {isLoading && <Image src={loadingImg} alt="loading ..." />}
       {!isLoading && (
         <>
           <TitleBar

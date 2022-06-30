@@ -1,4 +1,4 @@
-import { Button, SimpleGrid } from "@mantine/core";
+import { Button, SimpleGrid, Image } from "@mantine/core";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AppointmentCard from "../components/AppointmentCard";
@@ -6,6 +6,7 @@ import TitleBar from "../components/TitleBar";
 import { PetContext } from "../context/PetContext";
 import { SessionContext } from "../context/SessionContext";
 import SearchAvail from "../modals/SearchAvail";
+import loadingImg from "../assets/hamster_1.gif"
 
 function Dashboard() {
   const [user, setUser] = useState({});
@@ -79,7 +80,7 @@ function Dashboard() {
 
   return (
     <>
-      {isLoading && <p>Loading...</p>}
+      {isLoading && <Image src={loadingImg} alt="loading ..." />}
       {!isLoading && (
         <>
           <TitleBar

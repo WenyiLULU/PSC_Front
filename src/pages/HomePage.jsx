@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Login from "../modals/Login";
 import StartButton from "../components/StartButton";
 import Signup from "../modals/Signup";
+import dog from "../assets/dog_1.gif"
 
 import { BackgroundImage, Center, Text, Box, Title,Image } from '@mantine/core';
 import bacgroudImg from "../assets/background.png"
@@ -56,6 +57,16 @@ function HomePage() {
             Come play with me !
           </Box>
           <StartButton setLoginModalOpen={setLoginModalOpen} />
+          <Image
+            src={dog}
+            alt="dog walking"
+            sx={()=>({
+              width:"300px",
+              '@media (max-width: 400px)': {
+                width:"100px",
+              }
+            })}
+          />
           <Login
             loginModalOpen={loginModalOpen}
             setLoginModalOpen={setLoginModalOpen}
