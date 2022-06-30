@@ -21,7 +21,7 @@ import { PetContextProvider } from "./context/PetContext";
 
 function App() {
   const { isAuthenticated } = useContext(SessionContext);
-
+ 
   return (
     <>
       <PetContextProvider>
