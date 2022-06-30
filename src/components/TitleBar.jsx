@@ -1,10 +1,10 @@
 import React from "react";
 import "../App.css";
-
+import {Title} from "@mantine/core"
 const TitleBar = (props) => {
   return (
     <div className="titleBar">
-      <h1>{props.title}</h1>
+      <Title order={1}>{props.title}</Title>
       <div className="titleOptions">{props.options}</div>
     </div>
   );

@@ -20,20 +20,41 @@ function HomePage() {
         <Center style={{display: "flex", flexDirection:"column", margin:"0 auto", width: "100%", height: "100%" }}>
           <div style={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
           <Image
-            height={150}
-            width={150}
-            color={"red"}
             src={logo}
             alt="logo"
+            sx={()=>({
+              height: "150px",
+              width:"150px",
+              '@media (max-width: 400px)': {
+                height:"60px",
+                width:"60px",
+              }
+            })}
           />
-          <Title order={1} style={{color:"#302e36", fontSize: "60px", marginLeft:"20px", textShadow: "4px 4px #7fc9cd" }}>
+          <Box 
+            style={{color:"#302e36", marginLeft:"20px", textShadow: "3px 3px #7fc9cd", fontWeight:"bold" }}
+            sx={()=>({
+              fontSize: "60px",
+              '@media (max-width: 400px)': {
+                fontSize: "30px"
+              }
+            })}
+            >
              Pets Social Club
-            </Title>
+            </Box>
           </div>
             
-          <Title order={2} style={{color:"#302e36",fontSize: "50px", margin:"30px 0"}}>
+          <Box 
+            style={{color:"#302e36", margin:"30px 0",textShadow: "2px 2px #7fc9cd", fontWeight:"bold"}}
+            sx={()=>({
+              fontSize: "50px",
+              '@media (max-width: 400px)': {
+                fontSize: "25px"
+              }
+            })}
+          >
             Come play with me !
-          </Title>
+          </Box>
           <StartButton setLoginModalOpen={setLoginModalOpen} />
           <Login
             loginModalOpen={loginModalOpen}

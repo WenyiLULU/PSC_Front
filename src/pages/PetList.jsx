@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { SessionContext } from "../context/SessionContext";
 import { useContext } from "react";
-import { useNavigate, Link, useParams } from "react-router-dom";
+import { Link} from "react-router-dom";
 import PetCreate from "../modals/PetCreate";
 import StandardButton from "../components/StandardButton";
 import PetCard from "../components/PetCard";
-import { Card, SimpleGrid } from "@mantine/core";
+import { SimpleGrid } from "@mantine/core";
 import "../App.css";
 import TitleBar from "../components/TitleBar";
 
