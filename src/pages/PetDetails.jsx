@@ -116,7 +116,14 @@ const PetDetails = () => {
               ]}
             >
               {img.map((photo, index) => (
-                <Image key={index} radius="lg" src={photo} alt="my pet photo" />
+                <Image
+                  fit="cover"
+                  height={300}
+                  key={index}
+                  radius="lg"
+                  src={photo}
+                  alt="my pet photo"
+                />
               ))}
             </SimpleGrid>
 
