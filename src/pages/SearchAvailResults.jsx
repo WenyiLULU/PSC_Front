@@ -1,17 +1,14 @@
 import { Button, Card, Text } from "@mantine/core";
 import { useContext } from "react";
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { SessionContext } from "../context/SessionContext";
-import { apiBase } from "../utils/reqBackEnd";
-import CreateAppointment from "./CreateAppointment";
 
 function SearchAvailResults() {
   const location = useLocation();
   const [avail, setAvail] = useState({});
   const [match, setMatch] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const [appointModel, setAppointModel] = useState(false);
   const { isAuthenticated } = useContext(SessionContext);
   const { apiWithToken } = useContext(SessionContext);
   const navigate = useNavigate();
@@ -22,6 +19,7 @@ function SearchAvailResults() {
   };
 
   useEffect(() => {
+    if (isAuthenticated)
     checkMatch();
   }, [avail]);
 
@@ -77,6 +75,8 @@ function SearchAvailResults() {
         <>
           <div>
             <p>City: {location.state.city}</p>
+
+            {/* change depending on type of search */}
             <p>Type of search: {location.state.actionType}</p>
           </div>
           <h1>Results</h1>

@@ -16,9 +16,9 @@ function Dashboard() {
     useContext(SessionContext);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [userPets, setUserPets] = useState([])
+  const [userPets, setUserPets] = useState([]);
 
-  const { pets } = useContext(PetContext)
+  const { pets } = useContext(PetContext);
 
   const fetchUser = async () => {
     try {
@@ -59,9 +59,9 @@ function Dashboard() {
   };
 
   const fetchUserPets = async () => {
-    const petsData = await pets.filter(e=> e.owner === userId)
-    setUserPets(petsData)
-  }
+    const petsData = await pets.filter((e) => e.owner === userId);
+    setUserPets(petsData);
+  };
 
   useEffect(() => {
     userId ? fetchUser() : navigate("/notauth");
@@ -70,7 +70,7 @@ function Dashboard() {
   useEffect(() => {
     if (isAuthenticated) {
       fetchAppointments();
-      fetchUserPets()
+      fetchUserPets();
     }
   }, []);
 
@@ -87,25 +87,25 @@ function Dashboard() {
             title={"Dashboard"}
             options={
               <Button
-              radius="lg"
-              size="xs"
-              variant="outline" 
-              color="#7FC9CD" 
-              style={{
-                background:"#e0f5eb",
-                boxShadow: "2px 2px 4px 0 #302e36",
-                margin:"0 10px",   
-              }} 
-              sx={()=>({
-                height:"40px", 
-                width:"150px",
-                margin:"0 10px",
-                '@media (max-width: 400px)': {
-                height:"30px", 
-                width:"150px",
-                margin:"0 5px",
-                }
-              })}
+                radius="lg"
+                size="xs"
+                variant="outline"
+                color="#7FC9CD"
+                style={{
+                  background: "#e0f5eb",
+                  boxShadow: "2px 2px 4px 0 #302e36",
+                  margin: "0 10px",
+                }}
+                sx={() => ({
+                  height: "40px",
+                  width: "150px",
+                  margin: "0 10px",
+                  "@media (max-width: 400px)": {
+                    height: "30px",
+                    width: "150px",
+                    margin: "0 5px",
+                  },
+                })}
                 onClick={() => {
                   setSearchModalOpen(true);
                 }}
@@ -123,7 +123,7 @@ function Dashboard() {
           >
             {appointments.map((e, eIndex) => (
               <AppointmentCard
-                key={eIndex}
+                key={e._id}
                 eIndex={eIndex}
                 e={e}
                 user={user}

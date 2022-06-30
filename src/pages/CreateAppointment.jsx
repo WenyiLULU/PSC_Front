@@ -1,8 +1,7 @@
-import { Button, Card, Modal, Text } from "@mantine/core";
+import { Button, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useContext, useEffect, useState } from "react";
 import {
-  Navigate,
   useLocation,
   useNavigate,
   useParams,
@@ -14,7 +13,7 @@ function CreateAppointment({ requestData }) {
   const location = useLocation();
   const { availId } = useParams();
   const form = useForm({});
-  const { apiPostWithToken, user, apiWithToken } = useContext(SessionContext);
+  const { apiPostWithToken, apiWithToken } = useContext(SessionContext);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState([]);
