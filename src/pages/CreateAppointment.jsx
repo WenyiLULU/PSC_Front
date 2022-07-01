@@ -1,4 +1,4 @@
-import { Button, Text, Card, Center,Space } from "@mantine/core";
+import { Button, Text, Card, Center,Space, Badge } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useContext, useEffect, useState } from "react";
 import {
@@ -77,10 +77,10 @@ function CreateAppointment({ requestData }) {
           <Space h="md" />
           <Text><strong>To:</strong> {location.state.name}</Text>
           <Space h="md" />
-          <Text>
-            <strong>Time:</strong> {location.state.startDate.toString().slice(0, 10)} TO{" "}
+          <Badge color="red" variant="light" align="center">
+          {location.state.startDate.toString().slice(0, 10)} ~ {" "}
             {location.state.endDate.toString().slice(0, 10)}
-          </Text>
+          </Badge>
           <Space h="md" />
           <Button type="submit">Request Appointment</Button>
         </form>

@@ -20,7 +20,7 @@ const AvailCard = ({ oneAvail, handleDelete }) => {
       <Text>
         <strong>Dates : </strong>{" "}
         <Badge color="red" variant="light" align="center">
-          {oneAvail.startDate.slice(0, 10)} - {oneAvail.endDate.slice(0, 10)}
+          {oneAvail.startDate.slice(0, 10)} ~ {oneAvail.endDate.slice(0, 10)}
         </Badge>
       </Text>
       <Text>Type: {oneAvail.actionType}</Text>

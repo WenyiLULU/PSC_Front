@@ -1,8 +1,10 @@
-import { Button, Card, Text } from "@mantine/core";
+import { Button, Card, Text, Image, Center, SimpleGrid, Badge } from "@mantine/core";
 import { useContext } from "react";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { SessionContext } from "../context/SessionContext";
+import loadingImg from "../assets/hamster_1.gif"
+import notfoundImg from "../assets/dog_2.gif"
 
 function SearchAvailResults() {
   const location = useLocation();
@@ -70,7 +72,7 @@ function SearchAvailResults() {
 
   return (
     <>
-      {isLoading && <p>...Loading</p>}
+      {isLoading && <Image src={loadingImg} alt="loading ..." />}
       {!isLoading && (
         <>
           <div>
@@ -80,16 +82,34 @@ function SearchAvailResults() {
             <p>Type of search: {location.state.actionType}</p>
           </div>
           <h1>Results</h1>
-          {match.length === 0 && <p>Sorry, no results found</p>}
+          {match.length === 0 && 
+          <Center style={{dislay:"flex",flexDirection:"column"}}>
+            <p>Sorry, no results found... Try another time or city</p>
+            <Button
+                component={Link}
+                to={isAuthenticated ? "/user/dashboard" : "/notauth"}
+              >
+               Dashboard
+            </Button>
+            <Image src={notfoundImg} alt="not found" />
+          </Center>}
+          <SimpleGrid
+            breakpoints={[
+              { maxWidth: 2000, cols: 6, spacing: "md" },
+              { maxWidth: 1750, cols: 5, spacing: "md" },
+              { maxWidth: 1500, cols: 3, spacing: "md" },
+              { maxWidth: 1100, cols: 2, spacing: "sm" },
+              { maxWidth: 800, cols: 1, spacing: "sm" },
+            ]}
+          >
           {match.map((singleAvail) => (
             <div style={{ width: 300 }}>
               <Card name={singleAvail.author.username} align="center">
-                <Text>
-                  Start Date: {singleAvail.startDate.toString().slice(0, 10)}
-                </Text>
-                <Text>
-                  End Date: {singleAvail.endDate.toString().slice(0, 10)}
-                </Text>
+                
+                <Badge color="red" variant="light" align="center">
+                  {singleAvail.startDate.toString().slice(0, 10)} ~ {singleAvail.endDate.toString().slice(0, 10)}
+                </Badge>
+                
                 <Text weight={500} align="center">
                   {singleAvail.author.username}
                 </Text>
@@ -101,11 +121,11 @@ function SearchAvailResults() {
                     Pets: {singleAvail.pets.map((e) => e + " ")}
                   </Text>
                 )}
-                {/* {location.state.pets !== undefined && (
+                {location.state.pets !== undefined && (
                   <Text weight={500} align="center">
                     Pets: {location.state.pets.map((e) => e + " ")}
                   </Text>
-                )} */}
+                )}
 
                 <Button
                   align="center"
@@ -116,6 +136,8 @@ function SearchAvailResults() {
               </Card>
             </div>
           ))}
+          </SimpleGrid>
+          
 
         
         </>
