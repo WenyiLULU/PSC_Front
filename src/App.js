@@ -7,10 +7,6 @@ import UserProfile from "./pages/UserProfile";
 import PetList from "./pages/PetList";
 import PetDetails from "./pages/PetDetails";
 import NotAuth from "./pages/NotAuth";
-// import Signup from './modals/Signup';
-// import Login from './modals/Login';
-import { SessionContext } from "./context/SessionContext";
-import { useContext } from "react";
 import NotFound from "./pages/NotFound";
 import UserCalendar from "./pages/UserCalendar";
 import SearchAvailResults from "./pages/SearchAvailResults";
@@ -18,9 +14,9 @@ import AvailabilitiesList from "./pages/AvailabilitiesList";
 import AvailDetails from "./pages/AvailDetails";
 import CreateAppointment from "./pages/CreateAppointment";
 import { PetContextProvider } from "./context/PetContext";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
-  const { isAuthenticated } = useContext(SessionContext);
  
   return (
     <>
@@ -32,48 +28,40 @@ function App() {
             <Route path='/login' element={<Login />} /> */}
             <Route
               path="/user/dashboard"
-              element={isAuthenticated ? <Dashboard /> : <NotAuth />}
+              element={<PrivateRoute><Dashboard /></PrivateRoute>}
             />
             <Route
               path="/user/:userId"
-              element={isAuthenticated ? <UserProfile /> : <NotAuth />}
+              element={<PrivateRoute><UserProfile /></PrivateRoute>}
             />
             <Route
               path="/user/pets"
-              element={isAuthenticated ? <PetList /> : <NotAuth />}
+              element={<PrivateRoute><PetList /></PrivateRoute>}
             />
             <Route
               path="/user/pets/:petId"
-              element={isAuthenticated ? <PetDetails /> : <NotAuth />}
+              element={<PrivateRoute><PetDetails /></PrivateRoute>}
             />
             <Route
               path="/user/avail"
-              element={isAuthenticated ? <AvailabilitiesList /> : <NotAuth />}
+              element={<PrivateRoute><AvailabilitiesList /></PrivateRoute>}
             />
             <Route
               path="/user/avail/:availID"
-              element={isAuthenticated ? <AvailDetails /> : <NotAuth />}
+              element={<PrivateRoute><AvailDetails /></PrivateRoute> }
             />
             <Route
               path="/user/calendar/:userId"
-              element={isAuthenticated ? <UserCalendar /> : <NotAuth />}
+              element={<PrivateRoute><UserCalendar /></PrivateRoute> }
             />
             <Route
               path="/result"
-              element={isAuthenticated ? <SearchAvailResults /> : <NotAuth />}
+              element={<PrivateRoute><SearchAvailResults /></PrivateRoute>}
             />
             <Route
               path="/result/:availId"
               element={
-                isAuthenticated ? (
-                  <h1>
-                    {" "}
-                    <CreateAppointment />{" "}
-                  </h1>
-                ) : (
-                  <NotAuth />
-                )
-              }
+                <PrivateRoute><CreateAppointment /></PrivateRoute>}
             />
             <Route path="/notauth" element={<NotAuth />} />
             <Route path="*" element={<NotFound />} />

@@ -83,7 +83,7 @@ const ImageDropzone = ({ dropModalOpen, setDropModalOpen, user, setUser }) => {
     <Modal
       opened={dropModalOpen}
       onClose={() => setDropModalOpen(false)}
-      title="EditUser"
+      title="Change photo"
     >
       <Dropzone
         onDrop={(files) => {

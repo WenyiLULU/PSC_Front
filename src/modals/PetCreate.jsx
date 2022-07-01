@@ -143,7 +143,6 @@ function CreatePet({ createPetModal, setCreatePetModal, setNeedRefresh }) {
             { value: "l", label: "Large" },
           ]}
         />
-        <PetContext.Consumer></PetContext.Consumer>
         <Group position="right" mt="md">
           <Button type="submit">Add</Button>
         </Group>

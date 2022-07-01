@@ -81,7 +81,7 @@ function PetUpdate({ modalOpen, setModalOpen, pet, setPet }) {
     <Modal
       opened={modalOpen}
       onClose={() => setModalOpen(false)}
-      title="EditUser"
+      title="Update Info"
     >
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <TextInput label="Pet Name" {...form.getInputProps("name")} />

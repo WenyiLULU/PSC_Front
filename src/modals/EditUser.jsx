@@ -79,7 +79,7 @@ function EditUser({ editModalOpen, setEditModalOpen, user, setUser }) {
     <Modal
       opened={editModalOpen}
       onClose={() => setEditModalOpen(false)}
-      title="EditUser"
+      title="Edit User Info"
     >
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <TextInput label="Username" {...form.getInputProps("username")} />
@@ -91,12 +91,13 @@ function EditUser({ editModalOpen, setEditModalOpen, user, setUser }) {
           label="I'm a pets owner"
           color="cyan"
           {...form.getInputProps("owner")}
-          
+          checked={form.getInputProps("owner").value}
         />
         <Checkbox
           label="I want to be a pet sitter"
           color="cyan"
           {...form.getInputProps("sitter")}
+          checked={form.getInputProps("sitter").value}
         />
         <Textarea label="About you" {...form.getInputProps("description")} />
 

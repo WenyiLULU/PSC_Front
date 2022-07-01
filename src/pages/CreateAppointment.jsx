@@ -1,4 +1,4 @@
-import { Button, Text } from "@mantine/core";
+import { Button, Text, Card, Center,Space } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useContext, useEffect, useState } from "react";
 import {
@@ -66,17 +66,28 @@ function CreateAppointment({ requestData }) {
     <>
       {isLoading && <p>Loading...</p>}
       {!isLoading && (
+        <Center >
+          <Card style={{width:300}}  align='center'>
         <form onSubmit={form.onSubmit(handleSubmit)}>
-          <Text>Type: {userData.actionType.toUpperCase()}</Text>
-          <Text>City: {userData.city}</Text>
-          <Text>From: {userData.author.username}</Text>
-          <Text>To: {location.state.name}</Text>
+          <Text><strong>Type:</strong> {userData.actionType.toUpperCase()}</Text>
+          <Space h="md" />
+          <Text><strong>City:</strong> {userData.city}</Text>
+          <Space h="md" />
+          <Text><strong>From:</strong> {userData.author.username}</Text>
+          <Space h="md" />
+          <Text><strong>To:</strong> {location.state.name}</Text>
+          <Space h="md" />
           <Text>
-            Time: {location.state.startDate.toString().slice(0, 10)} TO{" "}
+            <strong>Time:</strong> {location.state.startDate.toString().slice(0, 10)} TO{" "}
             {location.state.endDate.toString().slice(0, 10)}
           </Text>
+          <Space h="md" />
           <Button type="submit">Request Appointment</Button>
         </form>
+        </Card>
+        </Center>
+        
+        
       )}
     </>
   );

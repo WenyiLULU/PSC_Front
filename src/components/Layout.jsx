@@ -94,10 +94,11 @@ function Layout({ children }) {
                 justifyContent:"space-between",
                 alignItems:"center",
                 background:"#95b1db",
-                color:"white"
+                color:"white",
+                fontSize:"15px"
               }}
             >
-              <Text>Ironhack 2022</Text>
+              <div>2022</div>
               <div>© Esteban B | Sebastian M | Wenyi L</div>
             </Footer>
           }

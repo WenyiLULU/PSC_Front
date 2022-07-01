@@ -61,7 +61,7 @@ const ImageDropzone = ({ dropModalOpen, setDropModalOpen, pet, setPet }) => {
     <Modal
       opened={dropModalOpen}
       onClose={() => setDropModalOpen(false)}
-      title="EditUser"
+      title="Add photos"
     >
       <Dropzone
         // loading

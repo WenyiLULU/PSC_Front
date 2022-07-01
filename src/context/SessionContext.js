@@ -13,6 +13,7 @@ const SessionContext = createContext();
 const SessionContextProvider = ({ children }) => {
   const [token, setToken] = useState();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
   const [userId, setUserId] = useState();
   const navigate = useNavigate();
 
@@ -50,6 +51,7 @@ const SessionContextProvider = ({ children }) => {
       localStorage.removeItem("authToken");
       //navigate('/notauth')
     }
+    setIsVerified(true)
   };
 
   const apiWithToken = apiBase(token);
@@ -67,6 +69,7 @@ const SessionContextProvider = ({ children }) => {
         token,
         userId,
         isAuthenticated,
+        isVerified,
         authenticateUser,
         logout,
         apiWithToken,

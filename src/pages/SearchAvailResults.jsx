@@ -80,6 +80,7 @@ function SearchAvailResults() {
             <p>Type of search: {location.state.actionType}</p>
           </div>
           <h1>Results</h1>
+          {match.length === 0 && <p>Sorry, no results found</p>}
           {match.map((singleAvail) => (
             <div style={{ width: 300 }}>
               <Card name={singleAvail.author.username} align="center">

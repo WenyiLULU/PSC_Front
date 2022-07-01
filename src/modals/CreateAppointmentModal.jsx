@@ -1,4 +1,4 @@
-import { Button, Card, Modal, Text } from "@mantine/core";
+import { Button, Group, Modal, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useContext, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -42,7 +42,10 @@ function CreateAppointment({ userData, requestData, appointModel, setAppointMode
         <Text>
           Time: {requestData.startDate.toString().slice(0,10)} TO {requestData.endDate.toString().slice(0,10)}
         </Text>
-        <Button type="submit">Request Appointment</Button>
+        <Group position="right" mt="md">
+          <Button type="submit">Request Appointment</Button>
+        </Group>
+        
       </form>
       </Modal>
     </>

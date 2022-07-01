@@ -1,4 +1,4 @@
-import { Button, Modal, MultiSelect, Select, TextInput } from "@mantine/core";
+import { Button, Modal, MultiSelect, Select, TextInput, Group } from "@mantine/core";
 import { RangeCalendar } from "@mantine/dates";
 import { useForm } from "@mantine/form";
 import { useEffect, useState } from "react";
@@ -72,7 +72,9 @@ function SearchAvail({ searchModalOpen, setSearchModalOpen, user, userPets, setU
           placeholder="Select a city"
           {...form.getInputProps("city")}
         />
+        <Group position="right" mt="md">
         <Button type="submit">Select timeframe</Button>
+        </Group>
       </form>
     </Modal>
   );
