@@ -29,6 +29,7 @@ const SessionContextProvider = ({ children }) => {
     setToken();
     localStorage.removeItem("authToken");
     setIsAuthenticated(false);
+    setUserId()
     navigate("/");
   };
 
@@ -61,6 +62,7 @@ const SessionContextProvider = ({ children }) => {
 
   useEffect(() => {
     verifyAuth();
+    console.log("auth:",isAuthenticated )
   }, [token]);
   // deleted apiWithToken from context values for now
   return (

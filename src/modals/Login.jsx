@@ -24,7 +24,7 @@ function Login({ loginModalOpen, setLoginModalOpen, setSignupModalOpen }) {
       if (response.status === "KO") {
         throw new Error(response.message);
       } else {
-        authenticateUser(response.token);
+        await authenticateUser(response.token);
         navigate("/user/dashboard");
       }
     } catch (error) {

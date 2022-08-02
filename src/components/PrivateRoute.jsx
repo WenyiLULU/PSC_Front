@@ -6,7 +6,7 @@ import loadingImg from "../assets/hamster_1.gif"
 
 const PrivateRoute = ({children}) => {
     const {isAuthenticated, isVerified} = useContext(SessionContext)
-     
+    console.log("auth private route component:", isAuthenticated) 
     if(!isVerified){
         return <Image src={loadingImg} alt="loading ..." />
     }
