@@ -1,4 +1,4 @@
-![logo_PSC](https://res.cloudinary.com/cocktail-lab/image/upload/v1659478720/pscImage/logo_v3_w_rg8t3u.png)
+<img src="https://res.cloudinary.com/cocktail-lab/image/upload/v1659478720/pscImage/logo_v3_w_rg8t3u.png" alt="logo" width="100"/> 
 
 # Pet Social Club Front-end
 
